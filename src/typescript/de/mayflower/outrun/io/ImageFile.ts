@@ -1,50 +1,53 @@
 
+    import * as orts from '../index';
+
     /** ****************************************************************************************************************
     *   Specifies all different images used in the game.
     *******************************************************************************************************************/
+    // tslint:disable:max-line-length
     export class ImageFile
     {
-        public  static  BILLBOARD01             :string         = 'sprite/billboard01.png' ;
-        public  static  BILLBOARD02             :string         = 'sprite/billboard02.png' ;
-        public  static  BILLBOARD03             :string         = 'sprite/billboard03.png' ;
-        public  static  BILLBOARD04             :string         = 'sprite/billboard04.png' ;
-        public  static  BILLBOARD05             :string         = 'sprite/billboard05.png' ;
-        public  static  BILLBOARD06             :string         = 'sprite/billboard06.png' ;
-        public  static  BILLBOARD07             :string         = 'sprite/billboard07.png' ;
-        public  static  BILLBOARD08             :string         = 'sprite/billboard08.png' ;
-        public  static  BILLBOARD09             :string         = 'sprite/billboard09.png' ;
-        public  static  BOULDER1                :string         = 'sprite/boulder1.png' ;
-        public  static  BOULDER2                :string         = 'sprite/boulder2.png' ;
-        public  static  BOULDER3                :string         = 'sprite/boulder3.png' ;
-        public  static  BUSH1                   :string         = 'sprite/bush1.png' ;
-        public  static  BUSH2                   :string         = 'sprite/bush2.png' ;
-        public  static  CACTUS                  :string         = 'sprite/cactus.png' ;
-        public  static  CAR01                   :string         = 'sprite/car01.png' ;
-        public  static  CAR02                   :string         = 'sprite/car02.png' ;
-        public  static  CAR03                   :string         = 'sprite/car03.png' ;
-        public  static  CAR04                   :string         = 'sprite/car04.png' ;
-        public  static  COLUMN                  :string         = 'sprite/column.png' ;
-        public  static  DEAD_TREE1              :string         = 'sprite/deadTree1.png' ;
-        public  static  DEAD_TREE2              :string         = 'sprite/deadTree2.png' ;
-        public  static  PALM_TREE               :string         = 'sprite/palmTree.png' ;
-        public  static  PLAYER_LEFT             :string         = 'sprite/playerLeft.png' ;
-        public  static  PLAYER_RIGHT            :string         = 'sprite/playerRight.png' ;
-        public  static  PLAYER_STRAIGHT         :string         = 'sprite/playerStraight.png' ;
-        public  static  PLAYER_UPHILL_LEFT      :string         = 'sprite/playerUphillLeft.png' ;
-        public  static  PLAYER_UPHILL_RIGHT     :string         = 'sprite/playerUphillRight.png' ;
-        public  static  PLAYER_UPHILL_STRAIGHT  :string         = 'sprite/playerUphillStraight.png' ;
-        public  static  STUMP                   :string         = 'sprite/stump.png' ;
-        public  static  TREE1                   :string         = 'sprite/tree1.png' ;
-        public  static  TREE2                   :string         = 'sprite/tree2.png' ;
-        public  static  TRUCK1                  :string         = 'sprite/truck1.png' ;
-        public  static  TRUCK2                  :string         = 'sprite/truck2.png' ;
+        public  static  readonly    BILLBOARD01             :string         = 'sprite/billboard01.png';
+        public  static  readonly    BILLBOARD02             :string         = 'sprite/billboard02.png';
+        public  static  readonly    BILLBOARD03             :string         = 'sprite/billboard03.png';
+        public  static  readonly    BILLBOARD04             :string         = 'sprite/billboard04.png';
+        public  static  readonly    BILLBOARD05             :string         = 'sprite/billboard05.png';
+        public  static  readonly    BILLBOARD06             :string         = 'sprite/billboard06.png';
+        public  static  readonly    BILLBOARD07             :string         = 'sprite/billboard07.png';
+        public  static  readonly    BILLBOARD08             :string         = 'sprite/billboard08.png';
+        public  static  readonly    BILLBOARD09             :string         = 'sprite/billboard09.png';
+        public  static  readonly    BOULDER1                :string         = 'sprite/boulder1.png';
+        public  static  readonly    BOULDER2                :string         = 'sprite/boulder2.png';
+        public  static  readonly    BOULDER3                :string         = 'sprite/boulder3.png';
+        public  static  readonly    BUSH1                   :string         = 'sprite/bush1.png';
+        public  static  readonly    BUSH2                   :string         = 'sprite/bush2.png';
+        public  static  readonly    CACTUS                  :string         = 'sprite/cactus.png';
+        public  static  readonly    CAR01                   :string         = 'sprite/car01.png';
+        public  static  readonly    CAR02                   :string         = 'sprite/car02.png';
+        public  static  readonly    CAR03                   :string         = 'sprite/car03.png';
+        public  static  readonly    CAR04                   :string         = 'sprite/car04.png';
+        public  static  readonly    COLUMN                  :string         = 'sprite/column.png';
+        public  static  readonly    DEAD_TREE1              :string         = 'sprite/deadTree1.png';
+        public  static  readonly    DEAD_TREE2              :string         = 'sprite/deadTree2.png';
+        public  static  readonly    PALM_TREE               :string         = 'sprite/palmTree.png';
+        public  static  readonly    PLAYER_LEFT             :string         = 'sprite/playerLeft.png';
+        public  static  readonly    PLAYER_RIGHT            :string         = 'sprite/playerRight.png';
+        public  static  readonly    PLAYER_STRAIGHT         :string         = 'sprite/playerStraight.png';
+        public  static  readonly    PLAYER_UPHILL_LEFT      :string         = 'sprite/playerUphillLeft.png';
+        public  static  readonly    PLAYER_UPHILL_RIGHT     :string         = 'sprite/playerUphillRight.png';
+        public  static  readonly    PLAYER_UPHILL_STRAIGHT  :string         = 'sprite/playerUphillStraight.png';
+        public  static  readonly    STUMP                   :string         = 'sprite/stump.png';
+        public  static  readonly    TREE1                   :string         = 'sprite/tree1.png';
+        public  static  readonly    TREE2                   :string         = 'sprite/tree2.png';
+        public  static  readonly    TRUCK1                  :string         = 'sprite/truck1.png';
+        public  static  readonly    TRUCK2                  :string         = 'sprite/truck2.png';
 
-        public  static  HILL                    :string         = 'background/hill.png' ;
-        public  static  SKY                     :string         = 'background/sky.png'   ;
-        public  static  TREE                    :string         = 'background/tree.png' ;
+        public  static  readonly    HILL                    :string         = 'background/hill.png';
+        public  static  readonly    SKY                     :string         = 'background/sky.png';
+        public  static  readonly    TREE                    :string         = 'background/tree.png';
 
         /** This array contains all filenames of all images that shall be loaded. */
-        public  static  FILE_NAMES              :string[]       =
+        public  static  readonly    FILE_NAMES              :string[]       =
         [
             ImageFile.BILLBOARD01,
             ImageFile.BILLBOARD02,
@@ -110,4 +113,8 @@
             ImageFile.SKY,
             ImageFile.TREE,
         ];
+
+        public  static  readonly    BILLBOARDS              :string[]       = [ImageFile.BILLBOARD01, ImageFile.BILLBOARD02, ImageFile.BILLBOARD03, ImageFile.BILLBOARD04, ImageFile.BILLBOARD05, ImageFile.BILLBOARD06, ImageFile.BILLBOARD07, ImageFile.BILLBOARD08, ImageFile.BILLBOARD09];
+        public  static  readonly    PLANTS                  :string[]       = [ImageFile.TREE1, ImageFile.TREE2, ImageFile.DEAD_TREE1, ImageFile.DEAD_TREE2, ImageFile.PALM_TREE, ImageFile.BUSH1, ImageFile.BUSH2, ImageFile.CACTUS, ImageFile.STUMP, ImageFile.BOULDER1, ImageFile.BOULDER2, ImageFile.BOULDER3];
+        public  static  readonly    CARS                    :string[]       = [ImageFile.CAR01, ImageFile.CAR02, ImageFile.CAR03, ImageFile.CAR04, ImageFile.TRUCK2, ImageFile.TRUCK1];
     }

@@ -1,5 +1,5 @@
 
-    import * as outrun from '..'
+    import * as outrun from '../..'
 
     /** ****************************************************************************************************************
     *   The legacy game stage.
@@ -16,7 +16,8 @@
         /** ************************************************************************************************************
         *   TODO to road factory.
         ***************************************************************************************************************/
-        private ROAD :any = {
+        private ROAD :any =
+        {
             LENGTH: {NONE: 0, SHORT: 25, MEDIUM: 50, LONG: 100},
             HILL: {NONE: 0, LOW: 20, MEDIUM: 40, HIGH: 60},
             CURVE: {NONE: 0, EASY: 2, MEDIUM: 4, HARD: 6}
@@ -233,7 +234,7 @@
             }
 
             for ( let n:number = 200; n < this.segments.length; n += 3 ) {
-                this.addSprite(n, outrun.MathUtil.randomChoice(outrun.SettingGame.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
+                this.addSprite(n, outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
             }
 
             let side   :number = 0;
@@ -242,9 +243,9 @@
 
             for ( let n:number = 1000; n < (this.segments.length - 50); n += 100 ) {
                 side = outrun.MathUtil.randomChoice([1, -1]);
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.SettingGame.BILLBOARDS), -side);
+                this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {
-                    sprite = outrun.MathUtil.randomChoice(outrun.SettingGame.PLANTS);
+                    sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
                     offset = side * (1.5 + Math.random());
                     this.addSprite(n + outrun.MathUtil.randomInt(0, 50), sprite, offset);
                 }
@@ -265,7 +266,7 @@
             for (let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ ) {
                 const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
                 const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
-                sprite = outrun.MathUtil.randomChoice(outrun.SettingGame.CARS);
+                sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.CARS);
                 const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.TRUCK2 ? 4 : 2);
                 car = {offset: offset, z: z, sprite: sprite, speed: speed};
                 segment = this.findSegment(car.z);
