@@ -146,6 +146,7 @@
         *   @param y     The Y location of this segment.
         *
         *   TODO to factory!
+        *   TODO Add class curve
         ***************************************************************************************************************/
         private static addSegment( segments:any[], curve:any, y:number ) : void
         {
