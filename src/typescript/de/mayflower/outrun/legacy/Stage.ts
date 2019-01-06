@@ -266,7 +266,7 @@
                 const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
                 const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
                 sprite = outrun.MathUtil.randomChoice(outrun.SettingGame.CARS);
-                const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.SEMI ? 4 : 2);
+                const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.TRUCK2 ? 4 : 2);
                 car = {offset: offset, z: z, sprite: sprite, speed: speed};
                 segment = this.findSegment(car.z);
                 segment.cars.push(car);

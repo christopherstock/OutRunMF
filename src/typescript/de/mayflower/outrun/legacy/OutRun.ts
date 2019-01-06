@@ -79,6 +79,7 @@
             };
             frame();
 */
+            // TODO remove! check FPS
             let now  :number = null;
             let last :number = new Date().getTime();
             let dt   :number = 0;
@@ -286,8 +287,8 @@
             outrun.Drawing2D.rect(this.canvasSystem.getCanvasContext(), 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingColor.SKY);
 
             outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.SKY, this.background.skyOffset, this.resolution * outrun.SettingGame.SKY_SPEED * playerY);
-            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.HILLS, this.background.hillOffset, this.resolution * outrun.SettingGame.HILL_SPEED * playerY);
-            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.TREES, this.background.treeOffset, this.resolution * outrun.SettingGame.TREE_SPEED * playerY);
+            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.HILL, this.background.hillOffset, this.resolution * outrun.SettingGame.HILL_SPEED * playerY);
+            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.TREE, this.background.treeOffset, this.resolution * outrun.SettingGame.TREE_SPEED * playerY);
 
             let   spriteScale :number = 0;
             let   spriteX     :number = 0;

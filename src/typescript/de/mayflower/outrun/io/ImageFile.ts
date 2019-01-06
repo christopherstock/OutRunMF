@@ -24,23 +24,24 @@
         public  static  CAR03                   :string         = 'sprite/car03.png' ;
         public  static  CAR04                   :string         = 'sprite/car04.png' ;
         public  static  COLUMN                  :string         = 'sprite/column.png' ;
-        public  static  DEAD_TREE1              :string         = 'sprite/dead_tree1.png' ;
-        public  static  DEAD_TREE2              :string         = 'sprite/dead_tree2.png' ;
-        public  static  PALM_TREE               :string         = 'sprite/palm_tree.png' ;
-        public  static  PLAYER_LEFT             :string         = 'sprite/player_left.png' ;
-        public  static  PLAYER_RIGHT            :string         = 'sprite/player_right.png' ;
-        public  static  PLAYER_STRAIGHT         :string         = 'sprite/player_straight.png' ;
-        public  static  PLAYER_UPHILL_LEFT      :string         = 'sprite/player_uphill_left.png' ;
-        public  static  PLAYER_UPHILL_RIGHT     :string         = 'sprite/player_uphill_right.png' ;
-        public  static  PLAYER_UPHILL_STRAIGHT  :string         = 'sprite/player_uphill_straight.png' ;
-        public  static  SEMI                    :string         = 'sprite/semi.png' ;
+        public  static  DEAD_TREE1              :string         = 'sprite/deadTree1.png' ;
+        public  static  DEAD_TREE2              :string         = 'sprite/deadTree2.png' ;
+        public  static  PALM_TREE               :string         = 'sprite/palmTree.png' ;
+        public  static  PLAYER_LEFT             :string         = 'sprite/playerLeft.png' ;
+        public  static  PLAYER_RIGHT            :string         = 'sprite/playerRight.png' ;
+        public  static  PLAYER_STRAIGHT         :string         = 'sprite/playerStraight.png' ;
+        public  static  PLAYER_UPHILL_LEFT      :string         = 'sprite/playerUphillLeft.png' ;
+        public  static  PLAYER_UPHILL_RIGHT     :string         = 'sprite/playerUphillRight.png' ;
+        public  static  PLAYER_UPHILL_STRAIGHT  :string         = 'sprite/playerUphillStraight.png' ;
         public  static  STUMP                   :string         = 'sprite/stump.png' ;
         public  static  TREE1                   :string         = 'sprite/tree1.png' ;
         public  static  TREE2                   :string         = 'sprite/tree2.png' ;
-        public  static  TRUCK                   :string         = 'sprite/truck.png' ;
-        public  static  HILLS                   :string         = 'background/hills.png' ;
+        public  static  TRUCK1                  :string         = 'sprite/truck1.png' ;
+        public  static  TRUCK2                  :string         = 'sprite/truck2.png' ;
+
+        public  static  HILL                    :string         = 'background/hill.png' ;
         public  static  SKY                     :string         = 'background/sky.png'   ;
-        public  static  TREES                   :string         = 'background/trees.png' ;
+        public  static  TREE                    :string         = 'background/tree.png' ;
 
         /** This array contains all filenames of all images that shall be loaded. */
         public  static  FILE_NAMES              :string[]       =
@@ -95,18 +96,18 @@
             ImageFile.PLAYER_UPHILL_RIGHT,
             ImageFile.PLAYER_UPHILL_STRAIGHT,
             ImageFile.PLAYER_UPHILL_STRAIGHT,
-            ImageFile.SEMI,
-            ImageFile.SEMI,
+            ImageFile.TRUCK2,
+            ImageFile.TRUCK2,
             ImageFile.STUMP,
             ImageFile.STUMP,
             ImageFile.TREE1,
             ImageFile.TREE1,
             ImageFile.TREE2,
             ImageFile.TREE2,
-            ImageFile.TRUCK,
+            ImageFile.TRUCK1,
 
-            ImageFile.HILLS,
+            ImageFile.HILL,
             ImageFile.SKY,
-            ImageFile.TREES,
+            ImageFile.TREE,
         ];
     }
