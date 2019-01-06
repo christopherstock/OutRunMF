@@ -1,7 +1,7 @@
 
     require( '../css/global.less' );
 
-    import * as orts from '..';
+    import * as outrun from '..';
 
     /** ****************************************************************************************************************
     *   The main class containing the point of entry and a single game instance.
@@ -25,19 +25,19 @@
     export class Main
     {
         /** The singleton instance of the game. */
-        public      static          game                    :orts.Game                  = null;
+        public      static          game                    :outrun.Game                = null;
 
         /** ************************************************************************************************************
         *   This method is invoked when the application starts.
         ***************************************************************************************************************/
         public static main() : void
         {
-            orts.HTML.setTitle( orts.SettingGame.APP_TITLE );
-            orts.HTML.setFavicon( 'favicon.ico' );
+            outrun.HTML.setTitle( outrun.SettingGame.APP_TITLE );
+            outrun.HTML.setFavicon( 'favicon.ico' );
 
             Main.acclaim();
 
-            Main.game = new orts.Game();
+            Main.game = new outrun.Game();
             Main.game.init();
         }
 
@@ -46,9 +46,9 @@
         ***************************************************************************************************************/
         private static acclaim() : void
         {
-            orts.Debug.acclaim.log( orts.SettingGame.APP_TITLE );
+            outrun.Debug.acclaim.log( outrun.SettingGame.APP_TITLE );
 
-            orts.Debug.acclaim.log( orts.Version.getCurrent() );
-            orts.Debug.acclaim.log();
+            outrun.Debug.acclaim.log( outrun.Version.getCurrent() );
+            outrun.Debug.acclaim.log();
         }
     }

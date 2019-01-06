@@ -1,5 +1,5 @@
 
-    import * as orts from '../index'
+    import * as outrun from '../index'
 
     /** ****************************************************************************************************************
     *   canvas rendering helpers.
@@ -63,7 +63,7 @@
 
         public static background( ctx:CanvasRenderingContext2D, width:number, height:number, sprite:string, rotation:number, offset:number ) : void
         {
-            const image:HTMLImageElement = orts.Main.game.imageSystem.getImage( sprite );
+            const image:HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
 
             rotation = rotation || 0;
             offset   = offset   || 0;
@@ -90,11 +90,11 @@
 
         public static sprite( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
-            const image:HTMLImageElement = orts.Main.game.imageSystem.getImage( sprite );
+            const image:HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
-            const destW:number  = (image.width  * scale * width/2) * (orts.SettingGame.SPRITE_SCALE * roadWidth);
-            const destH:number  = (image.height * scale * width/2) * (orts.SettingGame.SPRITE_SCALE * roadWidth);
+            const destW:number  = (image.width  * scale * width/2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
+            const destH:number  = (image.height * scale * width/2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
 
             destX = destX + (destW * (offsetX || 0));
             destY = destY + (destH * (offsetY || 0));
@@ -108,20 +108,20 @@
 
         public static player( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, speedPercent:number, scale:number, destX:number, destY:number, steer:number, updown:number ) : void
         {
-            const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * orts.MathUtil.randomChoice( [ -1, 1 ] );
+            const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
             let   sprite :string;
 
             if ( steer < 0 )
             {
-                sprite = ( updown > 0 ) ? orts.ImageFile.PLAYER_UPHILL_LEFT : orts.ImageFile.PLAYER_LEFT;
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
             }
             else if ( steer > 0 )
             {
-                sprite = ( updown > 0 ) ? orts.ImageFile.PLAYER_UPHILL_RIGHT : orts.ImageFile.PLAYER_RIGHT;
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
             }
             else
             {
-                sprite = ( updown > 0 ) ? orts.ImageFile.PLAYER_UPHILL_STRAIGHT : orts.ImageFile.PLAYER_STRAIGHT;
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
             }
 
             Drawing2D.sprite( ctx, width, height, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
@@ -131,7 +131,7 @@
         {
             if ( fog < 1 ) {
                 ctx.globalAlpha = ( 1 - fog );
-                ctx.fillStyle = orts.SettingColor.FOG;
+                ctx.fillStyle = outrun.SettingColor.FOG;
                 ctx.fillRect(x, y, width, height);
                 ctx.globalAlpha = 1;
             }

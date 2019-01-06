@@ -1,5 +1,5 @@
 
-    import * as orts from '../../index';
+    import * as orts from '../..';
 
     /** ****************************************************************************************************************
     *   Specifies all adjustments for the gameplay.

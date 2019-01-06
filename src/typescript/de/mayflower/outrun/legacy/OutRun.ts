@@ -1,5 +1,5 @@
 
-    import * as orts from '..'
+    import * as outrun from '..'
 
     /** ****************************************************************************************************************
     *   The main legacy game engine.
@@ -8,16 +8,16 @@
     export class OutRun
     {
         /** The canvas system. */
-        private     readonly    canvasSystem        :orts.CanvasSystem          = null;
+        private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
 
         /** The player. */
-        private                 player              :orts.Player                = null;
+        private                 player              :outrun.Player                = null;
         /** The game stage. */
-        private                 stage               :orts.Stage                 = null;
+        private                 stage               :outrun.Stage                 = null;
         /** The stage background. */
-        private                 background          :orts.Background            = null;
+        private                 background          :outrun.Background            = null;
         /** The stage camera. */
-        private                 camera              :orts.Camera                = null;
+        private                 camera              :outrun.Camera                = null;
 
         /** scaling factor to provide resolution independence (computed) */
         private                 resolution          :number                     = null;
@@ -36,7 +36,7 @@
         *
         *   @param canvasSystem The canvas system to use for rendering.
         ***************************************************************************************************************/
-        public constructor( canvasSystem:orts.CanvasSystem )
+        public constructor( canvasSystem:outrun.CanvasSystem )
         {
             this.canvasSystem = canvasSystem;
         }
@@ -47,21 +47,21 @@
         public reset() : void
         {
             // create the player
-            this.player = new orts.Player();
+            this.player = new outrun.Player();
 
             // create the camera
-            this.camera = new orts.Camera();
+            this.camera = new outrun.Camera();
 
-            this.player.playerZ = ( orts.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
+            this.player.playerZ = ( outrun.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
 
             this.resolution = this.canvasSystem.getHeight() / 480;
 
             // rebuild the stage
-            this.stage = new orts.Stage();
+            this.stage = new outrun.Stage();
             this.stage.resetRoad( this.player.playerZ );
 
             // create the background
-            this.background = new orts.Background();
+            this.background = new outrun.Background();
         }
 
         /** ************************************************************************************************************
@@ -92,9 +92,9 @@
                 dt = Math.min(1, (now - last) / 1000);
 
                 gdt = gdt + dt;
-                while (gdt > orts.SettingGame.STEP) {
-                    gdt = gdt - orts.SettingGame.STEP;
-                    this.update(orts.SettingGame.STEP);
+                while (gdt > outrun.SettingGame.STEP) {
+                    gdt = gdt - outrun.SettingGame.STEP;
+                    this.update(outrun.SettingGame.STEP);
                 }
                 this.render();
                 last = now;
@@ -117,47 +117,47 @@
             let   spriteW       :number  = 0;
 
             const playerSegment :any     = this.stage.findSegment(this.camera.getZ() + this.player.playerZ);
-            const playerW       :number  = 80 * orts.SettingGame.SPRITE_SCALE;
-            const speedPercent  :number  = this.player.speed / orts.SettingGame.MAX_SPEED;
+            const playerW       :number  = 80 * outrun.SettingGame.SPRITE_SCALE;
+            const speedPercent  :number  = this.player.speed / outrun.SettingGame.MAX_SPEED;
             const dx            :number  = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const startPosition :number  = this.camera.getZ();
 
             this.updateCars( dt, playerSegment, playerW );
 
-            this.camera.setZ( orts.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stage.trackLength) );
+            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stage.trackLength) );
 
             // check pressed keys
-            this.keyLeft = orts.Main.game.keySystem.isPressed(orts.KeyCodes.KEY_LEFT);
-            this.keyRight = orts.Main.game.keySystem.isPressed(orts.KeyCodes.KEY_RIGHT);
-            this.keyFaster = orts.Main.game.keySystem.isPressed(orts.KeyCodes.KEY_UP);
-            this.keySlower = orts.Main.game.keySystem.isPressed(orts.KeyCodes.KEY_DOWN);
+            this.keyLeft = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_LEFT);
+            this.keyRight = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_RIGHT);
+            this.keyFaster = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_UP);
+            this.keySlower = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_DOWN);
 
             if (this.keyLeft)
                 this.player.playerX = this.player.playerX - dx;
             else if (this.keyRight)
                 this.player.playerX = this.player.playerX + dx;
 
-            this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * orts.SettingGame.CENTRIFUGAL);
+            this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL);
 
             if (this.keyFaster)
-                this.player.speed = orts.MathUtil.accelerate(this.player.speed, orts.SettingGame.ACCELERATION_RATE, dt);
+                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.ACCELERATION_RATE, dt);
             else if (this.keySlower)
-                this.player.speed = orts.MathUtil.accelerate(this.player.speed, orts.SettingGame.BREAKING_RATE, dt);
+                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.BREAKING_RATE, dt);
             else
-                this.player.speed = orts.MathUtil.accelerate(this.player.speed, orts.SettingGame.NATURAL_DECELERATION_RATE, dt);
+                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.NATURAL_DECELERATION_RATE, dt);
 
             if ((this.player.playerX < -1) || (this.player.playerX > 1)) {
 
-                if (this.player.speed > orts.SettingGame.OFF_ROAD_LIMIT)
-                    this.player.speed = orts.MathUtil.accelerate(this.player.speed, orts.SettingGame.OFF_ROAD_DECELERATION, dt);
+                if (this.player.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
+                    this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
 
                 for (n = 0; n < playerSegment.sprites.length; n++) {
                     sprite = playerSegment.sprites[n];
-                    spriteW = orts.Main.game.imageSystem.getImage(sprite.source).width * orts.SettingGame.SPRITE_SCALE;
+                    spriteW = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
 
-                    if (orts.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
-                        this.player.speed = orts.SettingGame.MAX_SPEED / 5;
-                        this.camera.setZ( orts.MathUtil.increase(playerSegment.p1.world.z, -this.player.playerZ, this.stage.trackLength) ); // stop in front of sprite (at front of segment)
+                    if (outrun.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
+                        this.player.speed = outrun.SettingGame.MAX_SPEED / 5;
+                        this.camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.player.playerZ, this.stage.trackLength) ); // stop in front of sprite (at front of segment)
                         break;
                     }
                 }
@@ -165,22 +165,22 @@
 
             for (n = 0; n < playerSegment.cars.length; n++) {
                 car = playerSegment.cars[n];
-                carW = orts.Main.game.imageSystem.getImage(car.sprite).width * orts.SettingGame.SPRITE_SCALE;
+                carW = outrun.Main.game.imageSystem.getImage(car.sprite).width * outrun.SettingGame.SPRITE_SCALE;
                 if (this.player.speed > car.speed) {
-                    if (orts.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 0.8)) {
+                    if (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 0.8)) {
                         this.player.speed = car.speed * (car.speed / this.player.speed);
-                        this.camera.setZ( orts.MathUtil.increase( car.z, -this.player.playerZ, this.stage.trackLength ) );
+                        this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stage.trackLength ) );
                         break;
                     }
                 }
             }
 
-            this.player.playerX = orts.MathUtil.limit(this.player.playerX, -3, 3);     // dont ever let it go too far out of bounds
-            this.player.speed = orts.MathUtil.limit(this.player.speed, 0, orts.SettingGame.MAX_SPEED); // or exceed maxSpeed
+            this.player.playerX = outrun.MathUtil.limit(this.player.playerX, -3, 3);     // dont ever let it go too far out of bounds
+            this.player.speed = outrun.MathUtil.limit(this.player.speed, 0, outrun.SettingGame.MAX_SPEED); // or exceed maxSpeed
 
-            this.background.skyOffset  = orts.MathUtil.increase(this.background.skyOffset,  orts.SettingGame.SKY_SPEED  * playerSegment.curve * (this.camera.getZ() - startPosition) / orts.SettingGame.SEGMENT_LENGTH, 1);
-            this.background.hillOffset = orts.MathUtil.increase(this.background.hillOffset, orts.SettingGame.HILL_SPEED * playerSegment.curve * (this.camera.getZ() - startPosition) / orts.SettingGame.SEGMENT_LENGTH, 1);
-            this.background.treeOffset = orts.MathUtil.increase(this.background.treeOffset, orts.SettingGame.TREE_SPEED * playerSegment.curve * (this.camera.getZ() - startPosition) / orts.SettingGame.SEGMENT_LENGTH, 1);
+            this.background.skyOffset  = outrun.MathUtil.increase(this.background.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (this.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1);
+            this.background.hillOffset = outrun.MathUtil.increase(this.background.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (this.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1);
+            this.background.treeOffset = outrun.MathUtil.increase(this.background.treeOffset, outrun.SettingGame.TREE_SPEED * playerSegment.curve * (this.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1);
         }
 
         /** ************************************************************************************************************
@@ -197,8 +197,8 @@
                 const oldSegment:any = this.stage.findSegment(car.z);
 
                 car.offset = car.offset + this.updateCarOffset(car, oldSegment, playerSegment, playerW);
-                car.z = orts.MathUtil.increase(car.z, dt * car.speed, this.stage.trackLength);
-                car.percent = orts.MathUtil.percentRemaining(car.z, orts.SettingGame.SEGMENT_LENGTH); // useful for interpolation during rendering phase
+                car.z = outrun.MathUtil.increase(car.z, dt * car.speed, this.stage.trackLength);
+                car.percent = outrun.MathUtil.percentRemaining(car.z, outrun.SettingGame.SEGMENT_LENGTH); // useful for interpolation during rendering phase
 
                 const newSegment:any = this.stage.findSegment(car.z);
 
@@ -217,40 +217,40 @@
         private updateCarOffset( car:any, carSegment:any, playerSegment:any, playerW:number ) : number
         {
             const lookahead :number = 20;
-            const carW      :number = orts.Main.game.imageSystem.getImage(car.sprite).width * orts.SettingGame.SPRITE_SCALE;
+            const carW      :number = outrun.Main.game.imageSystem.getImage(car.sprite).width * outrun.SettingGame.SPRITE_SCALE;
 
             let   dir       :number = 0;    // TODO create enum for direction
             let   otherCarW :number = 0;
 
             // optimization, dont bother steering around other cars when 'out of sight' of the player
-            if ((carSegment.index - playerSegment.index) > orts.SettingGame.DRAW_DISTANCE)
+            if ((carSegment.index - playerSegment.index) > outrun.SettingGame.DRAW_DISTANCE)
                 return 0;
 
             for ( let i:number = 1; i < lookahead; i++ )
             {
                 const segment:any = this.stage.segments[(carSegment.index + i) % this.stage.segments.length];
 
-                if ((segment === playerSegment) && (car.speed > this.player.speed) && (orts.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 1.2))) {
+                if ((segment === playerSegment) && (car.speed > this.player.speed) && (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 1.2))) {
                     if (this.player.playerX > 0.5)
                         dir = -1;
                     else if (this.player.playerX < -0.5)
                         dir = 1;
                     else
                         dir = (car.offset > this.player.playerX) ? 1 : -1;
-                    return dir / i * (car.speed - this.player.speed) / orts.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+                    return dir / i * (car.speed - this.player.speed) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
                 }
 
                 for ( const otherCar of segment.cars )
                 {
-                    otherCarW = orts.Main.game.imageSystem.getImage(otherCar.sprite).width * orts.SettingGame.SPRITE_SCALE;
-                    if ((car.speed > otherCar.speed) && orts.MathUtil.overlap(car.offset, carW, otherCar.offset, otherCarW, 1.2)) {
+                    otherCarW = outrun.Main.game.imageSystem.getImage(otherCar.sprite).width * outrun.SettingGame.SPRITE_SCALE;
+                    if ((car.speed > otherCar.speed) && outrun.MathUtil.overlap(car.offset, carW, otherCar.offset, otherCarW, 1.2)) {
                         if (otherCar.offset > 0.5)
                             dir = -1;
                         else if (otherCar.offset < -0.5)
                             dir = 1;
                         else
                             dir = (car.offset > otherCar.offset) ? 1 : -1;
-                        return dir / i * (car.speed - otherCar.speed) / orts.SettingGame.MAX_SPEED;
+                        return dir / i * (car.speed - otherCar.speed) / outrun.SettingGame.MAX_SPEED;
                     }
                 }
             }
@@ -270,10 +270,10 @@
         private render() : void
         {
             const baseSegment   :any    = this.stage.findSegment(this.camera.getZ());
-            const basePercent   :number = orts.MathUtil.percentRemaining(this.camera.getZ(), orts.SettingGame.SEGMENT_LENGTH);
+            const basePercent   :number = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerSegment :any    = this.stage.findSegment(this.camera.getZ() + this.player.playerZ);
-            const playerPercent :number = orts.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, orts.SettingGame.SEGMENT_LENGTH);
-            const playerY       :number = orts.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
+            const playerPercent :number = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
+            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
 
             let   maxy          :number = this.canvasSystem.getHeight();
             let   x             :number = 0;
@@ -283,25 +283,25 @@
             this.canvasSystem.getCanvasContext().clearRect(0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight());
 
             // fill canvas with sky color
-            orts.Drawing2D.rect(this.canvasSystem.getCanvasContext(), 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.SettingColor.SKY);
+            outrun.Drawing2D.rect(this.canvasSystem.getCanvasContext(), 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingColor.SKY);
 
-            orts.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.ImageFile.SKY, this.background.skyOffset, this.resolution * orts.SettingGame.SKY_SPEED * playerY);
-            orts.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.ImageFile.HILLS, this.background.hillOffset, this.resolution * orts.SettingGame.HILL_SPEED * playerY);
-            orts.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.ImageFile.TREES, this.background.treeOffset, this.resolution * orts.SettingGame.TREE_SPEED * playerY);
+            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.SKY, this.background.skyOffset, this.resolution * outrun.SettingGame.SKY_SPEED * playerY);
+            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.HILLS, this.background.hillOffset, this.resolution * outrun.SettingGame.HILL_SPEED * playerY);
+            outrun.Drawing2D.background(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.TREES, this.background.treeOffset, this.resolution * outrun.SettingGame.TREE_SPEED * playerY);
 
             let   spriteScale :number = 0;
             let   spriteX     :number = 0;
             let   spriteY     :number = 0;
 
-            for ( let n:number = 0; n < orts.SettingGame.DRAW_DISTANCE; n++ )
+            for (let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
             {
                 const segment:any = this.stage.segments[(baseSegment.index + n) % this.stage.segments.length];
                 segment.looped = segment.index < baseSegment.index;
-                segment.fog = orts.MathUtil.exponentialFog(n / orts.SettingGame.DRAW_DISTANCE, orts.SettingGame.FOG_DENSITY);
+                segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxy;
 
-                orts.MathUtil.project(segment.p1, (this.player.playerX * orts.SettingGame.ROAD_WIDTH) - x, playerY + orts.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.SettingGame.ROAD_WIDTH);
-                orts.MathUtil.project(segment.p2, (this.player.playerX * orts.SettingGame.ROAD_WIDTH) - x - dx, playerY + orts.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), orts.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p1, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p2, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
 
                 x = x + dx;
                 dx = dx + segment.curve;
@@ -314,7 +314,7 @@
                     continue;
                 }
 
-                orts.Drawing2D.segment(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), orts.SettingGame.LANES,
+                outrun.Drawing2D.segment(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), outrun.SettingGame.LANES,
                     segment.p1.screen.x,
                     segment.p1.screen.y,
                     segment.p1.screen.w,
@@ -327,37 +327,37 @@
                 maxy = segment.p1.screen.y;
             }
 
-            for ( let n:number = ( orts.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
+            for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
                 const segment:any = this.stage.segments[(baseSegment.index + n) % this.stage.segments.length];
 
                 for ( const car of segment.cars )
                 {
-                    spriteScale = orts.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
-                    spriteX = orts.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * orts.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
-                    spriteY = orts.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
-                    orts.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, orts.SettingGame.ROAD_WIDTH, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+                    spriteScale = outrun.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
+                    spriteX = outrun.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * outrun.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
+                    spriteY = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
+                    outrun.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, outrun.SettingGame.ROAD_WIDTH, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
                 }
 
                 for ( const sprite of segment.sprites )
                 {
                     spriteScale = segment.p1.screen.scale;
-                    spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * orts.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
+                    spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
                     spriteY = segment.p1.screen.y;
-                    orts.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, orts.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, segment.clip);
+                    outrun.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, segment.clip);
                 }
 
                 if (segment === playerSegment) {
-                    orts.Drawing2D.player(
+                    outrun.Drawing2D.player(
                         this.canvasSystem.getCanvasContext(),
                         this.canvasSystem.getWidth(),
                         this.canvasSystem.getHeight(),
                         this.resolution,
-                        orts.SettingGame.ROAD_WIDTH,
-                        this.player.speed / orts.SettingGame.MAX_SPEED,
+                        outrun.SettingGame.ROAD_WIDTH,
+                        this.player.speed / outrun.SettingGame.MAX_SPEED,
                         this.camera.getDepth() / this.player.playerZ,
                         this.canvasSystem.getWidth() / 2,
-                        (this.canvasSystem.getHeight() / 2) - (this.camera.getDepth() / this.player.playerZ * orts.MathUtil.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * this.canvasSystem.getHeight() / 2),
+                        (this.canvasSystem.getHeight() / 2) - (this.camera.getDepth() / this.player.playerZ * outrun.MathUtil.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * this.canvasSystem.getHeight() / 2),
                         this.player.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ),
                         playerSegment.p2.world.y - playerSegment.p1.world.y
                     );

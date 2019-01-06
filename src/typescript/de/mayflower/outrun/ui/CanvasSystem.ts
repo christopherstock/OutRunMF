@@ -1,5 +1,5 @@
 
-    import * as orts from '..';
+    import * as outrun from '..';
 
     /** ****************************************************************************************************************
     *   Manages the canvas.
@@ -34,12 +34,12 @@
         public updateDimensions() : boolean
         {
             // get inner window dimensions
-            const canvasWidth:number  = orts.SettingGame.CANVAS_WIDTH;  // window.innerWidth;
-            const canvasHeight:number = orts.SettingGame.CANVAS_HEIGHT; // window.innerHeight;
+            const canvasWidth:number  = outrun.SettingGame.CANVAS_WIDTH;  // window.innerWidth;
+            const canvasHeight:number = outrun.SettingGame.CANVAS_HEIGHT; // window.innerHeight;
 /*
             // clip to minimum canvas dimensions
-            if ( canvasWidth  < orts.SettingGame.CANVAS_MIN_WIDTH  ) canvasWidth  = orts.SettingGame.CANVAS_MIN_WIDTH;
-            if ( canvasHeight < orts.SettingGame.CANVAS_MIN_HEIGHT ) canvasHeight = orts.SettingGame.CANVAS_MIN_HEIGHT;
+            if ( canvasWidth  < outrun.SettingGame.CANVAS_MIN_WIDTH  ) canvasWidth  = outrun.SettingGame.CANVAS_MIN_WIDTH;
+            if ( canvasHeight < outrun.SettingGame.CANVAS_MIN_HEIGHT ) canvasHeight = outrun.SettingGame.CANVAS_MIN_HEIGHT;
 */
             const dimensionsChanged:boolean =
             (
@@ -51,7 +51,7 @@
             this.canvas.width  = canvasWidth;
             this.canvas.height = canvasHeight;
 
-            orts.Debug.canvas.log
+            outrun.Debug.canvas.log
             (
                 'Updated canvas dimensions to [' + canvasWidth + 'x' + canvasHeight + '] '
                 + 'changed [' + dimensionsChanged + ']'

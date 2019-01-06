@@ -1,5 +1,5 @@
 
-    import * as orts from '..'
+    import * as outrun from '..'
 
     /** ****************************************************************************************************************
     *   The legacy game stage.
@@ -51,14 +51,14 @@
             this.resetSprites();
             this.resetCars();
 
-            this.segments[this.findSegment(playerZ).index + 2].color = orts.SettingColor.START;
-            this.segments[this.findSegment(playerZ).index + 3].color = orts.SettingColor.START;
-            for ( let n:number = 0; n < orts.SettingGame.RUMBLE_LENGTH; n++ )
+            this.segments[this.findSegment(playerZ).index + 2].color = outrun.SettingColor.START;
+            this.segments[this.findSegment(playerZ).index + 3].color = outrun.SettingColor.START;
+            for (let n:number = 0; n < outrun.SettingGame.RUMBLE_LENGTH; n++ )
             {
-                this.segments[ this.segments.length - 1 - n ].color = orts.SettingColor.FINISH;
+                this.segments[ this.segments.length - 1 - n ].color = outrun.SettingColor.FINISH;
             }
 
-            this.trackLength = this.segments.length * orts.SettingGame.SEGMENT_LENGTH;
+            this.trackLength = this.segments.length * outrun.SettingGame.SEGMENT_LENGTH;
         }
 
         /** ************************************************************************************************************
@@ -68,7 +68,7 @@
         ***************************************************************************************************************/
         public findSegment( z:number ) : any
         {
-            return this.segments[Math.floor(z / orts.SettingGame.SEGMENT_LENGTH) % this.segments.length];
+            return this.segments[Math.floor(z / outrun.SettingGame.SEGMENT_LENGTH) % this.segments.length];
         }
 
         /** ************************************************************************************************************
@@ -85,15 +85,15 @@
         private addRoad( enter:number, hold:number, leave:number, curve:number, y:number ) : void
         {
             const startY :number = this.lastY();
-            const endY   :number = startY + (orts.MathUtil.toInt( y ) * orts.SettingGame.SEGMENT_LENGTH);
+            const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
             const total  :number = ( enter + hold + leave );
 
             for ( let n:number = 0; n < enter; n++ )
             {
                 this.addSegment
                 (
-                    orts.MathUtil.easeIn(0, curve, n / enter),
-                    orts.MathUtil.easeInOut(startY, endY, n / total)
+                    outrun.MathUtil.easeIn(0, curve, n / enter),
+                    outrun.MathUtil.easeInOut(startY, endY, n / total)
                 );
             }
 
@@ -102,7 +102,7 @@
                 this.addSegment
                 (
                     curve,
-                    orts.MathUtil.easeInOut(startY, endY, (enter + n) / total)
+                    outrun.MathUtil.easeInOut(startY, endY, (enter + n) / total)
                 );
             }
 
@@ -110,8 +110,8 @@
             {
                 this.addSegment
                 (
-                    orts.MathUtil.easeInOut(curve, 0, n / leave),
-                    orts.MathUtil.easeInOut(startY, endY, (enter + hold + n) / total)
+                    outrun.MathUtil.easeInOut(curve, 0, n / leave),
+                    outrun.MathUtil.easeInOut(startY, endY, (enter + hold + n) / total)
                 );
             }
         }
@@ -198,7 +198,7 @@
         private addDownhillToEnd( num:number ) : void
         {
             num = num || 200;
-            this.addRoad(num, num, num, -this.ROAD.CURVE.EASY, -this.lastY() / orts.SettingGame.SEGMENT_LENGTH);
+            this.addRoad(num, num, num, -this.ROAD.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH);
         }
 
         /** ************************************************************************************************************
@@ -206,34 +206,34 @@
         ***************************************************************************************************************/
         private resetSprites() : void
         {
-            this.addSprite(20, orts.ImageFile.BILLBOARD07, -1);
-            this.addSprite(40, orts.ImageFile.BILLBOARD06, -1);
-            this.addSprite(60, orts.ImageFile.BILLBOARD08, -1);
-            this.addSprite(80, orts.ImageFile.BILLBOARD09, -1);
-            this.addSprite(100, orts.ImageFile.BILLBOARD01, -1);
-            this.addSprite(120, orts.ImageFile.BILLBOARD02, -1);
-            this.addSprite(140, orts.ImageFile.BILLBOARD03, -1);
-            this.addSprite(160, orts.ImageFile.BILLBOARD04, -1);
-            this.addSprite(180, orts.ImageFile.BILLBOARD05, -1);
+            this.addSprite(20, outrun.ImageFile.BILLBOARD07, -1);
+            this.addSprite(40, outrun.ImageFile.BILLBOARD06, -1);
+            this.addSprite(60, outrun.ImageFile.BILLBOARD08, -1);
+            this.addSprite(80, outrun.ImageFile.BILLBOARD09, -1);
+            this.addSprite(100, outrun.ImageFile.BILLBOARD01, -1);
+            this.addSprite(120, outrun.ImageFile.BILLBOARD02, -1);
+            this.addSprite(140, outrun.ImageFile.BILLBOARD03, -1);
+            this.addSprite(160, outrun.ImageFile.BILLBOARD04, -1);
+            this.addSprite(180, outrun.ImageFile.BILLBOARD05, -1);
 
-            this.addSprite(240, orts.ImageFile.BILLBOARD07, -1.2);
-            this.addSprite(240, orts.ImageFile.BILLBOARD06, 1.2);
-            this.addSprite(this.segments.length - 25, orts.ImageFile.BILLBOARD07, -1.2);
-            this.addSprite(this.segments.length - 25, orts.ImageFile.BILLBOARD06, 1.2);
+            this.addSprite(240, outrun.ImageFile.BILLBOARD07, -1.2);
+            this.addSprite(240, outrun.ImageFile.BILLBOARD06, 1.2);
+            this.addSprite(this.segments.length - 25, outrun.ImageFile.BILLBOARD07, -1.2);
+            this.addSprite(this.segments.length - 25, outrun.ImageFile.BILLBOARD06, 1.2);
 
             for ( let n:number = 10; n < 200; n += 4 + Math.floor(n / 100) ) {
-                this.addSprite(n, orts.ImageFile.PALM_TREE, 0.5 + Math.random() * 0.5);
-                this.addSprite(n, orts.ImageFile.PALM_TREE, 1 + Math.random() * 2);
+                this.addSprite(n, outrun.ImageFile.PALM_TREE, 0.5 + Math.random() * 0.5);
+                this.addSprite(n, outrun.ImageFile.PALM_TREE, 1 + Math.random() * 2);
             }
 
             for ( let n:number = 250; n < 1000; n += 5 ) {
-                this.addSprite(n, orts.ImageFile.COLUMN, 1.1);
-                this.addSprite(n + orts.MathUtil.randomInt(0, 5), orts.ImageFile.TREE1, -1 - (Math.random() * 2));
-                this.addSprite(n + orts.MathUtil.randomInt(0, 5), orts.ImageFile.TREE2, -1 - (Math.random() * 2));
+                this.addSprite(n, outrun.ImageFile.COLUMN, 1.1);
+                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE1, -1 - (Math.random() * 2));
+                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE2, -1 - (Math.random() * 2));
             }
 
             for ( let n:number = 200; n < this.segments.length; n += 3 ) {
-                this.addSprite(n, orts.MathUtil.randomChoice(orts.SettingGame.PLANTS), orts.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
+                this.addSprite(n, outrun.MathUtil.randomChoice(outrun.SettingGame.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
             }
 
             let side   :number = 0;
@@ -241,12 +241,12 @@
             let offset :number = 0;
 
             for ( let n:number = 1000; n < (this.segments.length - 50); n += 100 ) {
-                side = orts.MathUtil.randomChoice([1, -1]);
-                this.addSprite(n + orts.MathUtil.randomInt(0, 50), orts.MathUtil.randomChoice(orts.SettingGame.BILLBOARDS), -side);
+                side = outrun.MathUtil.randomChoice([1, -1]);
+                this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.SettingGame.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {
-                    sprite = orts.MathUtil.randomChoice(orts.SettingGame.PLANTS);
+                    sprite = outrun.MathUtil.randomChoice(outrun.SettingGame.PLANTS);
                     offset = side * (1.5 + Math.random());
-                    this.addSprite(n + orts.MathUtil.randomInt(0, 50), sprite, offset);
+                    this.addSprite(n + outrun.MathUtil.randomInt(0, 50), sprite, offset);
                 }
             }
         }
@@ -262,11 +262,11 @@
             let sprite  :any = null;
             let car     :any = null;
 
-            for ( let n:number = 0; n < orts.SettingGame.TOTAL_CARS; n++ ) {
-                const offset :number = Math.random() * orts.MathUtil.randomChoice([-0.8, 0.8]);
-                const z      :number = Math.floor(Math.random() * this.segments.length) * orts.SettingGame.SEGMENT_LENGTH;
-                sprite = orts.MathUtil.randomChoice(orts.SettingGame.CARS);
-                const speed  :number = orts.SettingGame.MAX_SPEED / 4 + Math.random() * orts.SettingGame.MAX_SPEED / (sprite === orts.ImageFile.SEMI ? 4 : 2);
+            for (let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ ) {
+                const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
+                const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
+                sprite = outrun.MathUtil.randomChoice(outrun.SettingGame.CARS);
+                const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.SEMI ? 4 : 2);
                 car = {offset: offset, z: z, sprite: sprite, speed: speed};
                 segment = this.findSegment(car.z);
                 segment.cars.push(car);
@@ -285,8 +285,8 @@
             const n:number = this.segments.length;
             this.segments.push({
                 index: n,
-                p1: {world: {y: this.lastY(), z: n * orts.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                p2: {world: {y: y, z: (n + 1) * orts.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                p1: {world: {y: this.lastY(), z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
                 curve: curve,
 
                 // TODO create class Sprite
@@ -295,9 +295,9 @@
                 cars: [],
                 color: Math.floor
                 (
-                    n / orts.SettingGame.RUMBLE_LENGTH) % 2
-                    ? orts.SettingColor.DARK
-                    : orts.SettingColor.LIGHT
+                    n / outrun.SettingGame.RUMBLE_LENGTH) % 2
+                    ? outrun.SettingColor.DARK
+                    : outrun.SettingColor.LIGHT
                 }
             );
         }

@@ -1,5 +1,5 @@
 
-    import * as orts from '..'
+    import * as outrun from '..'
 
     /** ****************************************************************************************************************
     *   The legacy camera.
@@ -13,7 +13,7 @@
 
         public constructor()
         {
-            this.depth = ( 1 / Math.tan( ( orts.SettingGame.FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
+            this.depth = ( 1 / Math.tan( ( outrun.SettingGame.FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
         }
 
         public getDepth() : number

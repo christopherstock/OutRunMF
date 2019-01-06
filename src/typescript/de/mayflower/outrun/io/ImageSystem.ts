@@ -1,5 +1,5 @@
 
-    import * as orts from '..';
+    import * as outrun from '..';
 
     /** ****************************************************************************************************************
     *   Loads and manages all desired images.
@@ -73,11 +73,11 @@
         private onImageLoaded=() :void =>
         {
             ++this.loadedCount;
-            orts.Debug.image.log( 'loaded imgage [' + this.loadedCount + '] / [' + this.fileNames.length + ']' );
+            outrun.Debug.image.log( 'loaded imgage [' + this.loadedCount + '] / [' + this.fileNames.length + ']' );
 
             if ( this.loadedCount === this.fileNames.length )
             {
-                orts.Debug.image.log( 'All images loaded' );
+                outrun.Debug.image.log( 'All images loaded' );
 
                 // invoke callback function when all images are loaded
                 this.callback();
