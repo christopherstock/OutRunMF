@@ -43,11 +43,11 @@
         protected createRoad( playerZ:number ) : void
         {
             this.addStraight(outrun.StageFactory.ROAD.LENGTH.SHORT);
-            this.addLowRollingHills(0, 0);
+            this.addLowRollingHills( outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
             this.addSCurves();
             this.addCurve(outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.LOW);
             this.addBumps();
-            this.addLowRollingHills(0, 0);
+            this.addLowRollingHills( outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
             this.addCurve(outrun.StageFactory.ROAD.LENGTH.LONG * 2, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.MEDIUM);
             this.addStraight(0);
             this.addHill(outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.HILL.HIGH);
@@ -59,7 +59,7 @@
             this.addHill(outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.HILL.MEDIUM);
             this.addStraight(0);
             this.addSCurves();
-            this.addDownhillToEnd(0);
+            this.addDownhillToEnd(200);
         }
 
         protected setStartAndFinish( playerZ:number ) : void
@@ -166,14 +166,12 @@
         ***************************************************************************************************************/
         private addLowRollingHills( num:number, height:number ) : void
         {
-            num = num || outrun.StageFactory.ROAD.LENGTH.SHORT;
-            height = height || outrun.StageFactory.ROAD.HILL.LOW;
-            this.addRoad(num, num, num, 0, height / 2);
-            this.addRoad(num, num, num, 0, -height);
-            this.addRoad(num, num, num, outrun.StageFactory.ROAD.CURVE.EASY, height);
-            this.addRoad(num, num, num, 0, 0);
-            this.addRoad(num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, height / 2);
-            this.addRoad(num, num, num, 0, 0);
+            this.addRoad( num, num, num, 0, height / 2 );
+            this.addRoad( num, num, num, 0, -height );
+            this.addRoad( num, num, num, outrun.StageFactory.ROAD.CURVE.EASY, height );
+            this.addRoad( num, num, num, 0, 0 );
+            this.addRoad( num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, height / 2 );
+            this.addRoad( num, num, num, 0, 0 );
         }
 
         /** ************************************************************************************************************
@@ -194,14 +192,14 @@
         ***************************************************************************************************************/
         private addBumps() : void
         {
-            this.addRoad(10, 10, 10, 0, 5);
-            this.addRoad(10, 10, 10, 0, -2);
-            this.addRoad(10, 10, 10, 0, -5);
-            this.addRoad(10, 10, 10, 0, 8);
-            this.addRoad(10, 10, 10, 0, 5);
-            this.addRoad(10, 10, 10, 0, -7);
-            this.addRoad(10, 10, 10, 0, 5);
-            this.addRoad(10, 10, 10, 0, -2);
+            this.addRoad( 10, 10, 10, 0, 5  );
+            this.addRoad( 10, 10, 10, 0, -2 );
+            this.addRoad( 10, 10, 10, 0, -5 );
+            this.addRoad( 10, 10, 10, 0, 8  );
+            this.addRoad( 10, 10, 10, 0, 5  );
+            this.addRoad( 10, 10, 10, 0, -7 );
+            this.addRoad( 10, 10, 10, 0, 5  );
+            this.addRoad( 10, 10, 10, 0, -2 );
         }
 
         /** ************************************************************************************************************
@@ -209,8 +207,7 @@
         ***************************************************************************************************************/
         private addDownhillToEnd( num:number ) : void
         {
-            num = num || 200;
-            this.addRoad(num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH);
+            this.addRoad( num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH );
         }
 
         /** ************************************************************************************************************
@@ -297,21 +294,24 @@
         private addSegment( curve:any, y:number ) : void
         {
             const n:number = this.segments.length;
-            this.segments.push({
-                index: n,
-                p1: {world: {y: this.lastY(), z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                curve: curve,
 
-                // TODO create class Sprite
+            // TODO introcude class Segment
+            this.segments.push(
+                {
+                    index: n,
+                    p1: {world: {y: this.lastY(), z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                    p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                    curve: curve,
 
-                sprites: [],
-                cars: [],
-                color: Math.floor
-                (
-                    n / outrun.SettingGame.RUMBLE_LENGTH) % 2
-                    ? outrun.SettingColor.DARK
-                    : outrun.SettingColor.LIGHT
+                    // TODO create class Sprite
+
+                    sprites: [],
+                    cars: [],
+                    color: (
+                        Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
+                        ? outrun.SettingColor.DARK
+                        : outrun.SettingColor.LIGHT
+                    )
                 }
             );
         }

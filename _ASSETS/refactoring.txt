@@ -30,3 +30,5 @@ Tools that support:
 Construction refactorings:
 ==========================
 - Separate stage: construction scheme and data to abstract class Stage + concrete subclass StageLegacy
+- Added new classes ("Segment")
+- Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
