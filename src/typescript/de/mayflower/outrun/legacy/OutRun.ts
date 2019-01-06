@@ -52,13 +52,15 @@
             // create the camera
             this.camera = new outrun.Camera();
 
+            // specify player's initial Z position TODO suspicious dependency
             this.player.playerZ = ( outrun.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
 
+            // specify canvas resolution according to its current height
             this.resolution = this.canvasSystem.getHeight() / 480;
 
             // rebuild the stage
             this.stage = new outrun.Stage();
-            this.stage.resetRoad( this.player.playerZ );
+            this.stage.init( this.player.playerZ );
 
             // create the background
             this.background = new outrun.Background();

@@ -1,3 +1,4 @@
+
 Introduction:
 =============
 s. "Martin Fowler" - Refactoring has never been more important!
@@ -25,3 +26,7 @@ Tools that support:
 - Lint
 - TS-Compiler
 - IntelliJ ( "Code Inspection" )
+
+Construction refactorings:
+==========================
+- Separate stage: construction scheme and data to abstract class Stage + concrete subclass StageLegacy
