@@ -35,6 +35,16 @@
         }
 
         /** ************************************************************************************************************
+        *   Finds the segment with the specified index.
+        *
+        *   TODO create class 'segment' !
+        ***************************************************************************************************************/
+        public findSegment( z:number ) : any
+        {
+            return this.segments[Math.floor(z / outrun.SettingGame.SEGMENT_LENGTH) % this.segments.length];
+        }
+
+        /** ************************************************************************************************************
         *   Creates the road of this stage.
         *
         *   @param playerZ The initial z position of the player.
@@ -42,24 +52,24 @@
         // tslint:disable:max-line-length
         protected createRoad( playerZ:number ) : void
         {
-            this.addStraight(outrun.StageFactory.ROAD.LENGTH.SHORT);
-            this.addLowRollingHills( outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
-            this.addSCurves();
-            this.addCurve(outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.LOW);
-            this.addBumps();
-            this.addLowRollingHills( outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
-            this.addCurve(outrun.StageFactory.ROAD.LENGTH.LONG * 2, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.MEDIUM);
-            this.addStraight(0);
-            this.addHill(outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.HILL.HIGH);
-            this.addSCurves();
-            this.addCurve(outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.NONE);
-            this.addHill(outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.HILL.HIGH);
-            this.addCurve(outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.LOW);
-            this.addBumps();
-            this.addHill(outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.HILL.MEDIUM);
-            this.addStraight(0);
-            this.addSCurves();
-            this.addDownhillToEnd(200);
+            Stage.addStraight( this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT );
+            Stage.addLowRollingHills( this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
+            Stage.addSCurves( this.segments );
+            Stage.addCurve( this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.LOW);
+            Stage.addBumps( this.segments );
+            Stage.addLowRollingHills( this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
+            Stage.addCurve( this.segments, outrun.StageFactory.ROAD.LENGTH.LONG * 2, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.MEDIUM);
+            Stage.addStraight( this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM );
+            Stage.addHill( this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.HILL.HIGH);
+            Stage.addSCurves( this.segments );
+            Stage.addCurve( this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.NONE);
+            Stage.addHill( this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.HILL.HIGH);
+            Stage.addCurve( this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.LOW);
+            Stage.addBumps( this.segments );
+            Stage.addHill( this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.HILL.MEDIUM);
+            Stage.addStraight( this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM );
+            Stage.addSCurves( this.segments );
+            Stage.addDownhillToEnd( this.segments, outrun.StageFactory.ROAD.LENGTH.DOUBLE_LONG );
         }
 
         protected setStartAndFinish( playerZ:number ) : void
@@ -74,17 +84,7 @@
         }
 
         /** ************************************************************************************************************
-        *   Finds the segment with the specified index.
-        *
-        *   TODO create class 'segment' !
-        ***************************************************************************************************************/
-        public findSegment( z:number ) : any
-        {
-            return this.segments[Math.floor(z / outrun.SettingGame.SEGMENT_LENGTH) % this.segments.length];
-        }
-
-        /** ************************************************************************************************************
-        *
+        *   TODO to class segment!
         ***************************************************************************************************************/
         private addSprite( n:number, source:string, offset:number ) : void
         {
@@ -93,17 +93,101 @@
 
         /** ************************************************************************************************************
         *
+        *   @param num The road length?
+        *
+        *   TODO to stage factory.
         ***************************************************************************************************************/
-        private addRoad( enter:number, hold:number, leave:number, curve:number, y:number ) : void
+        private static addStraight( segments:any[], num:number ) : void
         {
-            const startY :number = this.lastY();
+            Stage.addRoad( segments, num, num, num, 0, 0 );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addHill( segments:any[], num:number, height:number ) : void
+        {
+            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
+            height = height || outrun.StageFactory.ROAD.HILL.MEDIUM;
+
+            Stage.addRoad( segments, num, num, num, 0, height );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addCurve( segments:any[], num:number, curve:number, height:number ) : void
+        {
+            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
+            curve = curve || outrun.StageFactory.ROAD.CURVE.MEDIUM;
+            height = height || outrun.StageFactory.ROAD.HILL.NONE;
+
+            Stage.addRoad( segments, num, num, num, curve, height );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addLowRollingHills( segments:any[], num:number, height:number ) : void
+        {
+            Stage.addRoad( segments, num, num, num, 0, height / 2 );
+            Stage.addRoad( segments, num, num, num, 0, -height );
+            Stage.addRoad( segments, num, num, num, outrun.StageFactory.ROAD.CURVE.EASY, height );
+            Stage.addRoad( segments, num, num, num, 0, 0 );
+            Stage.addRoad( segments, num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, height / 2 );
+            Stage.addRoad( segments, num, num, num, 0, 0 );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        // tslint:disable:max-line-length
+        private static addSCurves( segments:any[] ) : void
+        {
+            Stage.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.NONE    );
+            Stage.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM,  outrun.StageFactory.ROAD.HILL.MEDIUM  );
+            Stage.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.EASY,    -outrun.StageFactory.ROAD.HILL.LOW    );
+            Stage.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.MEDIUM  );
+            Stage.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.MEDIUM );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addBumps( segments:any[] ) : void
+        {
+            Stage.addRoad( segments, 10, 10, 10, 0, 5  );
+            Stage.addRoad( segments, 10, 10, 10, 0, -2 );
+            Stage.addRoad( segments, 10, 10, 10, 0, -5 );
+            Stage.addRoad( segments, 10, 10, 10, 0, 8  );
+            Stage.addRoad( segments, 10, 10, 10, 0, 5  );
+            Stage.addRoad( segments, 10, 10, 10, 0, -7 );
+            Stage.addRoad( segments, 10, 10, 10, 0, 5  );
+            Stage.addRoad( segments, 10, 10, 10, 0, -2 );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addDownhillToEnd( segments:any[], num:number ) : void
+        {
+            Stage.addRoad( segments, num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, -Stage.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
+        }
+
+        /** ************************************************************************************************************
+        *
+        ***************************************************************************************************************/
+        private static addRoad( segments:any[], enter:number, hold:number, leave:number, curve:number, y:number ) : void
+        {
+            const startY :number = Stage.lastY( segments );
             const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
             const total  :number = ( enter + hold + leave );
 
             for ( let n:number = 0; n < enter; n++ )
             {
-                this.addSegment
+                Stage.addSegment
                 (
+                    segments,
                     outrun.MathUtil.easeIn(0, curve, n / enter),
                     outrun.MathUtil.easeInOut(startY, endY, n / total)
                 );
@@ -111,8 +195,9 @@
 
             for ( let n:number = 0; n < hold; n++ )
             {
-                this.addSegment
+                Stage.addSegment
                 (
+                    segments,
                     curve,
                     outrun.MathUtil.easeInOut(startY, endY, (enter + n) / total)
                 );
@@ -120,8 +205,9 @@
 
             for ( let n:number = 0; n < leave; n++ )
             {
-                this.addSegment
+                Stage.addSegment
                 (
+                    segments,
                     outrun.MathUtil.easeInOut(curve, 0, n / leave),
                     outrun.MathUtil.easeInOut(startY, endY, (enter + hold + n) / total)
                 );
@@ -129,85 +215,38 @@
         }
 
         /** ************************************************************************************************************
+        *   Adds a road segment.
         *
-        *   @param num The road length?
+        *   @param curve Specifies if this segment is a curve?
+        *   @param y     The Y location of this segment.
         *
-        *   TODO to stage factory.
+        *   TODO to factory!
         ***************************************************************************************************************/
-        private addStraight( num:number ) : void
+        private static addSegment( segments:any[], curve:any, y:number ) : void
         {
-            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
-            this.addRoad(num, num, num, 0, 0);
-        }
+            const n:number = segments.length;
+            const lastY:number = Stage.lastY( segments );
 
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private addHill( num:number, height:number ) : void
-        {
-            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
-            height = height || outrun.StageFactory.ROAD.HILL.MEDIUM;
-            this.addRoad(num, num, num, 0, height);
-        }
+            // TODO introcude class Segment
+            segments.push
+            (
+                {
+                    index: n,
+                    p1: {world: {y: lastY, z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                    p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+                    curve: curve,
 
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private addCurve( num:number, curve:number, height:number ) : void
-        {
-            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
-            curve = curve || outrun.StageFactory.ROAD.CURVE.MEDIUM;
-            height = height || outrun.StageFactory.ROAD.HILL.NONE;
-            this.addRoad(num, num, num, curve, height);
-        }
+                    // TODO create class Sprite
 
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private addLowRollingHills( num:number, height:number ) : void
-        {
-            this.addRoad( num, num, num, 0, height / 2 );
-            this.addRoad( num, num, num, 0, -height );
-            this.addRoad( num, num, num, outrun.StageFactory.ROAD.CURVE.EASY, height );
-            this.addRoad( num, num, num, 0, 0 );
-            this.addRoad( num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, height / 2 );
-            this.addRoad( num, num, num, 0, 0 );
-        }
-
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        // tslint:disable:max-line-length
-        private addSCurves() : void
-        {
-            this.addRoad( outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.NONE    );
-            this.addRoad( outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM,  outrun.StageFactory.ROAD.HILL.MEDIUM  );
-            this.addRoad( outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.EASY,    -outrun.StageFactory.ROAD.HILL.LOW    );
-            this.addRoad( outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.MEDIUM  );
-            this.addRoad( outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.MEDIUM );
-        }
-
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private addBumps() : void
-        {
-            this.addRoad( 10, 10, 10, 0, 5  );
-            this.addRoad( 10, 10, 10, 0, -2 );
-            this.addRoad( 10, 10, 10, 0, -5 );
-            this.addRoad( 10, 10, 10, 0, 8  );
-            this.addRoad( 10, 10, 10, 0, 5  );
-            this.addRoad( 10, 10, 10, 0, -7 );
-            this.addRoad( 10, 10, 10, 0, 5  );
-            this.addRoad( 10, 10, 10, 0, -2 );
-        }
-
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private addDownhillToEnd( num:number ) : void
-        {
-            this.addRoad( num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH );
+                    sprites: [],
+                    cars: [],
+                    color: (
+                        Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
+                        ? outrun.SettingColor.DARK
+                        : outrun.SettingColor.LIGHT
+                    )
+                }
+            );
         }
 
         /** ************************************************************************************************************
@@ -284,43 +323,10 @@
         }
 
         /** ************************************************************************************************************
-        *   Adds a road segment.
-        *
-        *   @param curve Specifies if this segment is a curve?
-        *   @param y     The Y location of this segment.
-        *
-        *   TODO to factory!
-        ***************************************************************************************************************/
-        private addSegment( curve:any, y:number ) : void
-        {
-            const n:number = this.segments.length;
-
-            // TODO introcude class Segment
-            this.segments.push(
-                {
-                    index: n,
-                    p1: {world: {y: this.lastY(), z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                    p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                    curve: curve,
-
-                    // TODO create class Sprite
-
-                    sprites: [],
-                    cars: [],
-                    color: (
-                        Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                        ? outrun.SettingColor.DARK
-                        : outrun.SettingColor.LIGHT
-                    )
-                }
-            );
-        }
-
-        /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        private lastY() : number
+        private static lastY( segments:any[] ) : number
         {
-            return (this.segments.length === 0) ? 0 : this.segments[this.segments.length - 1].p2.world.y;
+            return ( segments.length === 0 ) ? 0 : segments[ segments.length - 1 ].p2.world.y;
         }
     }
