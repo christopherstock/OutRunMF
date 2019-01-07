@@ -7,11 +7,11 @@
     export abstract class Stage
     {
         /** array of road segments */
-        public                  segments            :any[]                      = [];
+        public                  segments            :outrun.Segment[]           = [];
         /** array of cars on the road */
         public                  cars                :any[]                      = [];
         /** z length of entire track (computed) */
-        public                  trackLength         :number                     = 0;
+        public                  stageLength         :number                     = 0;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
@@ -37,18 +37,18 @@
             this.resetSprites();
             this.resetCars();
 
-            // save full stage length
-            this.trackLength = this.segments.length * outrun.SettingGame.SEGMENT_LENGTH;
+            // assign full stage length
+            this.stageLength = this.segments.length * outrun.SettingGame.SEGMENT_LENGTH;
         }
 
         /** ************************************************************************************************************
-        *   Finds the segment with the specified index.
+        *   Finds the segment that contains the current Z position.
         *
-        *   TODO create class 'segment' !
+        *   TODO to class 'segment' !
         ***************************************************************************************************************/
         public findSegment( z:number ) : any
         {
-            return this.segments[Math.floor(z / outrun.SettingGame.SEGMENT_LENGTH) % this.segments.length];
+            return this.segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % this.segments.length ];
         }
 
         /** ************************************************************************************************************
@@ -81,7 +81,7 @@
         {
             if ( this.segments.length > n )
             {
-                this.segments[n].sprites.push({source: source, offset: offset});
+                this.segments[ n ].sprites.push({source: source, offset: offset});
             }
         }
 

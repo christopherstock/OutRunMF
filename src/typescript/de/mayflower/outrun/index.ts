@@ -8,6 +8,8 @@
     export * from './base/Main';
     export * from './base/Version';
 
+    export * from './game/engine/Segment';
+
     export * from './game/stage/Road';
     export * from './game/stage/Stage';
     export * from './game/stage/StageFactory';

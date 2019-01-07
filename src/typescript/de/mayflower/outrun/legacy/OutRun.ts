@@ -127,7 +127,7 @@
 
             this.updateCars( dt, playerSegment, playerW );
 
-            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stage.trackLength) );
+            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stage.stageLength) );
 
             // check pressed keys
             this.keyLeft = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_LEFT);
@@ -163,7 +163,7 @@
 
                     if (outrun.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
                         this.player.speed = outrun.SettingGame.MAX_SPEED / 5;
-                        this.camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.player.playerZ, this.stage.trackLength) ); // stop in front of sprite (at front of segment)
+                        this.camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.player.playerZ, this.stage.stageLength) ); // stop in front of sprite (at front of segment)
                         break;
                     }
                 }
@@ -175,7 +175,7 @@
                 if (this.player.speed > car.speed) {
                     if (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 0.8)) {
                         this.player.speed = car.speed * (car.speed / this.player.speed);
-                        this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stage.trackLength ) );
+                        this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stage.stageLength ) );
                         break;
                     }
                 }
@@ -203,7 +203,7 @@
                 const oldSegment:any = this.stage.findSegment(car.z);
 
                 car.offset = car.offset + this.updateCarOffset(car, oldSegment, playerSegment, playerW);
-                car.z = outrun.MathUtil.increase(car.z, dt * car.speed, this.stage.trackLength);
+                car.z = outrun.MathUtil.increase(car.z, dt * car.speed, this.stage.stageLength);
                 car.percent = outrun.MathUtil.percentRemaining(car.z, outrun.SettingGame.SEGMENT_LENGTH); // useful for interpolation during rendering phase
 
                 const newSegment:any = this.stage.findSegment(car.z);
@@ -306,8 +306,8 @@
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxy;
 
-                outrun.MathUtil.project(segment.p1, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
-                outrun.MathUtil.project(segment.p2, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.trackLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p1, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.stageLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p2, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stage.stageLength : 0), this.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
 
                 x = x + dx;
                 dx = dx + segment.curve;

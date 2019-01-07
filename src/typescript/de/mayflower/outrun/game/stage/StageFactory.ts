@@ -12,7 +12,7 @@
         *   @param segments The array of existent segments where this segment is appended.
         *   @param num      The desired segment length.
         ***************************************************************************************************************/
-        public static addStraight( segments:any[], num:number ) : void
+        public static addStraight( segments:outrun.Segment[], num:number ) : void
         {
             StageFactory.addRoad( segments, num, num, num, 0, 0 );
         }
@@ -20,7 +20,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public static addHill( segments:any[], num:number, height:number ) : void
+        public static addHill( segments:outrun.Segment[], num:number, height:number ) : void
         {
             StageFactory.addRoad( segments, num, num, num, 0, height );
         }
@@ -28,7 +28,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public static addCurve( segments:any[], num:number, curve:number, height:number ) : void
+        public static addCurve( segments:outrun.Segment[], num:number, curve:number, height:number ) : void
         {
             StageFactory.addRoad( segments, num, num, num, curve, height );
         }
@@ -36,7 +36,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public static addLowRollingHills( segments:any[], num:number, height:number ) : void
+        public static addLowRollingHills( segments:outrun.Segment[], num:number, height:number ) : void
         {
             StageFactory.addRoad( segments, num, num, num, 0, height / 2 );
             StageFactory.addRoad( segments, num, num, num, 0, -height );
@@ -50,7 +50,7 @@
         *
         ***************************************************************************************************************/
         // tslint:disable:max-line-length
-        public static addSCurves( segments:any[] ) : void
+        public static addSCurves( segments:outrun.Segment[] ) : void
         {
             StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE    );
             StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM  );
@@ -62,7 +62,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public static addBumps( segments:any[] ) : void
+        public static addBumps( segments:outrun.Segment[] ) : void
         {
             StageFactory.addRoad( segments, 10, 10, 10, 0, 5  );
             StageFactory.addRoad( segments, 10, 10, 10, 0, -2 );
@@ -77,7 +77,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public static addDownhillToEnd( segments:any[], num:number ) : void
+        public static addDownhillToEnd( segments:outrun.Segment[], num:number ) : void
         {
             StageFactory.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, -StageFactory.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
         }
@@ -85,7 +85,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        private static addRoad( segments:any[], enter:number, hold:number, leave:number, curve:number, y:number ) : void
+        private static addRoad( segments:outrun.Segment[], enter:number, hold:number, leave:number, curve:number, y:number ) : void
         {
             const startY :number = StageFactory.lastY( segments );
             const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
@@ -129,7 +129,7 @@
         *   @param curve    Specifies if this segment is a curve?
         *   @param y        The Y location of this segment.
         ***************************************************************************************************************/
-        private static addSegment( segments:any[], curve:any, y:number ) : void
+        private static addSegment( segments:outrun.Segment[], curve:any, y:number ) : void
         {
             const n:number = segments.length;
             const lastY:number = StageFactory.lastY( segments );
@@ -139,14 +139,9 @@
             (
                 {
                     index: n,
-                    p1: {world: {y: lastY, z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-                    p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
-
-                    // TODO Add class curve
+                    p1: { world: { y: lastY, z:  n      * outrun.SettingGame.SEGMENT_LENGTH }, camera: {}, screen: {} },
+                    p2: { world: { y: y,     z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH }, camera: {}, screen: {} },
                     curve: curve,
-
-                    // TODO create class Sprite
-
                     sprites: [],
                     cars: [],
                     color: (
@@ -161,7 +156,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        private static lastY( segments:any[] ) : number
+        private static lastY( segments:outrun.Segment[] ) : number
         {
             return ( segments.length === 0 ? 0 : segments[ segments.length - 1 ].p2.world.y );
         }

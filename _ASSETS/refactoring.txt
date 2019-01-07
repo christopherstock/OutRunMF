@@ -27,8 +27,9 @@ Tools that support:
 - TS-Compiler
 - IntelliJ ( "Code Inspection" )
 
-Construction refactorings:
+Constructive refactorings:
 ==========================
 - Separate stage: construction scheme and data to abstract class Stage + concrete subclass StageLegacy
 - Added new classes ("Segment")
 - Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
+- Introduce empty class without members that extends any.
