@@ -1,4 +1,6 @@
 
+    import * as outrun from '../..'
+
     /** ****************************************************************************************************************
     *   Represents one segment of the road.
     *
@@ -19,7 +21,7 @@
         // TODO create class Sprite
         public                          sprites         :any[]          = null;
 
-        public                          cars            :any[]          = null;
+        public                          cars            :outrun.Car[]   = null;
 
         public                          color           :any            = null;
 

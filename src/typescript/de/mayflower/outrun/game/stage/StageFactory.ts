@@ -96,8 +96,8 @@
                 StageFactory.addSegment
                 (
                     segments,
-                    outrun.MathUtil.easeIn(0, curve, n / enter),
-                    outrun.MathUtil.easeInOut(startY, endY, n / total)
+                    outrun.MathUtil.easeIn( 0, curve, n / enter ),
+                    outrun.MathUtil.easeInOut( startY, endY, n / total )
                 );
             }
 
@@ -107,7 +107,7 @@
                 (
                     segments,
                     curve,
-                    outrun.MathUtil.easeInOut(startY, endY, (enter + n) / total)
+                    outrun.MathUtil.easeInOut( startY, endY, ( enter + n ) / total )
                 );
             }
 
@@ -116,8 +116,8 @@
                 StageFactory.addSegment
                 (
                     segments,
-                    outrun.MathUtil.easeInOut(curve, 0, n / leave),
-                    outrun.MathUtil.easeInOut(startY, endY, (enter + hold + n) / total)
+                    outrun.MathUtil.easeInOut( curve, 0, n / leave ),
+                    outrun.MathUtil.easeInOut( startY, endY, ( enter + hold + n ) / total )
                 );
             }
         }

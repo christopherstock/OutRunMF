@@ -9,7 +9,7 @@
         /** array of road segments */
         public                  segments            :outrun.Segment[]           = [];
         /** array of cars on the road */
-        public                  cars                :any[]                      = [];
+        public                  cars                :outrun.Car[]               = [];
         /** z length of entire track (computed) */
         public                  stageLength         :number                     = 0;
 
@@ -142,18 +142,20 @@
         {
             this.cars = [];
 
-            let segment :any = null;
-            let sprite  :any = null;
-            let car     :any = null;
+            let segment :outrun.Segment = null;
+            let sprite  :any            = null;
+            let car     :outrun.Car     = null;
 
             for ( let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ )
             {
                 const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
+
                 const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
                 sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.CARS);
+
                 const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.TRUCK2 ? 4 : 2);
-                car = {offset: offset, z: z, sprite: sprite, speed: speed};
-                segment = this.findSegment(car.z);
+                car = { offset: offset, z: z, sprite: sprite, speed: speed, percent: 0 };
+                segment = this.findSegment( car.z );
                 segment.cars.push(car);
                 this.cars.push(car);
             }

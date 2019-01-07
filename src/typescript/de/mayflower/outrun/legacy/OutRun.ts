@@ -113,11 +113,11 @@
         ***************************************************************************************************************/
         private update( dt:number ) : void
         {
-            let   n             :number  = 0;
-            let   car           :any     = 0; // TODO create class Car
-            let   carW          :number  = 0;
-            let   sprite        :any     = null;
-            let   spriteW       :number  = 0;
+            let   n             :number     = 0;
+            let   car           :outrun.Car = null;
+            let   carW          :number     = 0;
+            let   sprite        :any        = null;
+            let   spriteW       :number     = 0;
 
             const playerSegment :any     = this.stage.findSegment(this.camera.getZ() + this.player.playerZ);
             const playerW       :number  = 80 * outrun.SettingGame.SPRITE_SCALE;
