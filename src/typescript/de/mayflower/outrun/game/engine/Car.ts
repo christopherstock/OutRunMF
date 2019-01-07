@@ -17,5 +17,7 @@
         public                          speed                           :number                     = 0;
 
         // TODO add class Sprite!
-        public                          sprite                          :any                        = 0;
+
+        /** The image ID of this car's sprite. TODO to class ImageID? */
+        public                          sprite                          :string                     = null;
     }

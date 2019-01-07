@@ -10,6 +10,7 @@
 
     export * from './game/engine/Car';
     export * from './game/engine/Segment';
+    export * from './game/engine/Sprite';
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';

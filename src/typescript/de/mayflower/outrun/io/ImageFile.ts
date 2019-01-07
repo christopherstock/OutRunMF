@@ -3,6 +3,9 @@
 
     /** ****************************************************************************************************************
     *   Specifies all different images used in the game.
+    *
+    *   TODO to enum? variable for receiving all enum members??
+    *   s. https://stackoverflow.com/questions/39372804/typescript-how-to-loop-through-enum-values-for-display-in-radio-buttons
     *******************************************************************************************************************/
     // tslint:disable:max-line-length
     export class ImageFile

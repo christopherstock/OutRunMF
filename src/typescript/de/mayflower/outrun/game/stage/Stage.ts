@@ -7,17 +7,23 @@
     export abstract class Stage
     {
         /** array of road segments */
-        public                  segments            :outrun.Segment[]           = [];
+        public                      segments            :outrun.Segment[]           = [];
         /** array of cars on the road */
-        public                  cars                :outrun.Car[]               = [];
+        public                      cars                :outrun.Car[]               = [];
         /** z length of entire track (computed) */
-        public                  stageLength         :number                     = 0;
+        public                      stageLength         :number                     = 0;
+
+        /** The number of cars to create in this stage. */
+        private         readonly    carCount            :number                     = 0;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
+        *
+        *   @param carCount The number of cars to create in this stage.
         ***************************************************************************************************************/
-        protected constructor()
+        protected constructor( carCount:number )
         {
+            this.carCount = carCount;
         }
 
         /** ************************************************************************************************************
@@ -34,8 +40,8 @@
             this.setStartAndFinish( playerZ );
 
             // add sprites and cars
-            this.resetSprites();
-            this.resetCars();
+            this.createSprites();
+            this.createCars();
 
             // assign full stage length
             this.stageLength = this.segments.length * outrun.SettingGame.SEGMENT_LENGTH;
@@ -59,7 +65,14 @@
         protected abstract createRoad( playerZ:number ) : void;
 
         /** ************************************************************************************************************
+        *   Creates all decoration sprites for this stage.
+        ***************************************************************************************************************/
+        protected abstract createSprites() : void;
+
+        /** ************************************************************************************************************
         *   Sets the start and the finish line.
+        *
+        *   TODO Move to LevelPreset?
         *
         *   @param playerZ The initial z position of the player.
         ***************************************************************************************************************/
@@ -77,85 +90,33 @@
         /** ************************************************************************************************************
         *   TODO to class segment!
         ***************************************************************************************************************/
-        private addSprite( n:number, source:string, offset:number ) : void
+        protected addSprite( n:number, source:string, offset:number ) : void
         {
             if ( this.segments.length > n )
             {
-                this.segments[ n ].sprites.push({source: source, offset: offset});
-            }
-        }
-
-        /** ************************************************************************************************************
-        *
-        ***************************************************************************************************************/
-        private resetSprites() : void
-        {
-            this.addSprite( 20,  outrun.ImageFile.BILLBOARD07, -1 );
-            this.addSprite( 40,  outrun.ImageFile.BILLBOARD06, -1 );
-            this.addSprite( 60,  outrun.ImageFile.BILLBOARD08, -1 );
-            this.addSprite( 80,  outrun.ImageFile.BILLBOARD09, -1 );
-            this.addSprite( 100, outrun.ImageFile.BILLBOARD01, -1 );
-            this.addSprite( 120, outrun.ImageFile.BILLBOARD02, -1 );
-            this.addSprite( 140, outrun.ImageFile.BILLBOARD03, -1 );
-            this.addSprite( 160, outrun.ImageFile.BILLBOARD04, -1 );
-            this.addSprite( 180, outrun.ImageFile.BILLBOARD05, -1 );
-
-            this.addSprite( 240, outrun.ImageFile.BILLBOARD07, -1.2 );
-            this.addSprite( 240, outrun.ImageFile.BILLBOARD06, 1.2 );
-            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD07, -1.2 );
-            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD06, 1.2  );
-
-            for ( let n:number = 10; n < 200; n += 4 + Math.floor(n / 100) ) {
-                this.addSprite(n, outrun.ImageFile.PALM_TREE, 0.5 + Math.random() * 0.5);
-                this.addSprite(n, outrun.ImageFile.PALM_TREE, 1 + Math.random() * 2);
-            }
-
-            for ( let n:number = 250; n < 1000; n += 5 ) {
-                this.addSprite(n, outrun.ImageFile.COLUMN, 1.1);
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE1, -1 - (Math.random() * 2));
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE2, -1 - (Math.random() * 2));
-            }
-
-            for ( let n:number = 200; n < this.segments.length; n += 3 ) {
-                this.addSprite(n, outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
-            }
-
-            let side   :number = 0;
-            let sprite :any    = null;
-            let offset :number = 0;
-
-            for ( let n:number = 1000; n < (this.segments.length - 50); n += 100 ) {
-                side = outrun.MathUtil.randomChoice([1, -1]);
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
-                for ( let i:number = 0; i < 20; i++ ) {
-                    sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
-                    offset = side * (1.5 + Math.random());
-                    this.addSprite(n + outrun.MathUtil.randomInt(0, 50), sprite, offset);
-                }
+                this.segments[ n ].sprites.push( { source: source, offset: offset } );
             }
         }
 
         /** ************************************************************************************************************
         *   Resets all cars on the road to their initial state.
         ***************************************************************************************************************/
-        private resetCars() : void
+        private createCars() : void
         {
+            // TODO duplicated in segment.cars - remove one of both??
             this.cars = [];
 
-            let segment :outrun.Segment = null;
-            let sprite  :any            = null;
-            let car     :outrun.Car     = null;
-
-            for ( let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ )
+            for ( let i:number = 0; i < this.carCount; i++ )
             {
-                const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
+                const offset  :number         = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
+                const z       :number         = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
+                const sprite  :string         = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
 
-                const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
-                sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.CARS);
+                // TODO map speeds for cars!
+                const speed   :number         = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.TRUCK2 ? 4 : 2);
+                const car     :outrun.Car     = { offset: offset, z: z, sprite: sprite, speed: speed, percent: 0 };
+                const segment :outrun.Segment = this.findSegment( car.z );
 
-                const speed  :number = outrun.SettingGame.MAX_SPEED / 4 + Math.random() * outrun.SettingGame.MAX_SPEED / (sprite === outrun.ImageFile.TRUCK2 ? 4 : 2);
-                car = { offset: offset, z: z, sprite: sprite, speed: speed, percent: 0 };
-                segment = this.findSegment( car.z );
                 segment.cars.push(car);
                 this.cars.push(car);
             }
