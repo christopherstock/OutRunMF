@@ -9,6 +9,8 @@
     *   =====================
     *   TODO Primal
     *   =====================
+    *   TODO Enable different colors for level street, bg, left and right side?
+    *   TODO Enable additional segment forms left or right of the road.
     *   TODO Clear all TODOs.
     *   TODO Add FPS counter via Lib.
     *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
