@@ -13,7 +13,7 @@
         /** The game stage. */
         private                 stage               :outrun.Stage                 = null;
 
-        /** scaling factor to provide resolution independence (computed) */
+        /** scaling factor to provide resolution independence (computed). TODO to CanvasSystem? */
         private                 resolution          :number                     = null;
 
         /** Indicates if the 'steer left' key is pressed this game tick. */
@@ -45,7 +45,7 @@
 
             // rebuild the stage TODO create enum for different levels?
             this.stage = new outrun.LevelTest();
-            this.stage.init( this.stage.player.playerZ );
+            this.stage.init();
         }
 
         /** ************************************************************************************************************
@@ -81,7 +81,7 @@
                     gdt = gdt - outrun.SettingGame.STEP;
                     this.update(outrun.SettingGame.STEP);
                 }
-                this.render();
+                this.render( this.canvasSystem.getCanvasContext() );
                 last = now;
                 requestAnimationFrame( frame );
             };
@@ -255,110 +255,19 @@
         /** ************************************************************************************************************
         *   Renders the current tick of the legacy game.
         *
-        *   TODO Add param ctx
+        *   @param ctx The 2D drawing context.
         ***************************************************************************************************************/
-        private render() : void
+        private render( ctx:CanvasRenderingContext2D ) : void
         {
-            // TODO move to stage!
-
-            const baseSegment   :any    = this.stage.findSegment(this.stage.camera.getZ());
-            const basePercent   :number = outrun.MathUtil.percentRemaining(this.stage.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerSegment :any    = this.stage.findSegment(this.stage.camera.getZ() + this.stage.player.playerZ);
-            const playerPercent :number = outrun.MathUtil.percentRemaining(this.stage.camera.getZ() + this.stage.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
-            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
-
-            let   maxY          :number = this.canvasSystem.getHeight();
-            let   x             :number = 0;
-            let   dx            :number = -(baseSegment.curve * basePercent);
-
             // clear canvas
-            this.canvasSystem.getCanvasContext().clearRect(0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight());
+            ctx.clearRect(0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight());
 
-            // fill canvas with sky color
-            outrun.Drawing2D.rect(this.canvasSystem.getCanvasContext(), 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingColor.SKY);
-
-            outrun.Drawing2D.background( this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.SKY,  this.stage.background.skyOffset,  this.resolution * outrun.SettingGame.SKY_SPEED  * playerY );
-            outrun.Drawing2D.background( this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.HILL, this.stage.background.hillOffset, this.resolution * outrun.SettingGame.HILL_SPEED * playerY );
-            outrun.Drawing2D.background( this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.ImageFile.TREE, this.stage.background.treeOffset, this.resolution * outrun.SettingGame.TREE_SPEED * playerY );
-
-            let   spriteScale :number = 0;
-            let   spriteX     :number = 0;
-            let   spriteY     :number = 0;
-
-            for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
-            {
-                const segment:any = this.stage.segments[(baseSegment.index + n) % this.stage.segments.length];
-                segment.looped = segment.index < baseSegment.index;
-                segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
-                segment.clip = maxY;
-
-                outrun.MathUtil.project(segment.p1, (this.stage.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.stage.camera.getZ() - (segment.looped ? this.stage.stageLength : 0), this.stage.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
-                outrun.MathUtil.project(segment.p2, (this.stage.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.stage.camera.getZ() - (segment.looped ? this.stage.stageLength : 0), this.stage.camera.getDepth(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
-
-                x = x + dx;
-                dx = dx + segment.curve;
-
-                if (
-                    (segment.p1.camera.z <= this.stage.camera.getDepth() ) || // behind us
-                    (segment.p2.screen.y >= segment.p1.screen.y)     || // back face cull
-                    (segment.p2.screen.y >= maxY)                       // clip by (already rendered) hill
-                ) {
-                    continue;
-                }
-
-                outrun.Drawing2D.segment(
-                    this.canvasSystem.getCanvasContext(),
-                    this.canvasSystem.getWidth(),
-                    outrun.SettingGame.LANES,
-                    segment.p1.screen.x,
-                    segment.p1.screen.y,
-                    segment.p1.screen.w,
-                    segment.p2.screen.x,
-                    segment.p2.screen.y,
-                    segment.p2.screen.w,
-                    segment.fog,
-                    segment.color
-                );
-
-                maxY = segment.p1.screen.y;
-            }
-
-            // TODO
-            for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
-            {
-                const segment:any = this.stage.segments[(baseSegment.index + n) % this.stage.segments.length];
-
-                for ( const car of segment.cars )
-                {
-                    spriteScale = outrun.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
-                    spriteX = outrun.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * outrun.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
-                    spriteY = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
-                    outrun.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, outrun.SettingGame.ROAD_WIDTH, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
-                }
-
-                for ( const sprite of segment.sprites )
-                {
-                    spriteScale = segment.p1.screen.scale;
-                    spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * this.canvasSystem.getWidth() / 2);
-                    spriteY = segment.p1.screen.y;
-                    outrun.Drawing2D.sprite(this.canvasSystem.getCanvasContext(), this.canvasSystem.getWidth(), this.canvasSystem.getHeight(), this.resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, segment.clip);
-                }
-
-                if (segment === playerSegment) {
-                    outrun.Drawing2D.player(
-                        this.canvasSystem.getCanvasContext(),
-                        this.canvasSystem.getWidth(),
-                        this.canvasSystem.getHeight(),
-                        this.resolution,
-                        outrun.SettingGame.ROAD_WIDTH,
-                        this.stage.player.speed / outrun.SettingGame.MAX_SPEED,
-                        this.stage.camera.getDepth() / this.stage.player.playerZ,
-                        this.canvasSystem.getWidth() / 2,
-                        (this.canvasSystem.getHeight() / 2) - (this.stage.camera.getDepth() / this.stage.player.playerZ * outrun.MathUtil.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * this.canvasSystem.getHeight() / 2),
-                        this.stage.player.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ),
-                        playerSegment.p2.world.y - playerSegment.p1.world.y
-                    );
-                }
-            }
+            this.stage.render
+            (
+                ctx,
+                this.resolution,
+                this.keyLeft,
+                this.keyRight
+            );
         }
     }
