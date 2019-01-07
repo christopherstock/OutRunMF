@@ -25,11 +25,11 @@
         // tslint:disable:max-line-length
         protected createRoad( playerZ:number ) : void
         {
-            outrun.StageFactory.addStraight(        this.segments, outrun.Road.LENGTH.DOUBLE_LONG );
+            outrun.StageFactory.addStraight(        this.segments, outrun.Road.LENGTH.LONG );
+            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
 /*
             outrun.StageFactory.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
             outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.LOW);
             outrun.StageFactory.addBumps(           this.segments );
             outrun.StageFactory.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
             outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);

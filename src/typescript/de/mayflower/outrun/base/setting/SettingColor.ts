@@ -11,6 +11,7 @@
 
         public      static      LIGHT         :any         = { road: '#6b6b6b', grass: '#10aa10', rumble: '#555555', lane: '#cccccc'  };
         public      static      DARK          :any         = { road: '#696969', grass: '#009a00', rumble: '#bbbbbb'                   };
+
         public      static      START         :any         = { road: 'white',   grass: 'white',   rumble: 'white'                     };
         public      static      FINISH        :any         = { road: 'black',   grass: 'black',   rumble: 'black'                     };
     }
