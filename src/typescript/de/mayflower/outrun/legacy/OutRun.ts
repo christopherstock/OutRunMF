@@ -58,8 +58,8 @@
             // specify canvas resolution according to its current height
             this.resolution = this.canvasSystem.getHeight() / 480;
 
-            // rebuild the stage
-            this.stage = new outrun.Stage();
+            // rebuild the stage TODO create enum for different levels?
+            this.stage = new outrun.LevelTest();
             this.stage.init( this.player.playerZ );
 
             // create the background
@@ -135,13 +135,16 @@
             this.keyFaster = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_UP);
             this.keySlower = outrun.Main.game.keySystem.isPressed(outrun.KeyCodes.KEY_DOWN);
 
+            // Check keys TODO to class Player !
             if (this.keyLeft)
                 this.player.playerX = this.player.playerX - dx;
             else if (this.keyRight)
                 this.player.playerX = this.player.playerX + dx;
 
+            // check centrifugal force modification if player is in a curve
             this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL);
 
+            // accelerate or decelerate
             if (this.keyFaster)
                 this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.ACCELERATION_RATE, dt);
             else if (this.keySlower)

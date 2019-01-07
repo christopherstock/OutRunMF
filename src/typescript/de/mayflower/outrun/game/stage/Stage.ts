@@ -4,7 +4,7 @@
     /** ****************************************************************************************************************
     *   The legacy game stage.
     *******************************************************************************************************************/
-    export class Stage
+    export abstract class Stage
     {
         /** array of road segments */
         public                  segments            :any[]                      = [];
@@ -12,6 +12,13 @@
         public                  cars                :any[]                      = [];
         /** z length of entire track (computed) */
         public                  trackLength         :number                     = 0;
+
+        /** ************************************************************************************************************
+        *   Creates a new stage.
+        ***************************************************************************************************************/
+        protected constructor()
+        {
+        }
 
         /** ************************************************************************************************************
         *   Initializes all properties of this stage.
@@ -49,29 +56,13 @@
         *
         *   @param playerZ The initial z position of the player.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
-        protected createRoad( playerZ:number ) : void
-        {
-            outrun.StageFactory.addStraight(        this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT );
-            outrun.StageFactory.addLowRollingHills( this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addCurve(           this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.LOW);
-            outrun.StageFactory.addBumps(           this.segments );
-            outrun.StageFactory.addLowRollingHills( this.segments, outrun.StageFactory.ROAD.LENGTH.SHORT, outrun.StageFactory.ROAD.HILL.LOW );
-            outrun.StageFactory.addCurve(           this.segments, outrun.StageFactory.ROAD.LENGTH.LONG * 2, outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.MEDIUM);
-            outrun.StageFactory.addStraight(        this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM );
-            outrun.StageFactory.addHill(            this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.HILL.HIGH);
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addCurve(           this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.CURVE.MEDIUM, outrun.StageFactory.ROAD.HILL.NONE);
-            outrun.StageFactory.addHill(            this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.HILL.HIGH);
-            outrun.StageFactory.addCurve(           this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.LOW);
-            outrun.StageFactory.addBumps(           this.segments );
-            outrun.StageFactory.addHill(            this.segments, outrun.StageFactory.ROAD.LENGTH.LONG, -outrun.StageFactory.ROAD.HILL.MEDIUM);
-            outrun.StageFactory.addStraight(        this.segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM );
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addDownhillToEnd(   this.segments, outrun.StageFactory.ROAD.LENGTH.DOUBLE_LONG );
-        }
+        protected abstract createRoad( playerZ:number ) : void;
 
+        /** ************************************************************************************************************
+        *   Sets the start and the finish line.
+        *
+        *   @param playerZ The initial z position of the player.
+        ***************************************************************************************************************/
         protected setStartAndFinish( playerZ:number ) : void
         {
             // set start and finish
@@ -88,7 +79,10 @@
         ***************************************************************************************************************/
         private addSprite( n:number, source:string, offset:number ) : void
         {
-            this.segments[n].sprites.push({source: source, offset: offset});
+            if ( this.segments.length > n )
+            {
+                this.segments[n].sprites.push({source: source, offset: offset});
+            }
         }
 
         /** ************************************************************************************************************
@@ -96,20 +90,20 @@
         ***************************************************************************************************************/
         private resetSprites() : void
         {
-            this.addSprite(20, outrun.ImageFile.BILLBOARD07, -1);
-            this.addSprite(40, outrun.ImageFile.BILLBOARD06, -1);
-            this.addSprite(60, outrun.ImageFile.BILLBOARD08, -1);
-            this.addSprite(80, outrun.ImageFile.BILLBOARD09, -1);
-            this.addSprite(100, outrun.ImageFile.BILLBOARD01, -1);
-            this.addSprite(120, outrun.ImageFile.BILLBOARD02, -1);
-            this.addSprite(140, outrun.ImageFile.BILLBOARD03, -1);
-            this.addSprite(160, outrun.ImageFile.BILLBOARD04, -1);
-            this.addSprite(180, outrun.ImageFile.BILLBOARD05, -1);
+            this.addSprite( 20,  outrun.ImageFile.BILLBOARD07, -1 );
+            this.addSprite( 40,  outrun.ImageFile.BILLBOARD06, -1 );
+            this.addSprite( 60,  outrun.ImageFile.BILLBOARD08, -1 );
+            this.addSprite( 80,  outrun.ImageFile.BILLBOARD09, -1 );
+            this.addSprite( 100, outrun.ImageFile.BILLBOARD01, -1 );
+            this.addSprite( 120, outrun.ImageFile.BILLBOARD02, -1 );
+            this.addSprite( 140, outrun.ImageFile.BILLBOARD03, -1 );
+            this.addSprite( 160, outrun.ImageFile.BILLBOARD04, -1 );
+            this.addSprite( 180, outrun.ImageFile.BILLBOARD05, -1 );
 
-            this.addSprite(240, outrun.ImageFile.BILLBOARD07, -1.2);
-            this.addSprite(240, outrun.ImageFile.BILLBOARD06, 1.2);
-            this.addSprite(this.segments.length - 25, outrun.ImageFile.BILLBOARD07, -1.2);
-            this.addSprite(this.segments.length - 25, outrun.ImageFile.BILLBOARD06, 1.2);
+            this.addSprite( 240, outrun.ImageFile.BILLBOARD07, -1.2 );
+            this.addSprite( 240, outrun.ImageFile.BILLBOARD06, 1.2 );
+            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD07, -1.2 );
+            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD06, 1.2  );
 
             for ( let n:number = 10; n < 200; n += 4 + Math.floor(n / 100) ) {
                 this.addSprite(n, outrun.ImageFile.PALM_TREE, 0.5 + Math.random() * 0.5);
@@ -152,7 +146,8 @@
             let sprite  :any = null;
             let car     :any = null;
 
-            for (let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ ) {
+            for ( let n:number = 0; n < outrun.SettingGame.TOTAL_CARS; n++ )
+            {
                 const offset :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
                 const z      :number = Math.floor(Math.random() * this.segments.length) * outrun.SettingGame.SEGMENT_LENGTH;
                 sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.CARS);

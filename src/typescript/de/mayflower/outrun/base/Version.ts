@@ -6,10 +6,12 @@
     export class Version
     {
         /** The project's version v.0.0.1. */
-        private     static  readonly    V_0_0_1                 :Version            = new Version( '0.0.1', 'OutRunJS', '25.12.2018, 14:29:31 GMT+1' );
+        private     static  readonly    V_0_0_3                 :Version            = new Version( '0.0.3', 'OutRunMF', '06.01.2019, 14:32:05 GMT+1' );
+        private     static  readonly    V_0_0_2                 :Version            = new Version( '0.0.2', 'OutRunTS', '25.12.2018, 14:29:31 GMT+1' );
+        private     static  readonly    V_0_0_1                 :Version            = new Version( '0.0.1', 'OutRunJS', '31.10.2018, 17:38:17 GMT+1' );
 
         /** The project's current version. */
-        private     static  readonly    CURRENT_VERSION         :Version            = Version.V_0_0_1;
+        private     static  readonly    CURRENT_VERSION         :Version            = Version.V_0_0_3;
 
         /** This version's specifier. */
         private             readonly    version                 :string             = null;

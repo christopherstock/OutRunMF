@@ -1,6 +1,4 @@
 
-    import * as orts from '../..';
-
     /** ****************************************************************************************************************
     *   Specifies all adjustments for the gameplay.
     *******************************************************************************************************************/
@@ -8,7 +6,7 @@
     export class SettingGame
     {
         /** The application title. */
-        public  static  readonly    APP_TITLE                   :string             = 'OutRun TS';
+        public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ Out Run';
 
         public  static  readonly    SPRITE_SCALE                :number             = 0.3 * (1 / 80); // the reference sprite width should be 1/3rd the (half-)roadWidth
 
@@ -21,12 +19,14 @@
         public  static  readonly    STEP                        :number             = 1 / SettingGame.FPS;
         /** centrifugal force multiplier when going around curves */
         public  static  readonly    CENTRIFUGAL                 :number             = 0.3;
+
         /** background sky layer scroll speed when going around curve (or up hill) */
         public  static  readonly    SKY_SPEED                   :number             = 0.001;
         /** background hill layer scroll speed when going around curve (or up hill) */
         public  static  readonly    HILL_SPEED                  :number             = 0.002;
         /** background tree layer scroll speed when going around curve (or up hill) */
         public  static  readonly    TREE_SPEED                  :number             = 0.003;
+
         /** actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth */
         public  static  readonly    ROAD_WIDTH                  :number             = 2000;
         /** length of a single segment */

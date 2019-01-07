@@ -7,20 +7,10 @@
     export abstract class StageFactory
     {
         /** ************************************************************************************************************
-        *   TODO create class for road attributes?!
-        ***************************************************************************************************************/
-        public static readonly ROAD :any =
-        {
-            LENGTH: { NONE: 0, SHORT: 25, MEDIUM: 50, LONG: 100, DOUBLE_LONG: 200 },
-            HILL:   { NONE: 0, LOW:   20, MEDIUM: 40, HIGH: 60  },
-            CURVE:  { NONE: 0, EASY:  2,  MEDIUM: 4,  HARD: 6   }
-        };
-
-        /** ************************************************************************************************************
+        *   Adds a straight segment of road to the specified array.
         *
-        *   @param num The road length?
-        *
-        *   TODO to stage factory.
+        *   @param segments The array of existent segments where this segment is appended.
+        *   @param num      The desired segment length.
         ***************************************************************************************************************/
         public static addStraight( segments:any[], num:number ) : void
         {
@@ -32,9 +22,6 @@
         ***************************************************************************************************************/
         public static addHill( segments:any[], num:number, height:number ) : void
         {
-            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
-            height = height || outrun.StageFactory.ROAD.HILL.MEDIUM;
-
             StageFactory.addRoad( segments, num, num, num, 0, height );
         }
 
@@ -43,10 +30,6 @@
         ***************************************************************************************************************/
         public static addCurve( segments:any[], num:number, curve:number, height:number ) : void
         {
-            num = num || outrun.StageFactory.ROAD.LENGTH.MEDIUM;
-            curve = curve || outrun.StageFactory.ROAD.CURVE.MEDIUM;
-            height = height || outrun.StageFactory.ROAD.HILL.NONE;
-
             StageFactory.addRoad( segments, num, num, num, curve, height );
         }
 
@@ -57,9 +40,9 @@
         {
             StageFactory.addRoad( segments, num, num, num, 0, height / 2 );
             StageFactory.addRoad( segments, num, num, num, 0, -height );
-            StageFactory.addRoad( segments, num, num, num, outrun.StageFactory.ROAD.CURVE.EASY, height );
+            StageFactory.addRoad( segments, num, num, num, outrun.Road.CURVE.EASY, height );
             StageFactory.addRoad( segments, num, num, num, 0, 0 );
-            StageFactory.addRoad( segments, num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, height / 2 );
+            StageFactory.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, height / 2 );
             StageFactory.addRoad( segments, num, num, num, 0, 0 );
         }
 
@@ -69,11 +52,11 @@
         // tslint:disable:max-line-length
         public static addSCurves( segments:any[] ) : void
         {
-            StageFactory.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.NONE    );
-            StageFactory.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.MEDIUM,  outrun.StageFactory.ROAD.HILL.MEDIUM  );
-            StageFactory.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.CURVE.EASY,    -outrun.StageFactory.ROAD.HILL.LOW    );
-            StageFactory.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.EASY,   outrun.StageFactory.ROAD.HILL.MEDIUM  );
-            StageFactory.addRoad( segments, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, outrun.StageFactory.ROAD.LENGTH.MEDIUM, -outrun.StageFactory.ROAD.CURVE.MEDIUM, -outrun.StageFactory.ROAD.HILL.MEDIUM );
+            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE    );
+            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM  );
+            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.EASY,    -outrun.Road.HILL.LOW    );
+            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.MEDIUM  );
+            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.MEDIUM );
         }
 
         /** ************************************************************************************************************
@@ -96,7 +79,7 @@
         ***************************************************************************************************************/
         public static addDownhillToEnd( segments:any[], num:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, -outrun.StageFactory.ROAD.CURVE.EASY, -StageFactory.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
+            StageFactory.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, -StageFactory.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
         }
 
         /** ************************************************************************************************************
@@ -142,11 +125,9 @@
         /** ************************************************************************************************************
         *   Adds a road segment.
         *
-        *   @param curve Specifies if this segment is a curve?
-        *   @param y     The Y location of this segment.
-        *
-        *   TODO to factory!
-        *   TODO Add class curve
+        *   @param segments The array of existent segments where this segment is appended.
+        *   @param curve    Specifies if this segment is a curve?
+        *   @param y        The Y location of this segment.
         ***************************************************************************************************************/
         private static addSegment( segments:any[], curve:any, y:number ) : void
         {
@@ -160,6 +141,8 @@
                     index: n,
                     p1: {world: {y: lastY, z: n * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
                     p2: {world: {y: y, z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH}, camera: {}, screen: {}},
+
+                    // TODO Add class curve
                     curve: curve,
 
                     // TODO create class Sprite
@@ -180,6 +163,6 @@
         ***************************************************************************************************************/
         private static lastY( segments:any[] ) : number
         {
-            return ( segments.length === 0 ) ? 0 : segments[ segments.length - 1 ].p2.world.y;
+            return ( segments.length === 0 ? 0 : segments[ segments.length - 1 ].p2.world.y );
         }
     }

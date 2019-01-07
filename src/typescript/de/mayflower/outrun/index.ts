@@ -8,8 +8,12 @@
     export * from './base/Main';
     export * from './base/Version';
 
+    export * from './game/stage/Road';
     export * from './game/stage/Stage';
     export * from './game/stage/StageFactory';
+
+    export * from './game/stage/level/LevelPreset';
+    export * from './game/stage/level/LevelTest';
 
     export * from './hid/KeyCodes';
     export * from './hid/KeySystem';

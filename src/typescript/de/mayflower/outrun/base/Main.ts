@@ -12,6 +12,7 @@
     *   TODO Clear all TODOs.
     *   TODO Add FPS counter via Lib.
     *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
+    *   TODO Create a possibility to change levels via debug keys 1-x.
     *
     *   =====================
     *   TODO Secondary - game
@@ -21,6 +22,7 @@
     *   TODO Extract level creation to separate Factory / StageBuilder class?
     *   TODO Add sound effects?
     *   TODO Add main menu?
+    *   TODO Combine different road widths? ( different lane counts etc.)
     *******************************************************************************************************************/
     export class Main
     {
