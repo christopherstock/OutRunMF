@@ -6,12 +6,21 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
+        // TODO add private!
+
         /** array of road segments */
         public                      segments            :outrun.Segment[]           = [];
         /** array of cars on the road */
         public                      cars                :outrun.Car[]               = [];
         /** z length of entire track (computed) */
         public                      stageLength         :number                     = 0;
+
+        /** The player. */
+        public                      player              :outrun.Player              = null;
+        /** The stage background. */
+        public                      background          :outrun.Background          = null;
+        /** The stage camera. */
+        public                      camera              :outrun.Camera              = null;
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
@@ -23,7 +32,20 @@
         ***************************************************************************************************************/
         protected constructor( carCount:number )
         {
+            // assign car count
             this.carCount = carCount;
+
+            // create the player
+            this.player = new outrun.Player();
+
+            // create the camera
+            this.camera = new outrun.Camera();
+
+            // specify player's initial Z position TODO suspicious dependency
+            this.player.playerZ = ( outrun.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
+
+            // create the background
+            this.background = new outrun.Background();
         }
 
         /** ************************************************************************************************************
