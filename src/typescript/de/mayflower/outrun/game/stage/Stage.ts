@@ -86,6 +86,8 @@
             const basePercent   :number = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerSegment :any    = this.findSegment(this.camera.getZ() + this.player.playerZ);
             const playerPercent :number = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
+
+            // TODO to player!
             const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
 
             let   maxY          :number = outrun.Main.game.canvasSystem.getHeight();
@@ -93,11 +95,10 @@
             let   dx            :number = -(baseSegment.curve * basePercent);
 
             // fill canvas with sky color
-            outrun.Drawing2D.rect(ctx, 0, 0, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingColor.SKY);
+            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingColor.SKY );
 
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.SKY,  this.background.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.HILL, this.background.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.TREE, this.background.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
+            // draw the bg
+            this.background.draw( ctx, resolution, playerY );
 
             let   spriteScale :number = 0;
             let   spriteX     :number = 0;

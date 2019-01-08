@@ -166,9 +166,8 @@
             this.stage.player.playerX = outrun.MathUtil.limit(this.stage.player.playerX, -3, 3);     // dont ever let it go too far out of bounds
             this.stage.player.speed = outrun.MathUtil.limit(this.stage.player.speed, 0, outrun.SettingGame.MAX_SPEED); // or exceed maxSpeed
 
-            this.stage.background.skyOffset  = outrun.MathUtil.increase( this.stage.background.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (this.stage.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.stage.background.hillOffset = outrun.MathUtil.increase( this.stage.background.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (this.stage.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.stage.background.treeOffset = outrun.MathUtil.increase( this.stage.background.treeOffset, outrun.SettingGame.TREE_SPEED * playerSegment.curve * (this.stage.camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
+            // update bg offsets
+            this.stage.background.updateOffsets( playerSegment, this.stage.camera, startPosition );
         }
 
         /** ************************************************************************************************************
