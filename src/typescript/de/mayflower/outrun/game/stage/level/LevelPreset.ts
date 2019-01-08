@@ -81,14 +81,13 @@
             }
 
             let side   :number = 0;
-            let sprite :any    = null;
             let offset :number = 0;
 
             for ( let n:number = 1000; n < (this.segments.length - 50); n += 100 ) {
                 side = outrun.MathUtil.randomChoice([1, -1]);
                 this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {
-                    sprite = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
+                    const sprite:string = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
                     offset = side * (1.5 + Math.random());
                     this.addSprite(n + outrun.MathUtil.randomInt(0, 50), sprite, offset);
                 }

@@ -30,7 +30,7 @@
 
         // TODO introduce class Camera
 
-        public updateOffsets( playerSegment:outrun.Segment, camera:any, startPosition:number ) : void
+        public updateOffsets( playerSegment:outrun.Segment, camera:outrun.Camera, startPosition:number ) : void
         {
             this.skyOffset  = outrun.MathUtil.increase( this.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
             this.hillOffset = outrun.MathUtil.increase( this.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );

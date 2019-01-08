@@ -10,17 +10,17 @@
     {
         // TODO Add class Vector
 
-        public                  screen                          :any                = null;
+        public                  world                           :outrun.Vector             = null;
 
-        public                  world                           :any                = null;
+        public                  screen                          :outrun.Vector              = null;
 
-        public                  camera                          :any                = null;
+        public                  camera                          :outrun.Vector             = null;
 
-        public constructor( world:any )
+        public constructor( world:outrun.Vector )
         {
-            this.world = world;
-
-
-
+            this.world  = world;
+            this.screen = new outrun.Vector( 0, 0 );
+            this.camera = new outrun.Vector( 0, 0 );
         }
     }
+

@@ -1,4 +1,6 @@
 
+    import * as outrun from '../index'
+
     /** ****************************************************************************************************************
     *   Offers additional mathematical functionality.
     *******************************************************************************************************************/
@@ -88,7 +90,7 @@
 
         public static project
         (
-            p           :any,
+            p           :outrun.SegmentPoint,
             cameraX     :number,
             cameraY     :number,
             cameraZ     :number,

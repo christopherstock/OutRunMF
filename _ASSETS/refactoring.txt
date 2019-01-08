@@ -5,7 +5,7 @@ s. "Martin Fowler" - Refactoring has never been more important!
 
 Refactoring Methods:
 ====================
-- Descoping (enscoping?) ( Limit scope by intending into for-loop )
+- Descoping (enscoping?) ( Limit scope by intending into for-loop ) e.g. let i :number = 0;
 - From var to let ( from global to local )
 - Separate multiple vars in one line var x, y = 10, z;
 - Renaming ( clear speaking names )
@@ -14,6 +14,7 @@ Refactoring Methods:
 - Add documentation ( where it adds value )
 - Add typings (!) from JS to TS conversion
 - Order variables, fields and methods by visibility, type (number, boolean, string, object, collections ) and static state.
+  This helps grouping members and extract them later!
 - Group members by their logical corresponding
 - Extract/Separate grouped members to new class
 - Add const for non-changing values!
@@ -37,6 +38,7 @@ Constructive refactorings:
 - removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
 - extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
+- Create constructors from direct object instanciations (forced on making fields private) => newPoint = { x: 0, y: 0, z: 0 }
 
 Results:
 ==========================

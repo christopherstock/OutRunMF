@@ -12,16 +12,19 @@
 
         public                          p2              :outrun.SegmentPoint    = null;
 
-        public                          index           :any                    = null;
-
-        // TODO Add class curve
-        public                          curve           :any                    = null;
-
-        // TODO create class Sprite
         public                          sprites         :outrun.Sprite[]        = null;
 
         public                          cars            :outrun.Car[]           = null;
 
-        // TODO add type ..
-        public                          color           :any                    = null;
+        public                          color           :outrun.ColorCombo      = null;
+
+        public                          looped          :boolean                = false;
+
+        public                          fog             :number                 = null;
+
+        public                          clip            :number                 = 0;
+
+        public                          curve           :number                 = 0;
+
+        public                          index           :number                 = 0;
     }

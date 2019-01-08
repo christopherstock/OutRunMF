@@ -9,6 +9,7 @@
     export * from './game/engine/Segment';
     export * from './game/engine/SegmentPoint';
     export * from './game/engine/Sprite';
+    export * from './game/engine/Vector';
 
     export * from './base/setting/SettingColor';
     export * from './base/setting/SettingDebug';

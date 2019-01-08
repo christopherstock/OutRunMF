@@ -87,11 +87,10 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            let   i             :number     = 0;
-            let   car           :outrun.Car = null;
-            let   carW          :number     = 0;
-            let   sprite        :any        = null;
-            let   spriteW       :number     = 0;
+            let   car           :outrun.Car     = null;
+            let   sprite        :outrun.Sprite  = null;
+            let   carW          :number         = 0;
+            let   spriteW       :number         = 0;
 
             const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.playerZ);
             const playerW       :number         = 80 * outrun.SettingGame.SPRITE_SCALE;
@@ -131,7 +130,7 @@
                 if (this.player.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
                     this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
 
-                for (i = 0; i < playerSegment.sprites.length; i++) {
+                for ( let i:number = 0; i < playerSegment.sprites.length; i++ ) {
                     sprite = playerSegment.sprites[i];
                     spriteW = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
 
@@ -144,7 +143,7 @@
             }
 
             // TODO to foreach loop!
-            for ( i = 0; i < playerSegment.cars.length; i++ ) {
+            for ( let i:number = 0; i < playerSegment.cars.length; i++ ) {
                 car = playerSegment.cars[ i ];
 
                 carW = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
@@ -186,10 +185,10 @@
         ***************************************************************************************************************/
         public render( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            const baseSegment   :any    = this.findSegment(this.camera.getZ());
-            const basePercent   :number = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerSegment :any    = this.findSegment(this.camera.getZ() + this.player.playerZ);
-            const playerPercent :number = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
+            const baseSegment   :outrun.Segment = this.findSegment(this.camera.getZ());
+            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
+            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.playerZ);
+            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
 
             // TODO to player!
             const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
@@ -210,7 +209,7 @@
 
             for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
             {
-                const segment:any = this.segments[(baseSegment.index + n) % this.segments.length];
+                const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];
                 segment.looped = segment.index < baseSegment.index;
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxY;
@@ -249,14 +248,14 @@
             // TODO
             for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
-                const segment:any = this.segments[(baseSegment.index + n) % this.segments.length];
+                const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];
 
                 for ( const car of segment.cars )
                 {
                     spriteScale = outrun.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
                     spriteX = outrun.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
                     spriteY = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
-                    outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+                    outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, car.getSprite(), spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
                 }
 
                 for ( const sprite of segment.sprites )
@@ -387,7 +386,6 @@
             }
         }
 
-
         /** ************************************************************************************************************
         *   Updates the offset for the player car.
         ***************************************************************************************************************/
@@ -405,7 +403,7 @@
 
             for ( let i:number = 1; i < lookahead; i++ )
             {
-                const segment:any = this.segments[(carSegment.index + i) % this.segments.length];
+                const segment:outrun.Segment = this.segments[(carSegment.index + i) % this.segments.length];
 
                 if ((segment === playerSegment) && (car.speed > this.player.speed) && (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 1.2))) {
                     if (this.player.playerX > 0.5)
@@ -419,15 +417,16 @@
 
                 for ( const otherCar of segment.cars )
                 {
-                    otherCarW = outrun.Main.game.imageSystem.getImage(otherCar.sprite).width * outrun.SettingGame.SPRITE_SCALE;
-                    if ((car.speed > otherCar.speed) && outrun.MathUtil.overlap(car.offset, carW, otherCar.offset, otherCarW, 1.2)) {
-                        if (otherCar.offset > 0.5)
+                    otherCarW = outrun.Main.game.imageSystem.getImage( otherCar.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
+                    if ( ( car.speed > otherCar.speed ) && outrun.MathUtil.overlap( car.offset, carW, otherCar.offset, otherCarW, 1.2 ) )
+                    {
+                        if ( otherCar.offset > 0.5 )
                             dir = -1;
-                        else if (otherCar.offset < -0.5)
+                        else if ( otherCar.offset < -0.5 )
                             dir = 1;
                         else
-                            dir = (car.offset > otherCar.offset) ? 1 : -1;
-                        return dir / i * (car.speed - otherCar.speed) / outrun.SettingGame.MAX_SPEED;
+                            dir = ( car.offset > otherCar.offset ) ? 1 : -1;
+                        return dir / i * ( car.speed - otherCar.speed ) / outrun.SettingGame.MAX_SPEED;
                     }
                 }
             }
@@ -439,5 +438,5 @@
                 return -0.1;
             else
                 return 0;
-        };
+        }
     }

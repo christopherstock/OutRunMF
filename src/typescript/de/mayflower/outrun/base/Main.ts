@@ -9,7 +9,6 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Remove all :any statements
     *   TODO Create different backgrounds for different levels.
     *
     *   TODO Enable different colors for level street, bg, left and right side?
@@ -18,6 +17,8 @@
     *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
     *   TODO Create a possibility to change levels via debug keys 1-x.
     *   TODO Clear all TODOs.
+    *
+    *   TODO Add class curve?
     *
     *   =====================
     *   TODO Secondary - game

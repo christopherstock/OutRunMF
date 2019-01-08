@@ -25,7 +25,7 @@
             ctx.fill();
         }
 
-        public static segment( ctx:CanvasRenderingContext2D, width:number, lanes:number, x1:number, y1:number, w1:number, x2:number, y2:number, w2:number, fog:number, color:any ) : void
+        public static segment( ctx:CanvasRenderingContext2D, width:number, lanes:number, x1:number, y1:number, w1:number, x2:number, y2:number, w2:number, fog:number, color:outrun.ColorCombo ) : void
         {
             const r1 :number = Drawing2D.rumbleWidth(w1, lanes);
             const r2 :number = Drawing2D.rumbleWidth(w2, lanes);

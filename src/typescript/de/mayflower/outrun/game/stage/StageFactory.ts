@@ -129,7 +129,7 @@
         *   @param curve    Specifies if this segment is a curve?
         *   @param y        The Y location of this segment.
         ***************************************************************************************************************/
-        private static addSegment( segments:outrun.Segment[], curve:any, y:number ) : void
+        private static addSegment( segments:outrun.Segment[], curve:number, y:number ) : void
         {
             const n:number = segments.length;
             const lastY:number = StageFactory.lastY( segments );
@@ -137,14 +137,14 @@
             // TODO introcude class Segment
             segments.push
             (
-                // TODO create segment constructor
+                // TODO create Segment constructor
                 {
                     index: n,
                     p1: new outrun.SegmentPoint(
-                        { y: lastY, z:  n      * outrun.SettingGame.SEGMENT_LENGTH }
+                        new outrun.Vector( lastY, n * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     p2: new outrun.SegmentPoint(
-                        { y: y,     z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH }
+                        new outrun.Vector( y, ( n + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     curve: curve,
                     sprites: [],
@@ -153,7 +153,10 @@
                         Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
                         ? outrun.SettingColor.DARK
                         : outrun.SettingColor.LIGHT
-                    )
+                    ),
+                    looped: false,
+                    fog: 0,
+                    clip: 0
                 }
             );
         }
