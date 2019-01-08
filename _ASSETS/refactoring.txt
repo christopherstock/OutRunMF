@@ -20,6 +20,7 @@ Refactoring Methods:
 - Increase visibility ( private where possible! Then protected any finally public ) => create getters/setters for access control.
 - Add tests
 - clear suspicious name combinations ( setX( y ) ), MathUtil.toInt( x ) => MathUtil.toInt( num )
+- Remove pointless statements: rotation = rotation || 0;
 
 Tools that support:
 ===================
@@ -33,3 +34,6 @@ Constructive refactorings:
 - Added new classes ("Segment")
 - Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
 - Introduce empty class without members that extends any.
+- removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
+- extract grouped lines of code to new 'speaking' method (four key detection methods)
+- Remove/Resolve all "":any" statements

@@ -1,16 +1,17 @@
 
-    export * from './base/setting/SettingColor';
-    export * from './base/setting/SettingDebug';
-    export * from './base/setting/SettingGame';
-
     export * from './base/Debug';
     export * from './base/Game';
     export * from './base/Main';
     export * from './base/Version';
 
     export * from './game/engine/Car';
+    export * from './game/engine/ColorCombo';
     export * from './game/engine/Segment';
     export * from './game/engine/Sprite';
+
+    export * from './base/setting/SettingColor';
+    export * from './base/setting/SettingDebug';
+    export * from './base/setting/SettingGame';
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';

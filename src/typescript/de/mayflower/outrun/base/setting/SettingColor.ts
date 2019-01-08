@@ -1,4 +1,6 @@
 
+    import * as outrun from '../..';
+
     /** ****************************************************************************************************************
     *   Specifies all colors for the game.
     *******************************************************************************************************************/
@@ -9,9 +11,9 @@
         public      static      TREE          :string      = '#005108';
         public      static      FOG           :string      = '#005108';
 
-        public      static      LIGHT         :any         = { road: '#6b6b6b', grass: '#10aa10', rumble: '#555555', lane: '#cccccc'  };
-        public      static      DARK          :any         = { road: '#696969', grass: '#009a00', rumble: '#bbbbbb'                   };
+        public      static      LIGHT         :any         = new outrun.ColorCombo( '#6b6b6b', '#10aa10', '#555555', '#cccccc' );
+        public      static      DARK          :any         = new outrun.ColorCombo( '#696969', '#009a00', '#bbbbbb', null      );
 
-        public      static      START         :any         = { road: 'white',   grass: 'white',   rumble: 'white'                     };
-        public      static      FINISH        :any         = { road: 'black',   grass: 'black',   rumble: 'black'                     };
+        public      static      START         :any         = new outrun.ColorCombo( 'white',   'white',   'white',   null      );
+        public      static      FINISH        :any         = new outrun.ColorCombo( 'black',   'black',   'black',   null      );
     }
