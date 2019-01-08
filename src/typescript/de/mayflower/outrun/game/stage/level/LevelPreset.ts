@@ -13,7 +13,13 @@
         {
             super
             (
-                outrun.SettingGame.TOTAL_CARS
+                outrun.SettingGame.TOTAL_CARS,
+                new outrun.Background
+                (
+                    outrun.ImageFile.BG_SKY1,
+                    outrun.ImageFile.BG_HILL1,
+                    outrun.ImageFile.BG_TREE1
+                )
             );
         }
 

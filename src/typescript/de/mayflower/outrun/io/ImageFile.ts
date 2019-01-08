@@ -45,9 +45,13 @@
         public  static  readonly    TRUCK1                  :string         = 'sprite/truck1.png';
         public  static  readonly    TRUCK2                  :string         = 'sprite/truck2.png';
 
-        public  static  readonly    HILL                    :string         = 'background/hill.png';
-        public  static  readonly    SKY                     :string         = 'background/sky.png';
-        public  static  readonly    TREE                    :string         = 'background/tree.png';
+        public  static  readonly    BG_HILL1                :string         = 'background/hill1.png';
+        public  static  readonly    BG_SKY1                 :string         = 'background/sky1.png';
+        public  static  readonly    BG_TREE1                :string         = 'background/tree1.png';
+
+        public  static  readonly    BG_HILL2                :string         = 'background/hill2.png';
+        public  static  readonly    BG_SKY2                 :string         = 'background/sky2.png';
+        public  static  readonly    BG_TREE2                :string         = 'background/tree2.png';
 
         /** This array contains all filenames of all images that shall be loaded. */
         public  static  readonly    FILE_NAMES              :string[]       =
@@ -112,9 +116,13 @@
             ImageFile.TREE2,
             ImageFile.TRUCK1,
 
-            ImageFile.HILL,
-            ImageFile.SKY,
-            ImageFile.TREE,
+            ImageFile.BG_HILL1,
+            ImageFile.BG_SKY1,
+            ImageFile.BG_TREE1,
+
+            ImageFile.BG_HILL2,
+            ImageFile.BG_SKY2,
+            ImageFile.BG_TREE2,
         ];
 
         public  static  readonly    BILLBOARDS              :string[]       = [ImageFile.BILLBOARD01, ImageFile.BILLBOARD02, ImageFile.BILLBOARD03, ImageFile.BILLBOARD04, ImageFile.BILLBOARD05, ImageFile.BILLBOARD06, ImageFile.BILLBOARD07, ImageFile.BILLBOARD08, ImageFile.BILLBOARD09];

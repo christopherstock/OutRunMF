@@ -2,16 +2,30 @@
     import * as outrun from '..';
 
     /** ****************************************************************************************************************
-    *   The legacy stage background.
+    *   The stage background.
     *******************************************************************************************************************/
     export class Background
     {
+        /** The assigned image for the sky. */
+        private                 skyImage            :string                     = null;
+        /** The assigned image for the hills. */
+        private                 hillImage           :string                     = null;
+        /** The assigned image for the trees. */
+        private                 treeImage           :string                     = null;
+
         /** current sky scroll offset */
         private                 skyOffset           :number                     = 0;
         /** current hill scroll offset */
         private                 hillOffset          :number                     = 0;
         /** current tree scroll offset */
         private                 treeOffset          :number                     = 0;
+
+        public constructor( skyImage:string, hillImage:string, treeImage:string )
+        {
+            this.skyImage  = skyImage;
+            this.hillImage = hillImage;
+            this.treeImage = treeImage;
+        }
 
         /** ************************************************************************************************************
         *   Draws the background for a specific scene.
@@ -23,9 +37,9 @@
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number, playerY:number ) : void
         {
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.SKY,  this.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.HILL, this.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.ImageFile.TREE, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
+            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.skyImage,  this.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
+            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.hillImage, this.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
+            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
         }
 
         // TODO introduce class Camera

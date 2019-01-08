@@ -39,9 +39,10 @@
         /** ************************************************************************************************************
         *   Creates a new stage.
         *
-        *   @param carCount The number of cars to create in this stage.
+        *   @param carCount   The number of cars to create in this stage.
+        *   @param background The background to use for this stage.
         ***************************************************************************************************************/
-        protected constructor( carCount:number )
+        protected constructor( carCount:number, background:outrun.Background )
         {
             // assign car count
             this.carCount = carCount;
@@ -56,7 +57,7 @@
             this.player.playerZ = ( outrun.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
 
             // create the background
-            this.background = new outrun.Background();
+            this.background = background;
         }
 
         /** ************************************************************************************************************

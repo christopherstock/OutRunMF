@@ -20,9 +20,9 @@
     *
     *   TODO Add class curve?
     *
-    *   =====================
-    *   TODO Secondary - game
-    *   =====================
+    *   ==============================
+    *   TODO Secondary - game creation
+    *   ==============================
     *   TODO New images and sprites.
     *   TODO New stage system for creating different stages.
     *   TODO Extract level creation to separate Factory / StageBuilder class?

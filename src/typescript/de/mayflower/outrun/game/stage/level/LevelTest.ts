@@ -13,7 +13,13 @@
         {
             super
             (
-                3
+                3,
+                new outrun.Background
+                (
+                    outrun.ImageFile.BG_SKY2,
+                    outrun.ImageFile.BG_HILL2,
+                    outrun.ImageFile.BG_TREE2
+                )
             );
         }
 
