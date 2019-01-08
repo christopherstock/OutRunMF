@@ -37,3 +37,9 @@ Constructive refactorings:
 - removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
 - extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
+
+Results:
+==========================
+Separate units
+added Testability
+Easy possibility to combine all elements and easily create new features.

@@ -7,6 +7,7 @@
     export * from './game/engine/Car';
     export * from './game/engine/ColorCombo';
     export * from './game/engine/Segment';
+    export * from './game/engine/SegmentPoint';
     export * from './game/engine/Sprite';
 
     export * from './base/setting/SettingColor';

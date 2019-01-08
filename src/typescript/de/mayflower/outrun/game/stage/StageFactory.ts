@@ -137,10 +137,15 @@
             // TODO introcude class Segment
             segments.push
             (
+                // TODO create segment constructor
                 {
                     index: n,
-                    p1: { world: { y: lastY, z:  n      * outrun.SettingGame.SEGMENT_LENGTH }, camera: {}, screen: {} },
-                    p2: { world: { y: y,     z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH }, camera: {}, screen: {} },
+                    p1: new outrun.SegmentPoint(
+                        { y: lastY, z:  n      * outrun.SettingGame.SEGMENT_LENGTH }
+                    ),
+                    p2: new outrun.SegmentPoint(
+                        { y: y,     z: (n + 1) * outrun.SettingGame.SEGMENT_LENGTH }
+                    ),
                     curve: curve,
                     sprites: [],
                     cars: [],
