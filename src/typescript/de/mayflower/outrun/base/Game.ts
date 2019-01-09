@@ -15,6 +15,8 @@
         /** The image system that manages all images. */
         public              imageSystem             :orts.ImageSystem           = null;
 
+        public              outRun                  :orts.OutRun                = null;
+
         /** ************************************************************************************************************
         *   Inits the game from scratch.
         ***************************************************************************************************************/
@@ -38,11 +40,9 @@
         ***************************************************************************************************************/
         public onImagesLoaded=() : void =>
         {
-            orts.Debug.init.log( 'All images loaded successfully' );
-
             // start legacy game loop
-            const outRun:orts.OutRun = new orts.OutRun( this.canvasSystem );
-            outRun.reset();
-            outRun.start();
+            this.outRun = new orts.OutRun( this.canvasSystem );
+            this.outRun.reset();
+            this.outRun.start();
         }
     }

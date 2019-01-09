@@ -73,11 +73,10 @@
         private onImageLoaded=() :void =>
         {
             ++this.loadedCount;
-            outrun.Debug.image.log( 'loaded imgage [' + this.loadedCount + '] / [' + this.fileNames.length + ']' );
 
             if ( this.loadedCount === this.fileNames.length )
             {
-                outrun.Debug.image.log( 'All images loaded' );
+                outrun.Debug.init.log( ' All [' + this.loadedCount + '] images loaded' );
 
                 // invoke callback function when all images are loaded
                 this.callback();

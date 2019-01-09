@@ -11,7 +11,7 @@
         private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
 
         /** The game stage. */
-        private                 stage               :outrun.Stage                 = null;
+        public                  stage               :outrun.Stage                 = null;
 
         /** scaling factor to provide resolution independence (computed). TODO to CanvasSystem? */
         private                 resolution          :number                     = null;
@@ -65,7 +65,7 @@
                 now = new Date().getTime();
 
                 // using requestAnimationFrame have to be able to handle large delta's caused when it 'hibernates' in a background or non-visible tab
-                dt = Math.min(1, (now - last) / 1000);
+                dt = Math.min( 1, ( now - last ) / 1000 );
 
                 gdt = gdt + dt;
                 while (gdt > outrun.SettingGame.STEP) {
@@ -97,8 +97,11 @@
         private render( ctx:CanvasRenderingContext2D ) : void
         {
             // clear canvas
-            ctx.clearRect(0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight());
+            ctx.clearRect( 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight() );
 
+            // draw stage
             this.stage.render( ctx, this.resolution );
+
+            // draw HUD?
         }
     }

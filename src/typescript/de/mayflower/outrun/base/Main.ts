@@ -9,16 +9,16 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Create different backgrounds for different levels.
-    *
     *   TODO Enable different colors for level street, bg, left and right side?
     *   TODO Enable additional segment forms left or right of the road.
+    *
     *   TODO Add FPS counter via Lib.
     *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
+    *
     *   TODO Create a possibility to change levels via debug keys 1-x.
-    *   TODO Clear all TODOs.
     *
     *   TODO Add class curve?
+    *   TODO Clear all TODOs.
     *
     *   ==============================
     *   TODO Secondary - game creation

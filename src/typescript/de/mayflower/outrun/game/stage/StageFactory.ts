@@ -3,6 +3,8 @@
 
     /** ****************************************************************************************************************
     *   Creates stage segments.
+    *
+    *   TODO to non-static! Add track color fields!
     *******************************************************************************************************************/
     export abstract class StageFactory
     {
@@ -85,7 +87,16 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        private static addRoad( segments:outrun.Segment[], enter:number, hold:number, leave:number, curve:number, y:number ) : void
+        private static addRoad
+        (
+            segments   :outrun.Segment[],
+            enter      :number,
+            hold       :number,
+            leave      :number,
+            curve      :number,
+            y          :number
+        )
+        : void
         {
             const startY :number = StageFactory.lastY( segments );
             const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
@@ -129,7 +140,13 @@
         *   @param curve    Specifies if this segment is a curve?
         *   @param y        The Y location of this segment.
         ***************************************************************************************************************/
-        private static addSegment( segments:outrun.Segment[], curve:number, y:number ) : void
+        private static addSegment
+        (
+            segments   :outrun.Segment[],
+            curve      :number,
+            y          :number
+        )
+        : void
         {
             const n:number = segments.length;
             const lastY:number = StageFactory.lastY( segments );
@@ -151,8 +168,8 @@
                     cars: [],
                     color: (
                         Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                        ? outrun.SettingColor.DARK
-                        : outrun.SettingColor.LIGHT
+                        ? outrun.Main.game.outRun.stage.trackColorDark
+                        : outrun.Main.game.outRun.stage.trackColorLight
                     ),
                     looped: false,
                     fog: 0,

@@ -7,13 +7,15 @@
     // tslint:disable:max-line-length
     export class SettingColor
     {
-        public      static      SKY           :string                   = '#72d7ee';
-        public      static      TREE          :string                   = '#005108';
-        public      static      FOG           :string                   = '#005108';
+        public      static      SKY             :string                   = '#72d7ee';
+        public      static      FOG             :string                   = '#005108'; // ( TREE )
 
-        public      static      LIGHT         :outrun.ColorCombo        = new outrun.ColorCombo( '#6b6b6b', '#10aa10', '#555555', '#cccccc' );
-        public      static      DARK          :outrun.ColorCombo        = new outrun.ColorCombo( '#696969', '#009a00', '#bbbbbb', null      );
+        public      static      DEFAULT_LIGHT   :outrun.ColorCombo        = new outrun.ColorCombo( '#6b6b6b', '#10aa10', '#555555', '#cccccc' );
+        public      static      DEFAULT_DARK    :outrun.ColorCombo        = new outrun.ColorCombo( '#696969', '#009a00', '#bbbbbb', null      );
 
-        public      static      START         :outrun.ColorCombo        = new outrun.ColorCombo( 'white',   'white',   'white',   null      );
-        public      static      FINISH        :outrun.ColorCombo        = new outrun.ColorCombo( 'black',   'black',   'black',   null      );
+        public      static      RED_LIGHT       :outrun.ColorCombo        = new outrun.ColorCombo( '#515151', '#aa5110', '#ef0000', '#ffffff' );
+        public      static      RED_DARK        :outrun.ColorCombo        = new outrun.ColorCombo( '#484848', '#9a5000', '#ffffff', null      );
+
+        public      static      START           :outrun.ColorCombo        = new outrun.ColorCombo( 'white',   'white',   'white',   null      );
+        public      static      FINISH          :outrun.ColorCombo        = new outrun.ColorCombo( 'black',   'black',   'black',   null      );
     }

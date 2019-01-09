@@ -19,7 +19,9 @@
                     outrun.ImageFile.BG_SKY2,
                     outrun.ImageFile.BG_HILL2,
                     outrun.ImageFile.BG_TREE2
-                )
+                ),
+                outrun.SettingColor.RED_LIGHT,
+                outrun.SettingColor.RED_DARK
             );
         }
 

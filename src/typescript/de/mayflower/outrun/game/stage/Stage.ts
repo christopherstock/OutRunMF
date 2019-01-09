@@ -36,13 +36,17 @@
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
 
+        public          readonly    trackColorLight     :outrun.ColorCombo          = null;
+
+        public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+
         /** ************************************************************************************************************
         *   Creates a new stage.
         *
         *   @param carCount   The number of cars to create in this stage.
         *   @param background The background to use for this stage.
         ***************************************************************************************************************/
-        protected constructor( carCount:number, background:outrun.Background )
+        protected constructor( carCount:number, background:outrun.Background, trackColorLight:outrun.ColorCombo, trackColorDark:outrun.ColorCombo )
         {
             // assign car count
             this.carCount = carCount;
@@ -58,6 +62,10 @@
 
             // create the background
             this.background = background;
+
+            // assign track colors
+            this.trackColorLight = trackColorLight;
+            this.trackColorDark  = trackColorDark;
         }
 
         /** ************************************************************************************************************
@@ -182,7 +190,7 @@
         *
         *   @param ctx The 2D drawing context.
         *
-        *   TODO extract resolution here!
+        *   TODO extract resolution to CanvasSystem here!
         ***************************************************************************************************************/
         public render( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
