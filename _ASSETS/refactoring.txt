@@ -40,6 +40,7 @@ Constructive refactorings:
 - extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
 - Create constructors from direct object instanciations (forced on making fields private) => newPoint = { x: 0, y: 0, z: 0 }
+- cluster and separate on more than 7 items per folder, package, class, methods, fields, parameters and so on ..
 
 Results:
 ==========================

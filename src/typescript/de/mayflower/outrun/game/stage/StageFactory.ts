@@ -173,7 +173,8 @@
                     ),
                     looped: false,
                     fog: 0,
-                    clip: 0
+                    clip: 0,
+                    fogColor: outrun.Main.game.outRun.stage.fogColor
                 }
             );
         }

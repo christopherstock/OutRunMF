@@ -18,6 +18,8 @@
 
         public                          color           :outrun.ColorCombo      = null;
 
+        public                          fogColor        :string                 = null;
+
         public                          looped          :boolean                = false;
 
         public                          fog             :number                 = null;

@@ -30,4 +30,9 @@
         {
             this.z = z;
         }
+
+        public getStartupPlayerZ() : number
+        {
+            return ( outrun.SettingGame.CAMERA_HEIGHT * this.getDepth() );
+        }
     }

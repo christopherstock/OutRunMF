@@ -9,16 +9,14 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Enable different colors for level street, bg, left and right side?
-    *   TODO Enable additional segment forms left or right of the road.
-    *
+    *   TODO Create a possibility to change levels via debug keys 1-x.
     *   TODO Add FPS counter via Lib.
     *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
     *
-    *   TODO Create a possibility to change levels via debug keys 1-x.
-    *
     *   TODO Add class curve?
     *   TODO Clear all TODOs.
+    *
+    *   TODO Enable additional segment forms left or right of the road (seaside?).
     *
     *   ==============================
     *   TODO Secondary - game creation
@@ -29,6 +27,8 @@
     *   TODO Add sound effects?
     *   TODO Add main menu?
     *   TODO Combine different road widths? ( different lane counts etc.)
+    *
+    *   TODO prune finsh line?
     *
     *   =====================
     *   TODO Code Quality

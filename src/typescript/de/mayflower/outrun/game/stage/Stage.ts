@@ -38,14 +38,19 @@
 
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+
         private         readonly    skyColor            :string                     = null;
-        private         readonly    fogColor            :string                     = null;
+        public          readonly    fogColor            :string                     = null;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
         *
-        *   @param carCount   The number of cars to create in this stage.
-        *   @param background The background to use for this stage.
+        *   @param carCount        The number of cars to create in this stage.
+        *   @param background      The background to use for this stage.
+        *   @param trackColorLight The color for the road (light strip).
+        *   @param trackColorDark  The color for the road (dark strip).
+        *   @param skyColor        The color of the sky.
+        *   @param fogColor        The color of the fog.
         ***************************************************************************************************************/
         protected constructor
         (
@@ -60,14 +65,11 @@
             // assign car count
             this.carCount = carCount;
 
-            // create the player
-            this.player = new outrun.Player();
-
             // create the camera
             this.camera = new outrun.Camera();
 
-            // specify player's initial Z position TODO suspicious dependency
-            this.player.playerZ = ( outrun.SettingGame.CAMERA_HEIGHT * this.camera.getDepth() );
+            // create the player
+            this.player = new outrun.Player( this.camera.getStartupPlayerZ() );
 
             // create the background
             this.background = background;
@@ -230,6 +232,8 @@
             for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];
+
+                // TODO remove bad practice!
                 segment.looped = segment.index < baseSegment.index;
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxY;
@@ -247,7 +251,10 @@
                 ) {
                     continue;
                 }
-
+/*
+                // TODO to draw segment
+                segment.draw( ctx );
+*/
                 outrun.Drawing2D.segment(
                     ctx,
                     outrun.Main.game.canvasSystem.getWidth(),
@@ -260,7 +267,7 @@
                     segment.p2.screen.w,
                     segment.fog,
                     segment.color,
-                    this.fogColor
+                    segment.fogColor
                 );
 
                 maxY = segment.p1.screen.y;
