@@ -37,8 +37,9 @@
         private         readonly    carCount            :number                     = 0;
 
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
-
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+        private         readonly    skyColor            :string                     = null;
+        private         readonly    fogColor            :string                     = null;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
@@ -46,7 +47,15 @@
         *   @param carCount   The number of cars to create in this stage.
         *   @param background The background to use for this stage.
         ***************************************************************************************************************/
-        protected constructor( carCount:number, background:outrun.Background, trackColorLight:outrun.ColorCombo, trackColorDark:outrun.ColorCombo )
+        protected constructor
+        (
+            carCount        :number,
+            background      :outrun.Background,
+            trackColorLight :outrun.ColorCombo,
+            trackColorDark  :outrun.ColorCombo,
+            skyColor        :string,
+            fogColor        :string
+        )
         {
             // assign car count
             this.carCount = carCount;
@@ -66,6 +75,8 @@
             // assign track colors
             this.trackColorLight = trackColorLight;
             this.trackColorDark  = trackColorDark;
+            this.skyColor        = skyColor;
+            this.fogColor        = fogColor;
         }
 
         /** ************************************************************************************************************
@@ -207,7 +218,7 @@
             let   dx            :number = -(baseSegment.curve * basePercent);
 
             // fill canvas with sky color
-            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingColor.SKY );
+            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.skyColor );
 
             // draw the bg
             this.background.draw( ctx, resolution, playerY );
@@ -248,7 +259,8 @@
                     segment.p2.screen.y,
                     segment.p2.screen.w,
                     segment.fog,
-                    segment.color
+                    segment.color,
+                    this.fogColor
                 );
 
                 maxY = segment.p1.screen.y;

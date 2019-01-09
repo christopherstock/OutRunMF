@@ -21,7 +21,10 @@
                     outrun.ImageFile.BG_TREE2
                 ),
                 outrun.SettingColor.RED_LIGHT,
-                outrun.SettingColor.RED_DARK
+                outrun.SettingColor.RED_DARK,
+
+                outrun.SettingColor.RED_SKY,
+                outrun.SettingColor.RED_FOG
             );
         }
 

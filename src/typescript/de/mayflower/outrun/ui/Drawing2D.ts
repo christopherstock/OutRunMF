@@ -25,7 +25,7 @@
             ctx.fill();
         }
 
-        public static segment( ctx:CanvasRenderingContext2D, width:number, lanes:number, x1:number, y1:number, w1:number, x2:number, y2:number, w2:number, fog:number, color:outrun.ColorCombo ) : void
+        public static segment( ctx:CanvasRenderingContext2D, width:number, lanes:number, x1:number, y1:number, w1:number, x2:number, y2:number, w2:number, fog:number, color:outrun.ColorCombo, colorFog:string ) : void
         {
             const r1 :number = Drawing2D.rumbleWidth(w1, lanes);
             const r2 :number = Drawing2D.rumbleWidth(w2, lanes);
@@ -59,7 +59,7 @@
                 }
             }
 
-            Drawing2D.fog( ctx, 0, y1, width, y2-y1, fog );
+            Drawing2D.fog( ctx, 0, y1, width, y2-y1, fog, colorFog );
         }
 
         public static background( ctx:CanvasRenderingContext2D, width:number, height:number, sprite:string, rotation:number, offset:number ) : void
@@ -125,11 +125,12 @@
             Drawing2D.sprite( ctx, width, height, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
 
-        public static fog( ctx:CanvasRenderingContext2D, x:number, y:number, width:number, height:number, fog:number ) : void
+        public static fog( ctx:CanvasRenderingContext2D, x:number, y:number, width:number, height:number, fog:number, color:string ) : void
         {
+            // TODO extract and create alpha drawing fillRect method here!
             if ( fog < 1 ) {
                 ctx.globalAlpha = ( 1 - fog );
-                ctx.fillStyle = outrun.SettingColor.FOG;
+                ctx.fillStyle = color;
                 ctx.fillRect(x, y, width, height);
                 ctx.globalAlpha = 1;
             }
