@@ -154,28 +154,28 @@
             // TODO introcude class Segment
             segments.push
             (
-                // TODO create Segment constructor
-                {
-                    index: n,
-                    p1: new outrun.SegmentPoint(
+                new outrun.Segment
+                (
+                    n,
+                    new outrun.SegmentPoint(
                         new outrun.Vector( lastY, n * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
-                    p2: new outrun.SegmentPoint(
+                    new outrun.SegmentPoint(
                         new outrun.Vector( y, ( n + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
-                    curve: curve,
-                    sprites: [],
-                    cars: [],
-                    color: (
+                    curve,
+                    [],
+                    [],
+                    (
                         Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
                         ? outrun.Main.game.outRun.stage.trackColorDark
                         : outrun.Main.game.outRun.stage.trackColorLight
                     ),
-                    looped: false,
-                    fog: 0,
-                    clip: 0,
-                    fogColor: outrun.Main.game.outRun.stage.fogColor
-                }
+                    false,
+                    0,
+                    0,
+                    outrun.Main.game.outRun.stage.fogColor
+                )
             );
         }
 

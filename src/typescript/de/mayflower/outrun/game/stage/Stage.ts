@@ -251,25 +251,11 @@
                 ) {
                     continue;
                 }
-/*
-                // TODO to draw segment
-                segment.draw( ctx );
-*/
-                outrun.Drawing2D.segment(
-                    ctx,
-                    outrun.Main.game.canvasSystem.getWidth(),
-                    outrun.SettingGame.LANES,
-                    segment.p1.screen.x,
-                    segment.p1.screen.y,
-                    segment.p1.screen.w,
-                    segment.p2.screen.x,
-                    segment.p2.screen.y,
-                    segment.p2.screen.w,
-                    segment.fog,
-                    segment.color,
-                    segment.fogColor
-                );
 
+                // draw segment
+                segment.draw( ctx );
+
+                // assign maxY ?
                 maxY = segment.p1.screen.y;
             }
 
