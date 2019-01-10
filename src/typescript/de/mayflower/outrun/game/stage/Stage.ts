@@ -306,10 +306,8 @@
         *   @param dt            The delta time to update the game.
         *   @param playerSegment The segment the player is currently in.
         *   @param playerW       The current width of the player.
-        *
-        *   TODO to private! create Stage.update()
         ***************************************************************************************************************/
-        public updateCars( dt:number, playerSegment:outrun.Segment, playerW:number ) : void
+        private updateCars( dt:number, playerSegment:outrun.Segment, playerW:number ) : void
         {
             for ( const car of this.cars )
             {

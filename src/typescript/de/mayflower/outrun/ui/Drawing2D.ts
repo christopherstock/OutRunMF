@@ -7,10 +7,20 @@
     // tslint:disable:max-line-length
     export class Drawing2D
     {
-        public static rect( ctx:CanvasRenderingContext2D, left:number, top:number, width:number, height:number, color:string ) : void
+        public static rect( ctx:CanvasRenderingContext2D, left:number, top:number, width:number, height:number, color:string, alpha:number = 1.0 ) : void
         {
+            if ( alpha !== 1.0 )
+            {
+                ctx.globalAlpha = alpha;
+            }
+
             ctx.fillStyle = color;
             ctx.fillRect( left, top, width, height );
+
+            if ( alpha !== 1.0 )
+            {
+                ctx.globalAlpha = 1.0;
+            }
         }
 
         public static polygon( ctx:CanvasRenderingContext2D, x1:number, y1:number, x2:number, y2:number, x3:number, y3:number, x4:number, y4:number, color:string ) : void
@@ -90,12 +100,8 @@
 
         public static fog( ctx:CanvasRenderingContext2D, x:number, y:number, width:number, height:number, fog:number, color:string ) : void
         {
-            // TODO extract and create alpha drawing fillRect method here!
             if ( fog < 1 ) {
-                ctx.globalAlpha = ( 1 - fog );
-                ctx.fillStyle = color;
-                ctx.fillRect(x, y, width, height);
-                ctx.globalAlpha = 1;
+                Drawing2D.rect( ctx, x, y, width, height, color, ( 1 - fog ) );
             }
         }
 
