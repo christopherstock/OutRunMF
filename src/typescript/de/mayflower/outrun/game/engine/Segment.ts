@@ -9,26 +9,17 @@
     export class Segment
     {
         public                          p1              :outrun.SegmentPoint    = null;
-
         public                          p2              :outrun.SegmentPoint    = null;
-
-        public                          sprites         :outrun.Sprite[]        = null;
-
         public                          cars            :outrun.Car[]           = null;
-
         public                          color           :outrun.ColorCombo      = null;
-
         public                          fogColor        :string                 = null;
-
         public                          looped          :boolean                = false;
-
         public                          fog             :number                 = null;
-
         public                          clip            :number                 = 0;
-
         public                          curve           :number                 = 0;
-
         public                          index           :number                 = 0;
+
+        private         readonly        sprites         :outrun.Sprite[]        = null;
 
         public constructor
         (
@@ -58,6 +49,11 @@
             this.fogColor = fogColor;
         }
 
+        public addSprite( sprite:outrun.Sprite ) : void
+        {
+            this.sprites.push( sprite );
+        }
+
         public draw( ctx:CanvasRenderingContext2D ) : void
         {
             Segment.segment(
@@ -74,6 +70,11 @@
                 this.color,
                 this.fogColor
             );
+        }
+
+        public getSprites() : outrun.Sprite[]
+        {
+            return this.sprites;
         }
 
         // TODO merge with draw()

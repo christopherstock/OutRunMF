@@ -152,8 +152,10 @@
                 if (this.player.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
                     this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
 
-                for ( let i:number = 0; i < playerSegment.sprites.length; i++ ) {
-                    sprite = playerSegment.sprites[i];
+                // TODO to Sprite
+                // TODO to foreach
+                for ( let i:number = 0; i < playerSegment.getSprites().length; i++ ) {
+                    sprite = playerSegment.getSprites()[ i ];
                     spriteW = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
 
                     if (outrun.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
@@ -272,7 +274,7 @@
                     outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, car.getSprite(), spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
                 }
 
-                for ( const sprite of segment.sprites )
+                for ( const sprite of segment.getSprites() )
                 {
                     spriteScale = segment.p1.screen.scale;
                     spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
@@ -367,7 +369,7 @@
         {
             if ( this.segments.length > n )
             {
-                this.segments[ n ].sprites.push( { source: source, offset: offset } );
+                this.segments[ n ].addSprite( new outrun.Sprite( source, offset )  );
             }
         }
 
