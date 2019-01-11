@@ -9,11 +9,12 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Create a possibility to change levels via debug keys 1-x.
     *   TODO Add FPS counter via Lib.
     *
     *   TODO Add class curve?
     *   TODO Clear all TODOs.
+    *
+    *   TODO improve delta calculation in OutRun.start() .. check FPS!
     *
     *   ==============================
     *   TODO Refactorings

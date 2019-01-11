@@ -49,7 +49,6 @@
             };
             frame();
 */
-            // TODO remove! check FPS
             let now  :number = null;
             let last :number = new Date().getTime();
             let dt   :number = 0;

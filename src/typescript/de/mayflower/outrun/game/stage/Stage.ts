@@ -6,32 +6,29 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
-        // TODO all to private!
+        public          readonly    trackColorLight     :outrun.ColorCombo          = null;
+        public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+        public          readonly    skyColor            :string                     = null;
+        public          readonly    fogColor            :string                     = null;
 
         /** array of road segments */
-        public                      segments            :outrun.Segment[]           = [];
-
-        /** z length of entire track (computed) */
-        public                      stageLength         :number                     = 0;
-
-        /** The player. */
-        public                      player              :outrun.Player              = null;
-        /** The stage background. */
-        public                      background          :outrun.Background          = null;
-        /** The stage camera. */
-        public                      camera              :outrun.Camera              = null;
-
-        /** array of cars on the road */
-        private                     cars                :outrun.Car[]               = [];
+        protected                   segments            :outrun.Segment[]           = [];
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
 
-        public          readonly    trackColorLight     :outrun.ColorCombo          = null;
-        public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+        /** The player. */
+        private         readonly    player              :outrun.Player              = null;
+        /** The stage background. */
+        private         readonly    background          :outrun.Background          = null;
+        /** The stage camera. */
+        private         readonly    camera              :outrun.Camera              = null;
 
-        private         readonly    skyColor            :string                     = null;
-        public          readonly    fogColor            :string                     = null;
+        /** z length of entire track (computed) */
+        private                     stageLength         :number                     = 0;
+
+        /** array of cars on the road */
+        private                     cars                :outrun.Car[]               = [];
 
         /** ************************************************************************************************************
         *   Creates a new stage.

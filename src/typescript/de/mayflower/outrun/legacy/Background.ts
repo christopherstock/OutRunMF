@@ -30,10 +30,9 @@
         /** ************************************************************************************************************
         *   Draws the background for a specific scene.
         *
-        *   @param ctx     The canvas rendering context to draw onto.
-        *   @param playerY The player position Y for assigning the Y position of this background.
-        *
-        *   TODO remove resolution here!
+        *   @param ctx        The canvas rendering context to draw onto.
+        *   @param resolution The resolution to draw the background in.
+        *   @param playerY    The player position Y for assigning the Y position of this background.
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number, playerY:number ) : void
         {
