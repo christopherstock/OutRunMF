@@ -9,8 +9,6 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Scale canvas to screen size .. update all dimensions on size rechange.
-    *
     *   TODO Create a possibility to change levels via debug keys 1-x.
     *   TODO Add FPS counter via Lib.
     *

@@ -10,8 +10,15 @@
 
         public  static  readonly    SPRITE_SCALE                :number             = 0.3 * (1 / 80); // the reference sprite width should be 1/3rd the (half-)roadWidth
 
-        public  static  readonly    CANVAS_WIDTH                :number             = 640;
-        public  static  readonly    CANVAS_HEIGHT               :number             = 480;
+        /** Minimum canvas width. */
+        public  static  readonly    CANVAS_MIN_WIDTH            :number             = 480;
+        /** Minimum canvas height. */
+        public  static  readonly    CANVAS_MIN_HEIGHT           :number             = 320;
+
+        /** Maximum canvas width or 0 to disable. */
+        public  static  readonly    CANVAS_MAX_WIDTH            :number             = 800;
+        /** Maximum canvas height or 0 to disable. */
+        public  static  readonly    CANVAS_MAX_HEIGHT           :number             = 528;
 
         /** how many 'update' frames per second */
         public  static  readonly    FPS                         :number             = 60;

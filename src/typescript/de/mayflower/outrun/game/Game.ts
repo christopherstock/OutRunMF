@@ -29,6 +29,9 @@
             this.canvasSystem = new orts.CanvasSystem();
             this.canvasSystem.updateDimensions();
 
+            orts.Debug.init.log( 'Init window resize system' );
+            window.addEventListener( 'resize', this.onWindowResize );
+
             orts.Debug.init.log( 'Init image system' );
             this.imageSystem = new orts.ImageSystem( orts.ImageFile.FILE_NAMES, this.onImagesLoaded );
         }
@@ -42,5 +45,20 @@
             this.outRun = new orts.OutRun( this.canvasSystem );
             this.outRun.reset();
             this.outRun.start();
-        }
+        };
+
+        /** ************************************************************************************************************
+        *   Being invoked when the size of the browser window is changed.
+        ***************************************************************************************************************/
+        private onWindowResize=() : void =>
+        {
+            // update canvas dimensions and check if they actually changed
+            const dimensionsChanged:boolean = this.canvasSystem.updateDimensions();
+
+            if ( dimensionsChanged )
+            {
+                // resize HUD etc.?
+
+            }
+        };
     }

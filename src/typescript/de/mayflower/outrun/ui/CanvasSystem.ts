@@ -39,30 +39,35 @@
         ***************************************************************************************************************/
         public updateDimensions() : boolean
         {
-            // get inner window dimensions
-            const canvasWidth:number  = outrun.SettingGame.CANVAS_WIDTH;  // window.innerWidth;
-            const canvasHeight:number = outrun.SettingGame.CANVAS_HEIGHT; // window.innerHeight;
-/*
+            // assign inner window dimensions as new dimensions
+            let newWidth  :number = window.innerWidth;
+            let newHeight :number = window.innerHeight;
+
             // clip to minimum canvas dimensions
-            if ( canvasWidth  < outrun.SettingGame.CANVAS_MIN_WIDTH  ) canvasWidth  = outrun.SettingGame.CANVAS_MIN_WIDTH;
-            if ( canvasHeight < outrun.SettingGame.CANVAS_MIN_HEIGHT ) canvasHeight = outrun.SettingGame.CANVAS_MIN_HEIGHT;
-*/
+            if ( newWidth  < outrun.SettingGame.CANVAS_MIN_WIDTH  ) newWidth  = outrun.SettingGame.CANVAS_MIN_WIDTH;
+            if ( newHeight < outrun.SettingGame.CANVAS_MIN_HEIGHT ) newHeight = outrun.SettingGame.CANVAS_MIN_HEIGHT;
+
+            // clip to maximum canvas dimensions
+            if ( newWidth  > outrun.SettingGame.CANVAS_MAX_WIDTH  ) newWidth  = outrun.SettingGame.CANVAS_MAX_WIDTH;
+            if ( newHeight > outrun.SettingGame.CANVAS_MAX_HEIGHT ) newHeight = outrun.SettingGame.CANVAS_MAX_HEIGHT;
+
+            // determine dimension change
             const dimensionsChanged:boolean =
             (
-                   this.canvas.width  !== canvasWidth
-                || this.canvas.height !== canvasHeight
+                   this.canvas.width  !== newWidth
+                || this.canvas.height !== newHeight
             );
 
-            // assign new dimensions to canvas
-            this.canvas.width  = canvasWidth;
-            this.canvas.height = canvasHeight;
+            // assign new dimensions to HTML5 canvas
+            this.canvas.width  = newWidth;
+            this.canvas.height = newHeight;
 
             // specify canvas resolution according to its current height
-            this.resolution = canvasHeight / CanvasSystem.RESOLUTION_DIVIDER;
+            this.resolution = newHeight / CanvasSystem.RESOLUTION_DIVIDER;
 
             outrun.Debug.canvas.log
             (
-                'Updated canvas dimensions to [' + canvasWidth + 'x' + canvasHeight + '] '
+                'Updated canvas dimensions to [' + newWidth + 'x' + newHeight + '] '
                 + 'resolution [' + this.resolution   + ']'
                 + 'changed ['    + dimensionsChanged + ']'
             );
