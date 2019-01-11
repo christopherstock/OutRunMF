@@ -34,7 +34,7 @@
         /** background tree layer scroll speed when going around curve (or up hill) */
         public  static  readonly    TREE_SPEED                  :number             = 0.003;
 
-        /** actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth */
+        /** actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth. TODO .. */
         public  static  readonly    ROAD_WIDTH                  :number             = 2000;
         /** length of a single segment */
         public  static  readonly    SEGMENT_LENGTH              :number             = 200;

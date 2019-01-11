@@ -117,24 +117,10 @@
             this.player.update( dx, dt );
 
             // check centrifugal force modification if player is in a curve
-            this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL);
+            this.player.checkCentrifugalForce( dx, speedPercent, playerSegment );
 
-            if ((this.player.playerX < -1) || (this.player.playerX > 1)) {
-
-                if (this.player.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
-                    this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
-
-                // check player collision with sprite
-                for ( const sprite of playerSegment.getSprites() ) {
-                    const spriteW:number = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
-
-                    if (outrun.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
-                        this.player.speed = outrun.SettingGame.MAX_SPEED / 5;
-                        this.camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.player.playerZ, this.stageLength) ); // stop in front of sprite (at front of segment)
-                        break;
-                    }
-                }
-            }
+            // check if player is off-road
+            this.player.checkOffroad( playerSegment, playerW, dt, this.stageLength, this.camera );
 
             // browse all cars
             for ( const car of playerSegment.cars ) {
@@ -144,7 +130,7 @@
                 if ( this.player.speed > car.speed ) {
 
                     // check if player is colliding?
-                    if ( outrun.MathUtil.overlap( this.player.playerX, playerW, car.offset, carW, 0.8 ) ) {
+                    if ( outrun.MathUtil.overlap( this.player.getX(), playerW, car.offset, carW, 0.8 ) ) {
                         this.player.speed = car.speed * (car.speed / this.player.speed);
                         this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stageLength ) );
                         break;
@@ -153,7 +139,7 @@
             }
 
             // dont ever let it go too far out of bounds
-            this.player.playerX = outrun.MathUtil.limit(this.player.playerX, -3, 3);
+            this.player.clipBoundsForX();
 
             // or exceed maxSpeed
             this.player.speed   = outrun.MathUtil.limit(this.player.speed, 0, outrun.SettingGame.MAX_SPEED);
@@ -211,8 +197,8 @@
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxY;
 
-                outrun.MathUtil.project(segment.p1, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
-                outrun.MathUtil.project(segment.p2, (this.player.playerX * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p1, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.MathUtil.project(segment.p2, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
 
                 x = x + dx;
                 dx = dx + segment.curve;
@@ -379,13 +365,13 @@
             {
                 const segment:outrun.Segment = this.segments[(carSegment.index + i) % this.segments.length];
 
-                if ((segment === playerSegment) && (car.speed > this.player.speed) && (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 1.2))) {
-                    if (this.player.playerX > 0.5)
+                if ((segment === playerSegment) && (car.speed > this.player.speed) && (outrun.MathUtil.overlap(this.player.getX(), playerW, car.offset, carW, 1.2))) {
+                    if (this.player.getX() > 0.5)
                         dir = -1;
-                    else if (this.player.playerX < -0.5)
+                    else if (this.player.getX() < -0.5)
                         dir = 1;
                     else
-                        dir = (car.offset > this.player.playerX) ? 1 : -1;
+                        dir = ( car.offset > this.player.getX() ) ? 1 : -1;
                     return dir / i * (car.speed - this.player.speed) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
                 }
 
