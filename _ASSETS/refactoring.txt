@@ -23,6 +23,12 @@ Refactoring Methods:
 - Add tests
 - clear suspicious name combinations ( setX( y ) ), MathUtil.toInt( x ) => MathUtil.toInt( num )
 - Remove pointless statements: rotation = rotation || 0;
+- Unify level of abstraction!!
+    player.render()
+    stage.render()
+    this.keyLeft = this.keySystem.isPressed( KEYS.KEY_LEFT ) // extract!
+- Minimize method parameters by moving values or extracting to member fields etc.
+- Resolve static methods to instance methods on single usages!
 
 Tools that support:
 ===================
@@ -37,6 +43,13 @@ Constructive refactorings:
 - Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
 - Introduce empty class without members that extends any.
 - removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
+
+        private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+        {
+            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
+        }
+
+
 - extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
 - Create constructors from direct object instanciations (forced on making fields private) => newPoint = { x: 0, y: 0, z: 0 }

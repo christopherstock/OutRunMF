@@ -24,15 +24,6 @@
         /** array of cars on the road */
         private                     cars                :outrun.Car[]               = [];
 
-        /** Indicates if the 'steer left' key is pressed this game tick. */
-        private                     keyLeft             :boolean                    = false;
-        /** Indicates if the 'steer right' key is pressed this game tick. */
-        private                     keyRight            :boolean                    = false;
-        /** Indicates if the 'faster' key is pressed this game tick. */
-        private                     keyFaster           :boolean                    = false;
-        /** Indicates if the 'slower' key is pressed this game tick. */
-        private                     keySlower           :boolean                    = false;
-
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
 
@@ -124,28 +115,18 @@
 
             this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stageLength) );
 
-            // Check keys TODO to class Player !
-            // check pressed keys TODO extract to method
-            this.keyLeft   = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
-            this.keyRight  = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
-            this.keyFaster = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
-            this.keySlower = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
+            // check keys for player
+            this.player.handlePlayerKeys();
 
-            if (this.keyLeft)
-                this.player.playerX = this.player.playerX - dx;
-            else if (this.keyRight)
-                this.player.playerX = this.player.playerX + dx;
+            // update player
+            this.player.update( dx, dt );
+
+
+
+
 
             // check centrifugal force modification if player is in a curve
             this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL);
-
-            // accelerate or decelerate
-            if (this.keyFaster)
-                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.ACCELERATION_RATE, dt);
-            else if (this.keySlower)
-                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.BREAKING_RATE, dt);
-            else
-                this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.NATURAL_DECELERATION_RATE, dt);
 
             if ((this.player.playerX < -1) || (this.player.playerX > 1)) {
 
@@ -283,19 +264,8 @@
                 }
 
                 if (segment === playerSegment) {
-                    outrun.Drawing2D.player(
-                        ctx,
-                        outrun.Main.game.canvasSystem.getWidth(),
-                        outrun.Main.game.canvasSystem.getHeight(),
-                        resolution,
-                        outrun.SettingGame.ROAD_WIDTH,
-                        this.player.speed / outrun.SettingGame.MAX_SPEED,
-                        this.camera.getDepth() / this.player.playerZ,
-                        outrun.Main.game.canvasSystem.getWidth() / 2,
-                        (outrun.Main.game.canvasSystem.getHeight() / 2) - (this.camera.getDepth() / this.player.playerZ * outrun.MathUtil.interpolate(playerSegment.p1.camera.y, playerSegment.p2.camera.y, playerPercent) * outrun.Main.game.canvasSystem.getHeight() / 2),
-                        this.player.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ),
-                        playerSegment.p2.world.y - playerSegment.p1.world.y
-                    );
+
+                    this.player.draw( ctx, resolution, playerSegment, this.camera, playerPercent );
                 }
             }
         }

@@ -35,7 +35,7 @@
             this.resolution = this.canvasSystem.getHeight() / 480;  // TODO outsource to named constant
 
             // rebuild the stage TODO create enum for different levels?
-            this.stage = new outrun.LevelTest();
+            this.stage = new outrun.LevelPreset();
             this.stage.init();
         }
 

@@ -80,10 +80,10 @@
         // TODO merge with draw()
         public static segment( ctx:CanvasRenderingContext2D, width:number, lanes:number, x1:number, y1:number, w1:number, x2:number, y2:number, w2:number, fog:number, color:outrun.ColorCombo, colorFog:string ) : void
         {
-            const r1 :number = outrun.Drawing2D.rumbleWidth(     w1, lanes );
-            const r2 :number = outrun.Drawing2D.rumbleWidth(     w2, lanes );
-            const l1 :number = outrun.Drawing2D.laneMarkerWidth( w1, lanes );
-            const l2 :number = outrun.Drawing2D.laneMarkerWidth( w2, lanes );
+            const r1 :number = Segment.calculateRumbleWidth(     w1, lanes );
+            const r2 :number = Segment.calculateRumbleWidth(     w2, lanes );
+            const l1 :number = Segment.calculateLaneMarkerWidth( w1, lanes );
+            const l2 :number = Segment.calculateLaneMarkerWidth( w2, lanes );
 
             let lanew1 :number = 0;
             let lanew2 :number = 0;
@@ -127,5 +127,16 @@
 
             // draw fog
             outrun.Drawing2D.fog( ctx, 0, y1, width, y2 - y1, fog, colorFog );
+        }
+
+        // TODO extract magic numbers!
+        private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+        {
+            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
+        }
+
+        private static calculateLaneMarkerWidth( projectedRoadWidth:number, lanes:number ) : number
+        {
+            return ( projectedRoadWidth / Math.max( 32, 8 * lanes ) );
         }
     }

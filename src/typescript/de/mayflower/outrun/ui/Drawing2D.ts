@@ -104,15 +104,4 @@
                 Drawing2D.rect( ctx, x, y, width, height, color, ( 1 - fog ) );
             }
         }
-
-        // TODO to class Segment?
-        public static rumbleWidth( projectedRoadWidth:number, lanes:number ) : number
-        {
-            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
-        }
-
-        public static laneMarkerWidth( projectedRoadWidth:number, lanes:number ) : number
-        {
-            return ( projectedRoadWidth / Math.max( 32, 8 * lanes ) );
-        }
     }

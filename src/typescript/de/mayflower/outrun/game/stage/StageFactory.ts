@@ -4,7 +4,7 @@
     /** ****************************************************************************************************************
     *   Creates stage segments.
     *
-    *   TODO to non-static! Add track color fields!
+    *   TODO to non-static 'StageBuilder'! Add track color fields!
     *******************************************************************************************************************/
     export abstract class StageFactory
     {

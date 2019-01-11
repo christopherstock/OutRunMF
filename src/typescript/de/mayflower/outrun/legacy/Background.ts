@@ -42,8 +42,6 @@
             outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
         }
 
-        // TODO introduce class Camera
-
         public updateOffsets( playerSegment:outrun.Segment, camera:outrun.Camera, startPosition:number ) : void
         {
             this.skyOffset  = outrun.MathUtil.increase( this.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
