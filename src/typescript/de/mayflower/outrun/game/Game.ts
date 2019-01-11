@@ -1,19 +1,24 @@
 
     import * as outrun from '..';
 
+    require( 'FPSMeter' );
+
     /** ****************************************************************************************************************
     *   Manages the game logic.
     *******************************************************************************************************************/
     export class Game
     {
         /** The key system that manages pressed keys. */
-        public              keySystem               :outrun.KeySystem             = null;
+        public              keySystem               :outrun.KeySystem               = null;
         /** The canvas system that manages the canvas. */
-        public              canvasSystem            :outrun.CanvasSystem          = null;
+        public              canvasSystem            :outrun.CanvasSystem            = null;
         /** The image system that manages all images. */
-        public              imageSystem             :outrun.ImageSystem           = null;
+        public              imageSystem             :outrun.ImageSystem             = null;
 
-        public              outRun                  :outrun.OutRun                = null;
+        /** The legacy game instance. */
+        public              outRun                  :outrun.OutRun                  = null;
+
+        public              fpsMeter                :FPSMeter                       = null;
 
         /** ************************************************************************************************************
         *   Inits the game from scratch.
@@ -29,6 +34,9 @@
             this.canvasSystem = new outrun.CanvasSystem();
             this.canvasSystem.updateDimensions();
 
+            outrun.Debug.init.log( 'Init FPS meter' );
+            this.initFpsCounter();
+
             outrun.Debug.init.log( 'Init window resize system' );
             window.addEventListener( 'resize', this.onWindowResize );
 
@@ -36,10 +44,32 @@
             this.imageSystem = new outrun.ImageSystem( outrun.ImageFile.FILE_NAMES, this.onImagesLoaded );
         }
 
+        /***************************************************************************************************************
+        *   Inits the FPS counter.
+        ***************************************************************************************************************/
+        private initFpsCounter() : void
+        {
+            this.fpsMeter = new FPSMeter(
+                null,
+                {
+                    graph:    1,
+                    decimals: 1,
+                    position: 'absolute',
+                    zIndex:   10,
+                    top:      'auto',
+                    right:    '25px',
+                    bottom:   '25px',
+                    left:     'auto',
+                    margin:   '0',
+                    heat:     1,
+                }
+            );
+        }
+
         /** ************************************************************************************************************
         *   Being invoked when all images are loaded.
         ***************************************************************************************************************/
-        public onImagesLoaded=() : void =>
+        private onImagesLoaded=() : void =>
         {
             // start legacy game loop
             this.outRun = new outrun.OutRun( this.canvasSystem );

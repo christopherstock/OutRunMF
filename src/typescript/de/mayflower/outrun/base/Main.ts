@@ -9,7 +9,6 @@
     *   =====================
     *   TODO Primal
     *   =====================
-    *   TODO Add FPS counter via Lib.
     *   TODO Add class curve?
     *   TODO improve delta calculation in OutRun.start() .. check FPS!
     *
@@ -27,12 +26,13 @@
     *   TODO New stage system for creating different stages.
     *   TODO Extract level creation to separate Factory / StageBuilder class?
     *   TODO Add sound effects?
-    *   TODO Add main menu?
     *   TODO Combine different road widths? ( different lane counts etc.)
     *   TODO prune finsh line?
-    *   TODO Enable fullscreen mode.
     *   TODO More speed for car!
     *   TODO Stage.createCars: create speed map for all cars.
+    *   TODO Enable fullscreen mode.
+    *   TODO Add intro
+    *   TODO Add main menu?
     *
     *   =====================
     *   TODO Code Quality

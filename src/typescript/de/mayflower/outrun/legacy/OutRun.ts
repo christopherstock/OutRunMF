@@ -56,6 +56,8 @@
 
             const frame :()=>void = ():void =>
             {
+                outrun.Main.game.fpsMeter.tickStart();
+
                 this.checkGlobalKeys();
 
                 now = new Date().getTime();
@@ -72,6 +74,9 @@
                 this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
 
                 last = now;
+
+                outrun.Main.game.fpsMeter.tick();
+
                 requestAnimationFrame( frame );
             };
             frame(); // lets get this party started
