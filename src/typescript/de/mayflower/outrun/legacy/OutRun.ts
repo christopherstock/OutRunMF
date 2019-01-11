@@ -57,6 +57,8 @@
 
             const frame :()=>void = ():void =>
             {
+                this.checkGlobalKeys();
+
                 now = new Date().getTime();
 
                 // using requestAnimationFrame have to be able to handle large delta's caused when it 'hibernates' in a background or non-visible tab
@@ -65,9 +67,11 @@
                 gdt = gdt + dt;
                 while (gdt > outrun.SettingGame.STEP) {
                     gdt = gdt - outrun.SettingGame.STEP;
+
                     this.update(outrun.SettingGame.STEP);
                 }
                 this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
+
                 last = now;
                 requestAnimationFrame( frame );
             };
@@ -82,6 +86,24 @@
         private update( dt:number ) : void
         {
             this.stage.update( dt );
+        }
+
+        /** ************************************************************************************************************
+        *   Checks and performs global keys.
+        ***************************************************************************************************************/
+        private checkGlobalKeys() : void
+        {
+            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
+            {
+                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
+                this.changeToLevel( new outrun.LevelTest() );
+            }
+
+            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
+            {
+                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
+                this.changeToLevel( new outrun.LevelPreset() );
+            }
         }
 
         /** ************************************************************************************************************

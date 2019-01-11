@@ -30,7 +30,7 @@
         public      static  readonly    KEY_SPACE               :string                         = 'Space';
 
         /** The keycode that represents the '1' key. */
-        public      static  readonly    KEY_1                   :string                         = 'Key1';
+        public      static  readonly    KEY_1                   :string                         = 'Digit1';
         /** The keycode that represents the '2' key. */
-        public      static  readonly    KEY_2                   :string                         = 'Key2';
+        public      static  readonly    KEY_2                   :string                         = 'Digit2';
     }
