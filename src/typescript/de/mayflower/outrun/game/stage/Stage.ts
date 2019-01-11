@@ -100,11 +100,6 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            let   car           :outrun.Car     = null;
-            let   sprite        :outrun.Sprite  = null;
-            let   carW          :number         = 0;
-            let   spriteW       :number         = 0;
-
             const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.playerZ);
             const playerW       :number         = 80 * outrun.SettingGame.SPRITE_SCALE;
             const speedPercent  :number         = this.player.speed / outrun.SettingGame.MAX_SPEED;
@@ -121,10 +116,6 @@
             // update player
             this.player.update( dx, dt );
 
-
-
-
-
             // check centrifugal force modification if player is in a curve
             this.player.playerX = this.player.playerX - (dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL);
 
@@ -133,11 +124,9 @@
                 if (this.player.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
                     this.player.speed = outrun.MathUtil.accelerate(this.player.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
 
-                // TODO to Sprite
-                // TODO to foreach
-                for ( let i:number = 0; i < playerSegment.getSprites().length; i++ ) {
-                    sprite = playerSegment.getSprites()[ i ];
-                    spriteW = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
+                // check player collision with sprite
+                for ( const sprite of playerSegment.getSprites() ) {
+                    const spriteW:number = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
 
                     if (outrun.MathUtil.overlap(this.player.playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
                         this.player.speed = outrun.SettingGame.MAX_SPEED / 5;
@@ -147,16 +136,15 @@
                 }
             }
 
-            // TODO to foreach loop!
-            for ( let i:number = 0; i < playerSegment.cars.length; i++ ) {
-                car = playerSegment.cars[ i ];
+            // browse all cars
+            for ( const car of playerSegment.cars ) {
 
-                carW = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
+                const carW:number = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
 
-                if (this.player.speed > car.speed) {
+                if ( this.player.speed > car.speed ) {
 
                     // check if player is colliding?
-                    if (outrun.MathUtil.overlap(this.player.playerX, playerW, car.offset, carW, 0.8)) {
+                    if ( outrun.MathUtil.overlap( this.player.playerX, playerW, car.offset, carW, 0.8 ) ) {
                         this.player.speed = car.speed * (car.speed / this.player.speed);
                         this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stageLength ) );
                         break;
@@ -164,8 +152,11 @@
                 }
             }
 
-            this.player.playerX = outrun.MathUtil.limit(this.player.playerX, -3, 3);     // dont ever let it go too far out of bounds
-            this.player.speed = outrun.MathUtil.limit(this.player.speed, 0, outrun.SettingGame.MAX_SPEED); // or exceed maxSpeed
+            // dont ever let it go too far out of bounds
+            this.player.playerX = outrun.MathUtil.limit(this.player.playerX, -3, 3);
+
+            // or exceed maxSpeed
+            this.player.speed   = outrun.MathUtil.limit(this.player.speed, 0, outrun.SettingGame.MAX_SPEED);
 
             // update bg offsets
             this.background.updateOffsets( playerSegment, this.camera, startPosition );
