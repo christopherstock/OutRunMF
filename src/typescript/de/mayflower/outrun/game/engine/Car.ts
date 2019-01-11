@@ -8,13 +8,13 @@
     *******************************************************************************************************************/
     export class Car
     {
-        public                          offset                          :number                     = 0;
+        private                         offset                          :number                     = 0;
 
-        public                          z                               :number                     = 0;
+        private                         z                               :number                     = 0;
 
-        public                          speed                           :number                     = 0;
+        private                         percent                         :number                     = 0;
 
-        public                          percent                         :number                     = 0;
+        private     readonly            speed                           :number                     = 0;
 
         /** The image ID of this car's sprite. TODO to class ImageID? */
         private             readonly    sprite                          :string                     = null;
@@ -30,6 +30,41 @@
         public getSprite() : string
         {
             return this.sprite;
+        }
+
+        public getSpeed() : number
+        {
+            return this.speed;
+        }
+
+        public getOffset() : number
+        {
+            return this.offset;
+        }
+
+        public getZ() : number
+        {
+            return this.z;
+        }
+
+        public update( dt:number, segments:outrun.Segment[], player:outrun.Player, playerSegment:outrun.Segment, playerW:number, stageLength:number ) : void
+        {
+            const oldSegment:outrun.Segment = Car.findSegment( segments, this.z );
+
+            this.offset = this.offset + this.updateCarOffset( segments, player, oldSegment, playerSegment, playerW );
+            this.z = outrun.MathUtil.increase( this.z, dt * this.speed, stageLength );
+
+            // this is useful for interpolation during rendering phase
+            this.percent = outrun.MathUtil.percentRemaining( this.z, outrun.SettingGame.SEGMENT_LENGTH );
+
+            const newSegment:outrun.Segment = Car.findSegment( segments, this.z );
+
+            if ( oldSegment !== newSegment )
+            {
+                const index:number = oldSegment.cars.indexOf( this );
+                oldSegment.cars.splice( index, 1 );
+                newSegment.cars.push( this );
+            }
         }
 
         /** ************************************************************************************************************
@@ -93,5 +128,11 @@
             const spriteY     :number = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, this.percent);
 
             outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+        }
+
+        // TODO prune!
+        public static findSegment( segments:outrun.Segment[], z:number ) : outrun.Segment
+        {
+            return segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % segments.length ];
         }
     }

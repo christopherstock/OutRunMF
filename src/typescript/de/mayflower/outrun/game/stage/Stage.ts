@@ -127,12 +127,12 @@
 
                 const carW:number = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
 
-                if ( this.player.speed > car.speed ) {
+                if ( this.player.speed > car.getSpeed() ) {
 
                     // check if player is colliding?
-                    if ( outrun.MathUtil.overlap( this.player.getX(), playerW, car.offset, carW, 0.8 ) ) {
-                        this.player.speed = car.speed * (car.speed / this.player.speed);
-                        this.camera.setZ( outrun.MathUtil.increase( car.z, -this.player.playerZ, this.stageLength ) );
+                    if ( outrun.MathUtil.overlap( this.player.getX(), playerW, car.getOffset(), carW, 0.8 ) ) {
+                        this.player.speed = car.getSpeed() * (car.getSpeed() / this.player.speed);
+                        this.camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.player.playerZ, this.stageLength ) );
                         break;
                     }
                 }
@@ -248,22 +248,7 @@
         {
             for ( const car of this.cars )
             {
-                const oldSegment:outrun.Segment = this.findSegment(car.z);
-
-                car.offset = car.offset + car.updateCarOffset( this.segments, this.player, oldSegment, playerSegment, playerW );
-                car.z = outrun.MathUtil.increase( car.z, dt * car.speed, this.stageLength );
-
-                // this is useful for interpolation during rendering phase
-                car.percent = outrun.MathUtil.percentRemaining(car.z, outrun.SettingGame.SEGMENT_LENGTH);
-
-                const newSegment:outrun.Segment = this.findSegment(car.z);
-
-                if ( oldSegment !== newSegment )
-                {
-                    const index:number = oldSegment.cars.indexOf( car );
-                    oldSegment.cars.splice( index, 1 );
-                    newSegment.cars.push( car );
-                }
+                car.update( dt, this.segments, this.player, playerSegment, playerW, this.stageLength );
             }
         }
 
@@ -330,7 +315,7 @@
                     + ( Math.random() * outrun.SettingGame.MAX_SPEED / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 ) )
                 );
                 const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
-                const segment :outrun.Segment = this.findSegment( car.z );
+                const segment :outrun.Segment = this.findSegment( car.getZ() );
 
                 segment.cars.push( car );
                 this.cars.push(    car );
