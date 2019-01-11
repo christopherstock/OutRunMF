@@ -88,32 +88,45 @@
             camera        :outrun.Camera,
             playerPercent :number
 
-        ) : void
+        )
+        : void
         {
-            Player.drawPlayer(
-                ctx,
-                outrun.Main.game.canvasSystem.getWidth(),
-                outrun.Main.game.canvasSystem.getHeight(),
-                resolution,
-                outrun.SettingGame.ROAD_WIDTH,
-                this.speed / outrun.SettingGame.MAX_SPEED,
-                camera.getDepth() / this.z,
-                outrun.Main.game.canvasSystem.getWidth() / 2,
-                (
-                    (outrun.Main.game.canvasSystem.getHeight() / 2)
-                    - (
-                        camera.getDepth() / this.z * outrun.MathUtil.interpolate
-                        (
-                            playerSegment.getP1().getCamera().y,
-                            playerSegment.getP2().getCamera().y,
-                            playerPercent
-                        )
-                        * outrun.Main.game.canvasSystem.getHeight() / 2
+            const roadWidth    :number = outrun.SettingGame.ROAD_WIDTH;
+            const speedPercent :number = ( this.speed / outrun.SettingGame.MAX_SPEED );
+            const scale        :number = ( camera.getDepth() / this.z );
+            const destX        :number = ( outrun.Main.game.canvasSystem.getWidth() / 2 );
+            const destY        :number = (
+                (outrun.Main.game.canvasSystem.getHeight() / 2)
+                - (
+                    camera.getDepth() / this.z * outrun.MathUtil.interpolate
+                    (
+                        playerSegment.getP1().getCamera().y,
+                        playerSegment.getP2().getCamera().y,
+                        playerPercent
                     )
-                ),
-                this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ),
-                playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y
+                    * outrun.Main.game.canvasSystem.getHeight() / 2
+                )
             );
+            const steer        :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
+            const updown       :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
+
+            const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
+            let   sprite :string;
+
+            if ( steer < 0 )
+            {
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
+            }
+            else if ( steer > 0 )
+            {
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
+            }
+            else
+            {
+                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
+            }
+
+            outrun.Drawing2D.drawSprite( ctx, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
 
         public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment )
@@ -150,27 +163,5 @@
                     }
                 }
             }
-        }
-
-        // TODO merge with Drawing2D.drawSprite() ?
-        private static drawPlayer( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, speedPercent:number, scale:number, destX:number, destY:number, steer:number, updown:number ) : void
-        {
-            const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-            let   sprite :string;
-
-            if ( steer < 0 )
-            {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
-            }
-            else if ( steer > 0 )
-            {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
-            }
-            else
-            {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
-            }
-
-            outrun.Drawing2D.sprite( ctx, width, height, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
     }

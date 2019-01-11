@@ -59,14 +59,14 @@
             }
         }
 
-        // TODO remove width and height and replace with canvasSystem.getWidth..!
-        public static sprite( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
+        public static drawSprite( ctx:CanvasRenderingContext2D, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
-            const image:HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
+            const width :number           = outrun.Main.game.canvasSystem.getWidth();
+            const image :HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
-            const destW:number  = (image.width  * scale * width/2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
-            const destH:number  = (image.height * scale * width/2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
+            const destW:number  = (image.width  * scale * width / 2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
+            const destH:number  = (image.height * scale * width / 2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
 
             destX = destX + (destW * (offsetX || 0));
             destY = destY + (destH * (offsetY || 0));

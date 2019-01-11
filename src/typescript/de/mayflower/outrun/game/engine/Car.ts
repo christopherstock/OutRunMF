@@ -127,6 +127,6 @@
             const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
             const spriteY     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().y,     segment.getP2().getScreen().y, this.percent);
 
-            outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+            outrun.Drawing2D.drawSprite(ctx, resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
         }
     }
