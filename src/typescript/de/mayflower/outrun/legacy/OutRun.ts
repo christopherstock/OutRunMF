@@ -7,14 +7,11 @@
     // tslint:disable:max-line-length
     export class OutRun
     {
-        /** The canvas system. */
-        private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
-
         /** The game stage. */
         public                  stage               :outrun.Stage                 = null;
 
-        /** scaling factor to provide resolution independence (computed). TODO to CanvasSystem? */
-        private                 resolution          :number                     = null;
+        /** The canvas system. */
+        private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
 
         /** ************************************************************************************************************
         *   Creates a new legacy game system.
@@ -31,9 +28,6 @@
         ***************************************************************************************************************/
         public reset() : void
         {
-            // specify canvas resolution according to its current height
-            this.resolution = this.canvasSystem.getHeight() / 480;  // TODO outsource to named constant
-
             // rebuild the stage TODO create enum for different levels?
             this.stage = new outrun.LevelPreset();
             this.stage.init();
@@ -72,7 +66,7 @@
                     gdt = gdt - outrun.SettingGame.STEP;
                     this.update(outrun.SettingGame.STEP);
                 }
-                this.render( this.canvasSystem.getCanvasContext() );
+                this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
                 last = now;
                 requestAnimationFrame( frame );
             };
@@ -92,16 +86,18 @@
         /** ************************************************************************************************************
         *   Renders the current tick of the legacy game.
         *
-        *   @param ctx The 2D drawing context.
+        *   @param ctx        The 2D drawing context.
+        *   @param resolution The scaling factor for all images to draw.
         ***************************************************************************************************************/
-        private render( ctx:CanvasRenderingContext2D ) : void
+        private draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             // clear canvas
             ctx.clearRect( 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight() );
 
             // draw stage
-            this.stage.draw( ctx, this.resolution );
+            this.stage.draw( ctx, resolution );
 
             // draw HUD?
+
         }
     }

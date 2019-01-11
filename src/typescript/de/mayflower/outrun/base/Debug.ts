@@ -13,7 +13,7 @@
         /** Debugs game states. */
         public      static      readonly    game                :Debug              = new Debug( true  );
         /** Debugs canvas setup and resizing. */
-        public      static      readonly    canvas              :Debug              = new Debug( false );
+        public      static      readonly    canvas              :Debug              = new Debug( true  );
         /** Debugs sound system. */
         public      static      readonly    sound               :Debug              = new Debug( false );
         /** Debugs stage system. */

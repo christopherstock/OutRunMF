@@ -6,10 +6,16 @@
     *******************************************************************************************************************/
     export class CanvasSystem
     {
+        /** The divider to calculate the resolution from the canvas height. */
+        private static  readonly    RESOLUTION_DIVIDER      :number                         = 480;
+
         /** The native HTML5 canvas element. */
         private         readonly    canvas                  :HTMLCanvasElement              = null;
         /** The canvas rendering context. */
         private         readonly    canvasContext           :CanvasRenderingContext2D       = null;
+
+        /** The current resolution scale for drawing all images. */
+        private                     resolution              :number                         = 0;
 
         /** ************************************************************************************************************
         *   Constructs a new canvas system.
@@ -51,10 +57,14 @@
             this.canvas.width  = canvasWidth;
             this.canvas.height = canvasHeight;
 
+            // specify canvas resolution according to its current height
+            this.resolution = canvasHeight / CanvasSystem.RESOLUTION_DIVIDER;
+
             outrun.Debug.canvas.log
             (
                 'Updated canvas dimensions to [' + canvasWidth + 'x' + canvasHeight + '] '
-                + 'changed [' + dimensionsChanged + ']'
+                + 'resolution [' + this.resolution   + ']'
+                + 'changed ['    + dimensionsChanged + ']'
             );
 
             return dimensionsChanged;
@@ -98,5 +108,15 @@
         public getCanvasContext() : CanvasRenderingContext2D
         {
             return this.canvasContext;
+        }
+
+        /** ************************************************************************************************************
+        *   Returns the current canvas rendering context.
+        *
+        *   @return The current resolution scale.
+        ***************************************************************************************************************/
+        public getResolution() : number
+        {
+            return this.resolution;
         }
     }

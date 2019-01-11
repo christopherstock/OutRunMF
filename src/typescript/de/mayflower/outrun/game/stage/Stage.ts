@@ -175,9 +175,8 @@
         /** ************************************************************************************************************
         *   Renders the current tick of the legacy game.
         *
-        *   @param ctx The 2D drawing context.
-        *
-        *   TODO extract resolution to CanvasSystem here!
+        *   @param ctx        The 2D drawing context.
+        *   @param resolution The scaling factor for all images to draw.
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
