@@ -17,21 +17,29 @@
 
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
-        /** player relative z distance from camera (computed) */
-        public                      playerZ             :number                     = null;
         /** current player speed */
-        public                      speed               :number                     = 0;
+        private                     speed               :number                     = 0;
+        /** player relative z distance from camera (computed) */
+        private     readonly        z                   :number                     = null;
 
-        // TODO create members and make all fields private!
-
-        public constructor( playerZ:number )
+        public constructor( z:number )
         {
-            this.playerZ = playerZ;
+            this.z = z;
         }
 
         public getX() : number
         {
             return this.x;
+        }
+
+        public getZ() : number
+        {
+            return this.z;
+        }
+
+        public getSpeed() : number
+        {
+            return this.speed;
         }
 
         public handlePlayerKeys() : void
@@ -59,6 +67,19 @@
                 this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.NATURAL_DECELERATION_RATE, dt );
         }
 
+        public checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
+        {
+            if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
+
+                this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
+                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.z, stageLength ) );
+
+                return true;
+            }
+
+            return false;
+        }
+
         public draw
         (
             ctx           :CanvasRenderingContext2D,
@@ -76,12 +97,12 @@
                 resolution,
                 outrun.SettingGame.ROAD_WIDTH,
                 this.speed / outrun.SettingGame.MAX_SPEED,
-                camera.getDepth() / this.playerZ,
+                camera.getDepth() / this.z,
                 outrun.Main.game.canvasSystem.getWidth() / 2,
                 (
                     (outrun.Main.game.canvasSystem.getHeight() / 2)
                     - (
-                        camera.getDepth() / this.playerZ * outrun.MathUtil.interpolate
+                        camera.getDepth() / this.z * outrun.MathUtil.interpolate
                         (
                             playerSegment.p1.camera.y,
                             playerSegment.p2.camera.y,
@@ -105,6 +126,11 @@
             this.x = outrun.MathUtil.limit( this.x, -3, 3 );
         }
 
+        public clipSpeed()
+        {
+            this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.MAX_SPEED );
+        }
+
         public checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera )
         {
             if ((this.x < -1) || (this.x > 1)) {
@@ -119,7 +145,7 @@
 
                     if (outrun.MathUtil.overlap(this.x, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
                         this.speed = outrun.SettingGame.MAX_SPEED / 5;
-                        camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.playerZ, stageLength) ); // stop in front of sprite (at front of segment)
+                        camera.setZ( outrun.MathUtil.increase(playerSegment.p1.world.z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
                         break;
                     }
                 }

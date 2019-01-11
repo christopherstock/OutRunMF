@@ -3,8 +3,6 @@
 
     /** ****************************************************************************************************************
     *   Represents one impartial and CPU-driven car.
-    *
-    *   TODO all private!
     *******************************************************************************************************************/
     export class Car
     {
@@ -14,10 +12,10 @@
 
         private                         percent                         :number                     = 0;
 
-        private     readonly            speed                           :number                     = 0;
+        private         readonly        speed                           :number                     = 0;
 
-        /** The image ID of this car's sprite. TODO to class ImageID? */
-        private             readonly    sprite                          :string                     = null;
+        /** The image ID of this car's sprite. */
+        private         readonly        sprite                          :string                     = null;
 
         public constructor( offset:number, z:number, sprite:string, speed:number )
         {
@@ -86,14 +84,14 @@
             {
                 const segment:outrun.Segment = segments[(carSegment.index + i) % segments.length];
 
-                if ((segment === playerSegment) && (this.speed > player.speed) && (outrun.MathUtil.overlap(player.getX(), playerW, this.offset, carW, 1.2))) {
+                if ((segment === playerSegment) && ( this.speed > player.getSpeed() ) && (outrun.MathUtil.overlap(player.getX(), playerW, this.offset, carW, 1.2))) {
                     if (player.getX() > 0.5)
                         dir = -1;
                     else if (player.getX() < -0.5)
                         dir = 1;
                     else
                         dir = ( this.offset > player.getX() ) ? 1 : -1;
-                    return dir / i * (this.speed - player.speed) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+                    return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
                 }
 
                 for ( const otherCar of segment.cars )

@@ -77,7 +77,7 @@
         ***************************************************************************************************************/
         public init() : void
         {
-            const playerZ:number = this.player.playerZ;
+            const playerZ:number = this.player.getZ();
 
             // create the road
             this.createRoad( playerZ );
@@ -100,15 +100,15 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.playerZ);
+            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.getZ());
             const playerW       :number         = 80 * outrun.SettingGame.SPRITE_SCALE;
-            const speedPercent  :number         = this.player.speed / outrun.SettingGame.MAX_SPEED;
+            const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.MAX_SPEED;
             const dx            :number         = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const startPosition :number         = this.camera.getZ();
 
             this.updateCars( dt, playerSegment, playerW );
 
-            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.speed, this.stageLength) );
+            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.getSpeed(), this.stageLength) );
 
             // check keys for player
             this.player.handlePlayerKeys();
@@ -127,12 +127,11 @@
 
                 const carW:number = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
 
-                if ( this.player.speed > car.getSpeed() ) {
+                if ( this.player.getSpeed() > car.getSpeed() ) {
 
                     // check if player is colliding?
-                    if ( outrun.MathUtil.overlap( this.player.getX(), playerW, car.getOffset(), carW, 0.8 ) ) {
-                        this.player.speed = car.getSpeed() * (car.getSpeed() / this.player.speed);
-                        this.camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.player.playerZ, this.stageLength ) );
+                    if ( this.player.checkCollidingWithCar( car, playerW, carW, this.camera, this.stageLength ) )
+                    {
                         break;
                     }
                 }
@@ -141,8 +140,8 @@
             // dont ever let it go too far out of bounds
             this.player.clipBoundsForX();
 
-            // or exceed maxSpeed
-            this.player.speed   = outrun.MathUtil.limit(this.player.speed, 0, outrun.SettingGame.MAX_SPEED);
+            // clip maximum speed
+            this.player.clipSpeed();
 
             // update bg offsets
             this.background.updateOffsets( playerSegment, this.camera, startPosition );
@@ -168,8 +167,8 @@
         {
             const baseSegment   :outrun.Segment = this.findSegment(this.camera.getZ());
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.playerZ);
-            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.playerZ, outrun.SettingGame.SEGMENT_LENGTH);
+            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.getZ());
+            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
 
             // TODO to player!
             const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
