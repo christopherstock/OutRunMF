@@ -13,7 +13,7 @@
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
     *
     *   ==============================
-    *   TODO Secondary - game creation
+    *   TODO Game creation
     *   ==============================
     *   TODO Enable additional segment forms left or right of the road (seaside?).
     *   TODO New images and sprites.
@@ -24,6 +24,10 @@
     *   TODO prune finsh line?
     *   TODO More speed for car!
     *   TODO Stage.createCars: create speed map for all cars.
+    *
+    *   ==============================
+    *   TODO Secondary / Decorative features
+    *   ==============================
     *   TODO Enable fullscreen mode.
     *   TODO Add intro
     *   TODO Add main menu?
@@ -36,7 +40,7 @@
     export class Main
     {
         /** The singleton instance of the game. */
-        public      static          game                    :outrun.Game                = null;
+        public      static          game                    :outrun.Engine                = null;
 
         /** ************************************************************************************************************
         *   This method is invoked when the application starts.
@@ -48,7 +52,7 @@
 
             Main.acclaim();
 
-            Main.game = new outrun.Game();
+            Main.game = new outrun.Engine();
             Main.game.init();
         }
 

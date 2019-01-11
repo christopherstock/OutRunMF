@@ -181,13 +181,13 @@
                     [],
                     (
                         Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                        ? outrun.Main.game.outRun.stage.trackColorDark
-                        : outrun.Main.game.outRun.stage.trackColorLight
+                        ? outrun.Main.game.game.stage.trackColorDark
+                        : outrun.Main.game.game.stage.trackColorLight
                     ),
                     false,
                     0,
                     0,
-                    outrun.Main.game.outRun.stage.fogColor
+                    outrun.Main.game.game.stage.fogColor
                 )
             );
         }

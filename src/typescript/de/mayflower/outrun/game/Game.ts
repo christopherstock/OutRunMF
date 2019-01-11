@@ -1,94 +1,106 @@
 
-    import * as outrun from '..';
-
-    require( 'FPSMeter' );
+    import * as outrun from '..'
 
     /** ****************************************************************************************************************
-    *   Manages the game logic.
+    *   The main legacy game engine.
     *******************************************************************************************************************/
+    // tslint:disable:max-line-length
     export class Game
     {
-        /** The key system that manages pressed keys. */
-        public              keySystem               :outrun.KeySystem               = null;
-        /** The canvas system that manages the canvas. */
-        public              canvasSystem            :outrun.CanvasSystem            = null;
-        /** The image system that manages all images. */
-        public              imageSystem             :outrun.ImageSystem             = null;
+        /** The game stage. */
+        public                  stage               :outrun.Stage                 = null;
 
-        /** The legacy game instance. */
-        public              outRun                  :outrun.OutRun                  = null;
-
-        public              fpsMeter                :FPSMeter                       = null;
+        /** The canvas system. */
+        private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
 
         /** ************************************************************************************************************
-        *   Inits the game from scratch.
+        *   Creates a new legacy game system.
+        *
+        *   @param canvasSystem The canvas system to use for rendering.
         ***************************************************************************************************************/
-        public init() : void
+        public constructor( canvasSystem:outrun.CanvasSystem )
         {
-            outrun.Debug.init.log( 'Init game engine' );
-
-            outrun.Debug.init.log( 'Init key system' );
-            this.keySystem = new outrun.KeySystem();
-
-            outrun.Debug.init.log( 'Init canvas system' );
-            this.canvasSystem = new outrun.CanvasSystem();
-            this.canvasSystem.updateDimensions();
-
-            outrun.Debug.init.log( 'Init FPS meter' );
-            this.initFpsCounter();
-
-            outrun.Debug.init.log( 'Init window resize system' );
-            window.addEventListener( 'resize', this.onWindowResize );
-
-            outrun.Debug.init.log( 'Init image system' );
-            this.imageSystem = new outrun.ImageSystem( outrun.ImageFile.FILE_NAMES, this.onImagesLoaded );
-        }
-
-        /***************************************************************************************************************
-        *   Inits the FPS counter.
-        ***************************************************************************************************************/
-        private initFpsCounter() : void
-        {
-            this.fpsMeter = new FPSMeter(
-                null,
-                {
-                    graph:    1,
-                    decimals: 1,
-                    position: 'absolute',
-                    zIndex:   10,
-                    top:      'auto',
-                    right:    '25px',
-                    bottom:   '25px',
-                    left:     'auto',
-                    margin:   '0',
-                    heat:     1,
-                }
-            );
+            this.canvasSystem = canvasSystem;
         }
 
         /** ************************************************************************************************************
-        *   Being invoked when all images are loaded.
+        *   Changes to the specified level.
+        *
+        *   @param newLevel The level to change to.
         ***************************************************************************************************************/
-        private onImagesLoaded=() : void =>
+        public changeToLevel( newLevel:outrun.Stage ) : void
         {
-            // start legacy game loop
-            this.outRun = new outrun.OutRun( this.canvasSystem );
-            this.outRun.changeToLevel( new outrun.LevelTest() );
-            this.outRun.start();
+            this.stage = newLevel;
+            this.stage.init();
+        }
+
+        /** ************************************************************************************************************
+        *   Starts the game loop.
+        ***************************************************************************************************************/
+        public start() : void
+        {
+            requestAnimationFrame( this.tick );
+        }
+
+        /** ************************************************************************************************************
+        *   Performs one tick of the game loop.
+        ***************************************************************************************************************/
+        public tick = () :void =>
+        {
+            outrun.Main.game.fpsMeter.tickStart();
+
+            this.checkGlobalKeys();
+            this.update( outrun.SettingGame.STEP );
+            this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
+
+            outrun.Main.game.fpsMeter.tick();
+
+            requestAnimationFrame( this.tick );
         };
 
         /** ************************************************************************************************************
-        *   Being invoked when the size of the browser window is changed.
+        *   Updates the game world.
+        *
+        *   @param dt The delta time to update the game.
         ***************************************************************************************************************/
-        private onWindowResize=() : void =>
+        private update( dt:number ) : void
         {
-            // update canvas dimensions and check if they actually changed
-            const dimensionsChanged:boolean = this.canvasSystem.updateDimensions();
+            this.stage.update( dt );
+        }
 
-            if ( dimensionsChanged )
+        /** ************************************************************************************************************
+        *   Checks and performs global keys.
+        ***************************************************************************************************************/
+        private checkGlobalKeys() : void
+        {
+            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
             {
-                // resize HUD etc.?
-
+                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
+                this.changeToLevel( new outrun.LevelTest() );
             }
-        };
+
+            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
+            {
+                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
+                this.changeToLevel( new outrun.LevelPreset() );
+            }
+        }
+
+        /** ************************************************************************************************************
+        *   Renders the current tick of the legacy game.
+        *
+        *   @param ctx        The 2D drawing context.
+        *   @param resolution The scaling factor for all images to draw.
+        ***************************************************************************************************************/
+        private draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
+        {
+            // clear canvas
+            ctx.clearRect( 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight() );
+
+            // draw stage
+            this.stage.draw( ctx, resolution );
+
+            // draw HUD?
+
+        }
     }

@@ -3,8 +3,8 @@
     export * from './base/Main';
     export * from './base/Version';
 
+    export * from './game/Engine';
     export * from './game/Game';
-    export * from './game/OutRun';
 
     export * from './game/engine/Background';
     export * from './game/engine/Camera';
