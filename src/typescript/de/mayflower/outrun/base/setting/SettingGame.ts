@@ -7,6 +7,8 @@
     {
         /** The application title. */
         public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ Out Run';
+        /** The application favicon. */
+        public  static  readonly    APP_FAVICON                 :string             = 'favicon.ico';
 
         public  static  readonly    SPRITE_SCALE                :number             = 0.3 * (1 / 80); // the reference sprite width should be 1/3rd the (half-)roadWidth
 

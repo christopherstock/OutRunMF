@@ -39,47 +39,19 @@
         ***************************************************************************************************************/
         public start() : void
         {
-/*
-            const frame:()=>void = (): void =>
-            {
-                this.update( this.STEP );
-                this.draw();
-
-                requestAnimationFrame( frame );
-            };
-            frame();
-*/
-            let now  :number = null;
-            let last :number = new Date().getTime();
-            let dt   :number = 0;
-            let gdt  :number = 0;
-
             const frame :()=>void = ():void =>
             {
                 outrun.Main.game.fpsMeter.tickStart();
 
                 this.checkGlobalKeys();
-
-                now = new Date().getTime();
-
-                // using requestAnimationFrame have to be able to handle large delta's caused when it 'hibernates' in a background or non-visible tab
-                dt = Math.min( 1, ( now - last ) / 1000 );
-
-                gdt = gdt + dt;
-                while (gdt > outrun.SettingGame.STEP) {
-                    gdt = gdt - outrun.SettingGame.STEP;
-
-                    this.update(outrun.SettingGame.STEP);
-                }
+                this.update( outrun.SettingGame.STEP );
                 this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
-
-                last = now;
 
                 outrun.Main.game.fpsMeter.tick();
 
                 requestAnimationFrame( frame );
             };
-            frame(); // lets get this party started
+            requestAnimationFrame( frame ); // lets get this party started
         };
 
         /** ************************************************************************************************************

@@ -6,12 +6,6 @@
     /** ****************************************************************************************************************
     *   The main class containing the point of entry and a single game instance.
     *
-    *   =====================
-    *   TODO Primal
-    *   =====================
-    *   TODO Add class curve?
-    *   TODO improve delta calculation in OutRun.start() .. check FPS!
-    *
     *   ==============================
     *   TODO Refactorings
     *   ==============================
@@ -49,8 +43,8 @@
         ***************************************************************************************************************/
         public static main() : void
         {
-            outrun.HTML.setTitle( outrun.SettingGame.APP_TITLE );
-            outrun.HTML.setFavicon( 'favicon.ico' );
+            outrun.HTML.setTitle(   outrun.SettingGame.APP_TITLE   );
+            outrun.HTML.setFavicon( outrun.SettingGame.APP_FAVICON );
 
             Main.acclaim();
 
