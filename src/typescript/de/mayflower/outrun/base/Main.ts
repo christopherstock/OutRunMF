@@ -9,7 +9,7 @@
     *   ==============================
     *   TODO Refactorings
     *   ==============================
-    *   TODO Improve SettingGame.ROAD_WIDTH (currently half road width!)
+    *   TODO Improve SettingGame.HALF_ROAD_WIDTH (currently half road width!)
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
     *
     *   ==============================
@@ -22,7 +22,6 @@
     *   TODO Add sound effects?
     *   TODO Combine different road widths? ( different lane counts etc.)
     *   TODO prune finsh line?
-    *   TODO More speed for car!
     *   TODO Stage.createCars: create speed map for all cars.
     *
     *   ==============================

@@ -13,7 +13,7 @@
         {
             super
             (
-                outrun.SettingGame.TOTAL_CARS,
+                200,
                 new outrun.Background
                 (
                     outrun.ImageFile.BG_SKY1,

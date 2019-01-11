@@ -60,11 +60,11 @@
 
             // accelerate or decelerate
             if (this.keyFaster)
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.ACCELERATION_RATE, dt );
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_ACCELERATION_RATE, dt );
             else if (this.keySlower)
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.BREAKING_RATE, dt );
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_BREAKING_RATE, dt );
             else
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.NATURAL_DECELERATION_RATE, dt );
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_RATE_NATURAL, dt );
         }
 
         public checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
@@ -91,8 +91,7 @@
         )
         : void
         {
-            const roadWidth    :number = outrun.SettingGame.ROAD_WIDTH;
-            const speedPercent :number = ( this.speed / outrun.SettingGame.MAX_SPEED );
+            const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
             const scale        :number = ( camera.getDepth() / this.z );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
@@ -126,7 +125,7 @@
                 sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
             }
 
-            outrun.Drawing2D.drawSprite( ctx, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
+            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
 
         public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
@@ -141,7 +140,7 @@
 
         public clipSpeed() : void
         {
-            this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.MAX_SPEED );
+            this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
         }
 
         public checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera ) : void
@@ -150,16 +149,16 @@
 
                 // clip to offroad speed
                 if (this.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
-                    this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
+                    this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt);
 
                 // check player collision with sprite
                 for ( const sprite of playerSegment.getSprites() )
                 {
-                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingGame.SPRITE_SCALE;
+                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
                     if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getOffset() + spriteW / 2 * ( sprite.getOffset() > 0 ? 1 : -1 ), spriteW, 0 ) )
                     {
-                        this.speed = outrun.SettingGame.MAX_SPEED / 5;
+                        this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
                         camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
                         break;
                     }

@@ -63,7 +63,7 @@
             outrun.Main.game.engine.fpsMeter.tickStart();
 
             this.checkGlobalKeys();
-            this.update( outrun.SettingGame.STEP );
+            this.update( outrun.SettingEngine.STEP );
             this.draw
             (
                 this.engine.canvasSystem.getCanvasContext(),

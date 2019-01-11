@@ -34,9 +34,8 @@
             return this.camera;
         }
 
-        public static project
+        public updateProjectionPoints
         (
-            p           :outrun.SegmentPoint,
             cameraX     :number,
             cameraY     :number,
             cameraZ     :number,
@@ -48,14 +47,14 @@
             const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
             const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
 
-            p.camera.x     = ( p.world.x || 0 ) - cameraX;
-            p.camera.y     = ( p.world.y || 0 ) - cameraY;
-            p.camera.z     = ( p.world.z || 0 ) - cameraZ;
+            this.camera.x     = ( this.world.x || 0 ) - cameraX;
+            this.camera.y     = ( this.world.y || 0 ) - cameraY;
+            this.camera.z     = ( this.world.z || 0 ) - cameraZ;
 
-            p.screen.scale = ( cameraDepth / p.camera.z );
+            this.screen.scale = ( cameraDepth / this.camera.z );
 
-            p.screen.x     = Math.round( ( width  / 2 ) + ( p.screen.scale * p.camera.x  * width  / 2 ) );
-            p.screen.y     = Math.round( ( height / 2 ) - ( p.screen.scale * p.camera.y  * height / 2 ) );
-            p.screen.w     = Math.round(                  ( p.screen.scale * roadWidth   * width  / 2 ) );
+            this.screen.x     = Math.round( ( width  / 2 ) + ( this.screen.scale * this.camera.x  * width  / 2 ) );
+            this.screen.y     = Math.round( ( height / 2 ) - ( this.screen.scale * this.camera.y  * height / 2 ) );
+            this.screen.w     = Math.round(                  ( this.screen.scale * roadWidth      * width  / 2 ) );
         }
     }

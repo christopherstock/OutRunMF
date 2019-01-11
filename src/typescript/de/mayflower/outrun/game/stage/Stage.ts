@@ -95,8 +95,8 @@
         public update( dt:number ) : void
         {
             const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
-            const playerW       :number         = 80 * outrun.SettingGame.SPRITE_SCALE;
-            const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.MAX_SPEED;
+            const playerW       :number         = 80 * outrun.SettingEngine.SPRITE_SCALE;
+            const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
             const dx            :number         = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const startPosition :number         = this.camera.getZ();
 
@@ -119,7 +119,7 @@
             // browse all cars
             for ( const car of playerSegment.cars ) {
 
-                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
+                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
                 if ( this.player.getSpeed() > car.getSpeed() ) {
 
@@ -166,17 +166,18 @@
             // draw the bg
             this.background.draw( ctx, resolution, playerY );
 
-            for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
+            for ( let n:number = 0; n < outrun.SettingEngine.DRAW_DISTANCE; n++ )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
 
                 // assign new segment properties
                 segment.looped = segment.getIndex() < baseSegment.getIndex();
-                segment.fog    = outrun.MathUtil.exponentialFog( n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY );
+                segment.fog    = outrun.MathUtil.exponentialFog( n / outrun.SettingEngine.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY );
                 segment.clip   = maxY;
 
-                outrun.SegmentPoint.project( segment.getP1(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.SettingGame.ROAD_WIDTH );
-                outrun.SegmentPoint.project( segment.getP2(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.SettingGame.ROAD_WIDTH );
+                // calculate road segment projections
+                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.camera.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.camera.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
 
                 x = x + dx;
                 dx = dx + segment.curve;
@@ -197,7 +198,7 @@
             }
 
             // draw all segments
-            for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
+            for (let n:number = ( outrun.SettingEngine.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
                 const segment:outrun.Segment = this.segments[ ( baseSegment.getIndex() + n ) % this.segments.length ];
 
@@ -269,8 +270,8 @@
                 const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
 
                 const speed   :number         = (
-                    ( outrun.SettingGame.MAX_SPEED / 4 )
-                    + ( Math.random() * outrun.SettingGame.MAX_SPEED / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 ) )
+                    ( outrun.SettingGame.PLAYER_MAX_SPEED / 4 )
+                    + ( Math.random() * outrun.SettingGame.PLAYER_MAX_SPEED / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 ) )
                 );
                 const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );

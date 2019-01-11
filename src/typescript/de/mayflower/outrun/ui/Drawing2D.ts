@@ -65,8 +65,8 @@
             const image :HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
-            const destW:number  = (image.width  * scale * width / 2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
-            const destH:number  = (image.height * scale * width / 2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);
+            const destW:number  = (image.width  * scale * width / 2) * (outrun.SettingEngine.SPRITE_SCALE * roadWidth);
+            const destH:number  = (image.height * scale * width / 2) * (outrun.SettingEngine.SPRITE_SCALE * roadWidth);
 
             destX = destX + (destW * (offsetX || 0));
             destY = destY + (destH * (offsetY || 0));

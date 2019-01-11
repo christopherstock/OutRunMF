@@ -44,12 +44,12 @@
             let newHeight :number = window.innerHeight;
 
             // clip to minimum canvas dimensions
-            if ( newWidth  < outrun.SettingGame.CANVAS_MIN_WIDTH  ) newWidth  = outrun.SettingGame.CANVAS_MIN_WIDTH;
-            if ( newHeight < outrun.SettingGame.CANVAS_MIN_HEIGHT ) newHeight = outrun.SettingGame.CANVAS_MIN_HEIGHT;
+            if ( newWidth  < outrun.SettingEngine.CANVAS_MIN_WIDTH  ) newWidth  = outrun.SettingEngine.CANVAS_MIN_WIDTH;
+            if ( newHeight < outrun.SettingEngine.CANVAS_MIN_HEIGHT ) newHeight = outrun.SettingEngine.CANVAS_MIN_HEIGHT;
 
             // clip to maximum canvas dimensions
-            if ( newWidth  > outrun.SettingGame.CANVAS_MAX_WIDTH  ) newWidth  = outrun.SettingGame.CANVAS_MAX_WIDTH;
-            if ( newHeight > outrun.SettingGame.CANVAS_MAX_HEIGHT ) newHeight = outrun.SettingGame.CANVAS_MAX_HEIGHT;
+            if ( newWidth  > outrun.SettingEngine.CANVAS_MAX_WIDTH  ) newWidth  = outrun.SettingEngine.CANVAS_MAX_WIDTH;
+            if ( newHeight > outrun.SettingEngine.CANVAS_MAX_HEIGHT ) newHeight = outrun.SettingEngine.CANVAS_MAX_HEIGHT;
 
             // determine dimension change
             const dimensionsChanged:boolean =

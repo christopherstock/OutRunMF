@@ -8,12 +8,12 @@
     export * from './game/engine/Engine';
     export * from './game/engine/Background';
     export * from './game/engine/Camera';
-    export * from './game/engine/Car';
+    export * from './game/object/Car';
     export * from './game/engine/ColorCombo';
-    export * from './game/engine/Player';
+    export * from './game/object/Player';
     export * from './game/engine/Segment';
     export * from './game/engine/SegmentPoint';
-    export * from './game/engine/Sprite';
+    export * from './game/object/Sprite';
     export * from './game/engine/Vector';
 
     export * from './base/setting/SettingColor';

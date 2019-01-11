@@ -13,7 +13,7 @@
 
         public constructor()
         {
-            this.depth = ( 1 / Math.tan( ( outrun.SettingGame.FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
+            this.depth = ( 1 / Math.tan( ( outrun.SettingEngine.CAMERA_FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
         }
 
         public getDepth() : number
@@ -33,6 +33,6 @@
 
         public getStartupPlayerZ() : number
         {
-            return ( outrun.SettingGame.CAMERA_HEIGHT * this.getDepth() );
+            return ( outrun.SettingEngine.CAMERA_HEIGHT * this.getDepth() );
         }
     }
