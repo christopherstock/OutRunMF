@@ -79,9 +79,6 @@
             // create the road
             this.createRoad( playerZ );
 
-            // set start and finish
-            this.setStartAndFinish( playerZ );
-
             // add sprites and cars
             this.createSprites();
             this.createCars();
@@ -259,24 +256,6 @@
         *   Creates all decoration sprites for this stage.
         ***************************************************************************************************************/
         protected abstract createSprites() : void;
-
-        /** ************************************************************************************************************
-        *   Sets the start and the finish line.
-        *
-        *   TODO Move to LevelPreset?
-        *
-        *   @param playerZ The initial z position of the player.
-        ***************************************************************************************************************/
-        protected setStartAndFinish( playerZ:number ) : void
-        {
-            // set start and finish
-            this.segments[ this.findSegment( playerZ ).getIndex() + 2 ].color = outrun.SettingColor.START;
-            this.segments[ this.findSegment( playerZ ).getIndex() + 3 ].color = outrun.SettingColor.START;
-            for (let n:number = 0; n < outrun.SettingGame.RUMBLE_LENGTH; n++ )
-            {
-                this.segments[ this.segments.length - 1 - n ].color = outrun.SettingColor.FINISH;
-            }
-        }
 
         /** ************************************************************************************************************
         *   TODO to class segment!
