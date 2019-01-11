@@ -15,12 +15,15 @@
         /** Indicates if the 'slower' key is pressed this game tick. */
         private                     keySlower           :boolean                    = false;
 
+        /** The image ID of the player's current sprite. */
+        private                     sprite              :string                     = null;
+
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
-        /** current player speed */
-        private                     speed               :number                     = 0;
         /** player relative z distance from camera (computed) */
         private     readonly        z                   :number                     = null;
+        /** current player speed */
+        private                     speed               :number                     = 0;
 
         public constructor( z:number )
         {
@@ -106,26 +109,27 @@
                     * outrun.Main.game.engine.canvasSystem.getHeight() / 2
                 )
             );
-            const steer        :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
-            const updown       :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
 
+            const steer  :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
+            const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
             const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-            let   sprite :string;
 
+            // determine sprite
             if ( steer < 0 )
             {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
+                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
             }
             else if ( steer > 0 )
             {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
+                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
             }
             else
             {
-                sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
+                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
             }
 
-            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
+            // draw player
+            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
 
         public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
@@ -154,9 +158,9 @@
                 // check player collision with sprite
                 for ( const sprite of playerSegment.getSprites() )
                 {
-                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingEngine.SPRITE_SCALE;
+                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
-                    if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getOffset() + spriteW / 2 * ( sprite.getOffset() > 0 ? 1 : -1 ), spriteW, 0 ) )
+                    if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getX() + spriteW / 2 * ( sprite.getX() > 0 ? 1 : -1 ), spriteW, 0 ) )
                     {
                         this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
                         camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)

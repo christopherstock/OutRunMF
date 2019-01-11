@@ -94,6 +94,10 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
+/*
+            console.log( 'playerZ ' + this.player.getZ() );
+            console.log( 'cameraZ ' + this.camera.getZ() );
+*/
             const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
             const playerW       :number         = 80 * outrun.SettingEngine.SPRITE_SCALE;
             const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
@@ -235,7 +239,7 @@
         {
             if ( this.segments.length > index )
             {
-                this.segments[ index ].addSprite( new outrun.Sprite( source, offset )  );
+                this.segments[ index ].addSprite( new outrun.Obstacle( source, offset )  );
             }
         }
 

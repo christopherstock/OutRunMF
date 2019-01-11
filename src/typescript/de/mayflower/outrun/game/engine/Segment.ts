@@ -19,7 +19,7 @@
         private         readonly        p1              :outrun.SegmentPoint    = null;
         private         readonly        p2              :outrun.SegmentPoint    = null;
 
-        private         readonly        sprites         :outrun.Sprite[]        = null;
+        private         readonly        sprites         :outrun.Obstacle[]        = null;
 
         public constructor
         (
@@ -27,7 +27,7 @@
             p1       :outrun.SegmentPoint,
             p2       :outrun.SegmentPoint,
             curve    :number,
-            sprites  :outrun.Sprite[],
+            sprites  :outrun.Obstacle[],
             cars     :outrun.Car[],
             color    :outrun.ColorCombo,
             looped   :boolean,
@@ -64,7 +64,7 @@
             return this.p2;
         }
 
-        public addSprite( sprite:outrun.Sprite ) : void
+        public addSprite( sprite:outrun.Obstacle ) : void
         {
             this.sprites.push( sprite );
         }
@@ -135,14 +135,14 @@
             for ( const sprite of this.sprites )
             {
                 const spriteScale :number = this.p1.getScreen().scale;
-                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.getOffset() * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
+                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.getX() * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
                 const spriteY     :number = this.p1.getScreen().y;
 
-                outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, sprite.getSource(), spriteScale, spriteX, spriteY, (sprite.getOffset() < 0 ? -1 : 0), -1, this.clip );
+                outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, sprite.getSprite(), spriteScale, spriteX, spriteY, (sprite.getX() < 0 ? -1 : 0), -1, this.clip );
             }
         }
 
-        public getSprites() : outrun.Sprite[]
+        public getSprites() : outrun.Obstacle[]
         {
             return this.sprites;
         }

@@ -8,6 +8,7 @@
     {
         /** z distance camera is from screen (computed) */
         private     readonly    depth               :number                     = null;
+
         /** current camera Z position (add playerZ to get player's absolute Z position) */
         private                 z                   :number                     = 0;
 

@@ -9,12 +9,16 @@
     *   ==============================
     *   TODO Refactorings
     *   ==============================
-    *   TODO Improve SettingGame.HALF_ROAD_WIDTH (currently half road width!)
+    *   TODO Remove/Improve Z variable for Camera and constant Z variable for player!
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
+    *   TODO Change 'Obstacle' to class 'Deco'.
+    *   TODO Introduce sprite field for all game objects!
+    *   TODO Create abstract parent class 'GameObject'.
     *
     *   ==============================
     *   TODO Game creation
     *   ==============================
+    *   TODO Different road widths and lanes per level!
     *   TODO Enable additional segment forms left or right of the road (seaside?).
     *   TODO New images and sprites.
     *   TODO New stage system for creating different stages.

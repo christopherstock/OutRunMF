@@ -13,7 +13,7 @@
     export * from './game/object/Player';
     export * from './game/engine/Segment';
     export * from './game/engine/SegmentPoint';
-    export * from './game/object/Sprite';
+    export * from './game/object/Obstacle';
     export * from './game/engine/Vector';
 
     export * from './base/setting/SettingColor';
