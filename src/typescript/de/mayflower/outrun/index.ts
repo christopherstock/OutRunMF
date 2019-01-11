@@ -4,9 +4,13 @@
     export * from './base/Version';
 
     export * from './game/Game';
+    export * from './game/OutRun';
 
+    export * from './game/engine/Background';
+    export * from './game/engine/Camera';
     export * from './game/engine/Car';
     export * from './game/engine/ColorCombo';
+    export * from './game/engine/Player';
     export * from './game/engine/Segment';
     export * from './game/engine/SegmentPoint';
     export * from './game/engine/Sprite';
@@ -29,11 +33,6 @@
 
     export * from './io/ImageFile';
     export * from './io/ImageSystem';
-
-    export * from './legacy/Background';
-    export * from './legacy/Camera';
-    export * from './legacy/OutRun';
-    export * from './legacy/Player';
 
     export * from './ui/CanvasSystem';
     export * from './ui/Drawing2D';
