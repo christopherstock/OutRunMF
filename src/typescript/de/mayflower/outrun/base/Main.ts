@@ -34,6 +34,7 @@
     *   TODO prune finsh line?
     *   TODO Enable fullscreen mode.
     *   TODO More speed for car!
+    *   TODO Stage.createCars: create speed map for all cars.
     *
     *   =====================
     *   TODO Code Quality

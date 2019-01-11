@@ -94,7 +94,7 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.getZ());
+            const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
             const playerW       :number         = 80 * outrun.SettingGame.SPRITE_SCALE;
             const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.MAX_SPEED;
             const dx            :number         = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
@@ -142,16 +142,6 @@
         }
 
         /** ************************************************************************************************************
-        *   Finds the segment that contains the current Z position.
-        *
-        *   TODO to class 'segment' !
-        ***************************************************************************************************************/
-        public findSegment( z:number ) : outrun.Segment
-        {
-            return this.segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % this.segments.length ];
-        }
-
-        /** ************************************************************************************************************
         *   Renders the current tick of the legacy game.
         *
         *   @param ctx        The 2D drawing context.
@@ -159,12 +149,11 @@
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            const baseSegment   :outrun.Segment = this.findSegment(this.camera.getZ());
+            const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerSegment :outrun.Segment = this.findSegment(this.camera.getZ() + this.player.getZ());
+            const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
 
-            // TODO to player!
             const playerY       :number = outrun.MathUtil.interpolate(playerSegment.getP1().getWorld().y, playerSegment.getP2().getWorld().y, playerPercent);
 
             let   maxY          :number = outrun.Main.game.canvasSystem.getHeight();
@@ -177,18 +166,14 @@
             // draw the bg
             this.background.draw( ctx, resolution, playerY );
 
-            let   spriteScale :number = 0;
-            let   spriteX     :number = 0;
-            let   spriteY     :number = 0;
-
             for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
 
-                // TODO remove bad practice!
+                // assign new segment properties
                 segment.looped = segment.getIndex() < baseSegment.getIndex();
-                segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
-                segment.clip = maxY;
+                segment.fog    = outrun.MathUtil.exponentialFog( n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY );
+                segment.clip   = maxY;
 
                 outrun.SegmentPoint.project( segment.getP1(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.SettingGame.ROAD_WIDTH );
                 outrun.SegmentPoint.project( segment.getP2(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.SettingGame.ROAD_WIDTH );
@@ -231,21 +216,6 @@
         }
 
         /** ************************************************************************************************************
-        *   Updates the cars in the game world.
-        *
-        *   @param dt            The delta time to update the game.
-        *   @param playerSegment The segment the player is currently in.
-        *   @param playerW       The current width of the player.
-        ***************************************************************************************************************/
-        private updateCars( dt:number, playerSegment:outrun.Segment, playerW:number ) : void
-        {
-            for ( const car of this.cars )
-            {
-                car.update( dt, this.segments, this.player, playerSegment, playerW, this.stageLength );
-            }
-        }
-
-        /** ************************************************************************************************************
         *   Creates the road of this stage.
         *
         *   @param playerZ The initial z position of the player.
@@ -269,6 +239,21 @@
         }
 
         /** ************************************************************************************************************
+        *   Updates the cars in the game world.
+        *
+        *   @param dt            The delta time to update the game.
+        *   @param playerSegment The segment the player is currently in.
+        *   @param playerW       The current width of the player.
+        ***************************************************************************************************************/
+        private updateCars( dt:number, playerSegment:outrun.Segment, playerW:number ) : void
+        {
+            for ( const car of this.cars )
+            {
+                car.update( dt, this.segments, this.player, playerSegment, playerW, this.stageLength );
+            }
+        }
+
+        /** ************************************************************************************************************
         *   Resets all cars on the road to their initial state.
         ***************************************************************************************************************/
         private createCars() : void
@@ -284,19 +269,21 @@
                 ) * outrun.SettingGame.SEGMENT_LENGTH;
                 const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
 
-                // TODO map speeds for cars!
                 const speed   :number         = (
                     ( outrun.SettingGame.MAX_SPEED / 4 )
                     + ( Math.random() * outrun.SettingGame.MAX_SPEED / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 ) )
                 );
                 const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
-                const segment :outrun.Segment = this.findSegment( car.getZ() );
+                const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 
                 segment.cars.push( car );
                 this.cars.push(    car );
             }
         }
 
+        /** ************************************************************************************************************
+        *   Finds the segment that contains the current Z position.
+        ***************************************************************************************************************/
         public static findSegment( segments:outrun.Segment[], z:number ) : outrun.Segment
         {
             return segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % segments.length ];
