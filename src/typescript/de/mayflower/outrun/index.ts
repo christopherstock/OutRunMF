@@ -3,9 +3,9 @@
     export * from './base/Main';
     export * from './base/Version';
 
-    export * from './game/Engine';
     export * from './game/Game';
 
+    export * from './game/engine/Engine';
     export * from './game/engine/Background';
     export * from './game/engine/Camera';
     export * from './game/engine/Car';

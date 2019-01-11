@@ -71,7 +71,7 @@
         public updateCarOffset( segments:outrun.Segment[], player:outrun.Player, carSegment:outrun.Segment, playerSegment:outrun.Segment, playerW:number ) : number
         {
             const lookahead :number = 20;
-            const carW      :number = outrun.Main.game.imageSystem.getImage( this.sprite ).width * outrun.SettingGame.SPRITE_SCALE;
+            const carW      :number = outrun.Main.game.engine.imageSystem.getImage( this.sprite ).width * outrun.SettingGame.SPRITE_SCALE;
 
             let   dir       :number = 0;
             let   otherCarW :number = 0;
@@ -98,7 +98,7 @@
 
                 for ( const otherCar of segment.cars )
                 {
-                    otherCarW = outrun.Main.game.imageSystem.getImage( otherCar.sprite ).width * outrun.SettingGame.SPRITE_SCALE;
+                    otherCarW = outrun.Main.game.engine.imageSystem.getImage( otherCar.sprite ).width * outrun.SettingGame.SPRITE_SCALE;
                     if ( ( this.speed > otherCar.speed ) && outrun.MathUtil.overlap( this.offset, carW, otherCar.offset, otherCarW, 1.2 ) )
                     {
                         if ( otherCar.offset > 0.5 )
@@ -124,7 +124,7 @@
         public draw( ctx:CanvasRenderingContext2D, resolution:number, segment:outrun.Segment ) : void
         {
             const spriteScale :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().scale, segment.getP2().getScreen().scale, this.percent);
-            const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+            const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
             const spriteY     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().y,     segment.getP2().getScreen().y, this.percent);
 
             outrun.Drawing2D.drawSprite(ctx, resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);

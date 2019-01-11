@@ -40,7 +40,7 @@
     export class Main
     {
         /** The singleton instance of the game. */
-        public      static          game                    :outrun.Engine                = null;
+        public      static          game                    :outrun.Game                = null;
 
         /** ************************************************************************************************************
         *   This method is invoked when the application starts.
@@ -52,7 +52,7 @@
 
             Main.acclaim();
 
-            Main.game = new outrun.Engine();
+            Main.game = new outrun.Game();
             Main.game.init();
         }
 

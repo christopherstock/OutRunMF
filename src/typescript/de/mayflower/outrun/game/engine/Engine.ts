@@ -1,5 +1,5 @@
 
-    import * as outrun from '..';
+    import * as outrun from '../..';
 
     require( 'FPSMeter' );
 
@@ -17,15 +17,15 @@
         /** The FPS meter. */
         public              fpsMeter                :FPSMeter                       = null;
 
-        /** The game instance. */
-        public              game                    :outrun.Game                  = null;
+        /** The key system that manages pressed keys. */
+        private             onInitComplete          :() => void                     = null;
 
         /** ************************************************************************************************************
         *   Inits the game from scratch.
         ***************************************************************************************************************/
-        public init() : void
+        public init( onInitComplete: () => void ) : void
         {
-            outrun.Debug.init.log( 'Init game engine' );
+            this.onInitComplete = onInitComplete;
 
             outrun.Debug.init.log( 'Init key system' );
             this.keySystem = new outrun.KeySystem();
@@ -71,10 +71,8 @@
         ***************************************************************************************************************/
         private onImagesLoaded=() : void =>
         {
-            // start legacy game loop
-            this.game = new outrun.Game( this.canvasSystem );
-            this.game.changeToLevel( new outrun.LevelTest() );
-            this.game.start();
+            // notify engine load complete
+            this.onInitComplete();
         };
 
         /** ************************************************************************************************************

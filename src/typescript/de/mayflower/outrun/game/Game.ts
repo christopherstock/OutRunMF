@@ -7,20 +7,21 @@
     // tslint:disable:max-line-length
     export class Game
     {
-        /** The game stage. */
-        public                  stage               :outrun.Stage                 = null;
+        /** The game engine. */
+        public                  engine              :outrun.Engine                  = null;
 
-        /** The canvas system. */
-        private     readonly    canvasSystem        :outrun.CanvasSystem          = null;
+        /** The game stage. */
+        public                  stage               :outrun.Stage                   = null;
 
         /** ************************************************************************************************************
-        *   Creates a new legacy game system.
-        *
-        *   @param canvasSystem The canvas system to use for rendering.
+        *   Inits the game's engine.
         ***************************************************************************************************************/
-        public constructor( canvasSystem:outrun.CanvasSystem )
+        public init() : void
         {
-            this.canvasSystem = canvasSystem;
+            outrun.Debug.init.log( 'Init game engine' );
+
+            this.engine = new outrun.Engine();
+            this.engine.init( this.onEngineInitCompleted );
         }
 
         /** ************************************************************************************************************
@@ -35,9 +36,21 @@
         }
 
         /** ************************************************************************************************************
+        *   Being invoked when the game engine is fully initialized.
+        ***************************************************************************************************************/
+        private onEngineInitCompleted = () :void =>
+        {
+            outrun.Debug.init.log( 'Game engine fully initialized' );
+
+            // switch to initial level and startGameLoop the game loop
+            this.changeToLevel( new outrun.LevelTest() );
+            this.startGameLoop();
+        };
+
+        /** ************************************************************************************************************
         *   Starts the game loop.
         ***************************************************************************************************************/
-        public start() : void
+        private startGameLoop() : void
         {
             requestAnimationFrame( this.tick );
         }
@@ -45,15 +58,19 @@
         /** ************************************************************************************************************
         *   Performs one tick of the game loop.
         ***************************************************************************************************************/
-        public tick = () :void =>
+        private tick = () :void =>
         {
-            outrun.Main.game.fpsMeter.tickStart();
+            outrun.Main.game.engine.fpsMeter.tickStart();
 
             this.checkGlobalKeys();
             this.update( outrun.SettingGame.STEP );
-            this.draw( this.canvasSystem.getCanvasContext(), this.canvasSystem.getResolution() );
+            this.draw
+            (
+                this.engine.canvasSystem.getCanvasContext(),
+                this.engine.canvasSystem.getResolution()
+            );
 
-            outrun.Main.game.fpsMeter.tick();
+            outrun.Main.game.engine.fpsMeter.tick();
 
             requestAnimationFrame( this.tick );
         };
@@ -73,15 +90,15 @@
         ***************************************************************************************************************/
         private checkGlobalKeys() : void
         {
-            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
+            if ( outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
             {
-                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
+                outrun.Main.game.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
                 this.changeToLevel( new outrun.LevelTest() );
             }
 
-            if ( outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
+            if ( outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
             {
-                outrun.Main.game.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
+                outrun.Main.game.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
                 this.changeToLevel( new outrun.LevelPreset() );
             }
         }
@@ -95,7 +112,7 @@
         private draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             // clear canvas
-            ctx.clearRect( 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight() );
+            ctx.clearRect( 0, 0, this.engine.canvasSystem.getWidth(), this.engine.canvasSystem.getHeight() );
 
             // draw stage
             this.stage.draw( ctx, resolution );

@@ -36,9 +36,12 @@
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number, playerY:number ) : void
         {
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.skyImage,  this.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.hillImage, this.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
-            outrun.Drawing2D.background( ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
+            const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
+            const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
+
+            outrun.Drawing2D.background( ctx, width, height, this.skyImage,  this.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
+            outrun.Drawing2D.background( ctx, width, height, this.hillImage, this.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
+            outrun.Drawing2D.background( ctx, width, height, this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
         }
 
         public updateOffsets( playerSegment:outrun.Segment, camera:outrun.Camera, startPosition:number ) : void

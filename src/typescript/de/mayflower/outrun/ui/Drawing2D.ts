@@ -37,7 +37,7 @@
 
         public static background( ctx:CanvasRenderingContext2D, width:number, height:number, sprite:string, rotation:number, offset:number ) : void
         {
-            const image:HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
+            const image:HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
 
             const imageW:number = image.width / 2;
             const imageH:number = image.height;
@@ -61,8 +61,8 @@
 
         public static drawSprite( ctx:CanvasRenderingContext2D, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
-            const width :number           = outrun.Main.game.canvasSystem.getWidth();
-            const image :HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );
+            const width :number           = outrun.Main.game.engine.canvasSystem.getWidth();
+            const image :HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
             const destW:number  = (image.width  * scale * width / 2) * (outrun.SettingGame.SPRITE_SCALE * roadWidth);

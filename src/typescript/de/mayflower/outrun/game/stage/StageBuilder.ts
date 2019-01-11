@@ -94,13 +94,13 @@
         }
 
         /** ************************************************************************************************************
-        *   Sets the start and the finish line.
+        *   Sets the startGameLoop and the finish line.
         *
         *   @param playerZ The initial z position of the player.
         ***************************************************************************************************************/
         public addStartAndFinish( playerZ:number ) : void
         {
-            // set start and finish
+            // set startGameLoop and finish
             this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 2 ].color = outrun.SettingColor.START;
             this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 3 ].color = outrun.SettingColor.START;
             for (let n:number = 0; n < outrun.SettingGame.RUMBLE_LENGTH; n++ )
@@ -181,13 +181,13 @@
                     [],
                     (
                         Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                        ? outrun.Main.game.game.stage.trackColorDark
-                        : outrun.Main.game.game.stage.trackColorLight
+                        ? outrun.Main.game.stage.trackColorDark
+                        : outrun.Main.game.stage.trackColorLight
                     ),
                     false,
                     0,
                     0,
-                    outrun.Main.game.game.stage.fogColor
+                    outrun.Main.game.stage.fogColor
                 )
             );
         }

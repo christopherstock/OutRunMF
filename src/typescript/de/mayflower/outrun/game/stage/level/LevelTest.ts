@@ -58,7 +58,7 @@
             stageBuilder.addSCurves();
             stageBuilder.addDownhillToEnd(   outrun.Road.LENGTH.DOUBLE_LONG );
 */
-            // set start and finish
+            // set startGameLoop and finish
             stageBuilder.addStartAndFinish( playerZ );
 
             this.segments = stageBuilder.assemble();

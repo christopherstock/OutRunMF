@@ -2,7 +2,7 @@
     import * as outrun from '../..'
 
     /** ****************************************************************************************************************
-    *   Represents one point (start or end) of one road segment.
+    *   Represents one point (startGameLoop or end) of one road segment.
     *******************************************************************************************************************/
     export class SegmentPoint
     {
@@ -45,8 +45,8 @@
         )
         : void
         {
-            const width  :number = outrun.Main.game.canvasSystem.getWidth();
-            const height :number = outrun.Main.game.canvasSystem.getHeight();
+            const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
+            const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
 
             p.camera.x     = ( p.world.x || 0 ) - cameraX;
             p.camera.y     = ( p.world.y || 0 ) - cameraY;

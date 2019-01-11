@@ -44,10 +44,10 @@
 
         public handlePlayerKeys() : void
         {
-            this.keyLeft   = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
-            this.keyRight  = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
-            this.keyFaster = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
-            this.keySlower = outrun.Main.game.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
+            this.keyLeft   = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
+            this.keyRight  = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
+            this.keyFaster = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
+            this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
         }
 
         public update( dx:number, dt:number ) : void
@@ -94,9 +94,9 @@
             const roadWidth    :number = outrun.SettingGame.ROAD_WIDTH;
             const speedPercent :number = ( this.speed / outrun.SettingGame.MAX_SPEED );
             const scale        :number = ( camera.getDepth() / this.z );
-            const destX        :number = ( outrun.Main.game.canvasSystem.getWidth() / 2 );
+            const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
-                (outrun.Main.game.canvasSystem.getHeight() / 2)
+                (outrun.Main.game.engine.canvasSystem.getHeight() / 2)
                 - (
                     camera.getDepth() / this.z * outrun.MathUtil.interpolate
                     (
@@ -104,7 +104,7 @@
                         playerSegment.getP2().getCamera().y,
                         playerPercent
                     )
-                    * outrun.Main.game.canvasSystem.getHeight() / 2
+                    * outrun.Main.game.engine.canvasSystem.getHeight() / 2
                 )
             );
             const steer        :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
@@ -155,7 +155,7 @@
                 // check player collision with sprite
                 for ( const sprite of playerSegment.getSprites() )
                 {
-                    const spriteW:number = outrun.Main.game.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingGame.SPRITE_SCALE;
+                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingGame.SPRITE_SCALE;
 
                     if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getOffset() + spriteW / 2 * ( sprite.getOffset() > 0 ? 1 : -1 ), spriteW, 0 ) )
                     {

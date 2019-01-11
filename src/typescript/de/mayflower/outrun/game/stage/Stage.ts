@@ -119,7 +119,7 @@
             // browse all cars
             for ( const car of playerSegment.cars ) {
 
-                const carW:number = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
+                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
 
                 if ( this.player.getSpeed() > car.getSpeed() ) {
 
@@ -156,12 +156,12 @@
 
             const playerY       :number = outrun.MathUtil.interpolate(playerSegment.getP1().getWorld().y, playerSegment.getP2().getWorld().y, playerPercent);
 
-            let   maxY          :number = outrun.Main.game.canvasSystem.getHeight();
+            let   maxY          :number = outrun.Main.game.engine.canvasSystem.getHeight();
             let   x             :number = 0;
             let   dx            :number = -(baseSegment.curve * basePercent);
 
             // fill canvas with sky color
-            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), this.skyColor );
+            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.engine.canvasSystem.getWidth(), outrun.Main.game.engine.canvasSystem.getHeight(), this.skyColor );
 
             // draw the bg
             this.background.draw( ctx, resolution, playerY );
