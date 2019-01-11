@@ -171,7 +171,7 @@
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
 
             // TODO to player!
-            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
+            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.getWorld().y, playerSegment.p2.getWorld().y, playerPercent);
 
             let   maxY          :number = outrun.Main.game.canvasSystem.getHeight();
             let   x             :number = 0;
@@ -196,16 +196,16 @@
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxY;
 
-                outrun.MathUtil.project(segment.p1, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
-                outrun.MathUtil.project(segment.p2, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH);
+                outrun.SegmentPoint.project( segment.p1, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
+                outrun.SegmentPoint.project( segment.p2, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
 
                 x = x + dx;
                 dx = dx + segment.curve;
 
                 if (
-                    (segment.p1.camera.z <= this.camera.getDepth() ) || // behind us
-                    (segment.p2.screen.y >= segment.p1.screen.y)     || // back face cull
-                    (segment.p2.screen.y >= maxY)                       // clip by (already rendered) hill
+                    (segment.p1.getCamera().z <= this.camera.getDepth() ) || // behind us
+                    (segment.p2.getScreen().y >= segment.p1.getScreen().y)     || // back face cull
+                    (segment.p2.getScreen().y >= maxY)                       // clip by (already rendered) hill
                 ) {
                     continue;
                 }
@@ -214,7 +214,7 @@
                 segment.draw( ctx );
 
                 // assign maxY ?
-                maxY = segment.p1.screen.y;
+                maxY = segment.p1.getScreen().y;
             }
 
             // draw all segments

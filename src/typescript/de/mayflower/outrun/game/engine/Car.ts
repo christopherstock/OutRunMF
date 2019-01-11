@@ -121,9 +121,9 @@
 
         public draw( ctx:CanvasRenderingContext2D, resolution:number, segment:outrun.Segment ) : void
         {
-            const spriteScale :number = outrun.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, this.percent);
-            const spriteX     :number = outrun.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
-            const spriteY     :number = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, this.percent);
+            const spriteScale :number = outrun.MathUtil.interpolate(segment.p1.getScreen().scale, segment.p2.getScreen().scale, this.percent);
+            const spriteX     :number = outrun.MathUtil.interpolate(segment.p1.getScreen().x,     segment.p2.getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+            const spriteY     :number = outrun.MathUtil.interpolate(segment.p1.getScreen().y,     segment.p2.getScreen().y, this.percent);
 
             outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
         }

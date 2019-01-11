@@ -7,11 +7,11 @@
     export class Background
     {
         /** The assigned image for the sky. */
-        private                 skyImage            :string                     = null;
+        private     readonly    skyImage            :string                     = null;
         /** The assigned image for the hills. */
-        private                 hillImage           :string                     = null;
+        private     readonly    hillImage           :string                     = null;
         /** The assigned image for the trees. */
-        private                 treeImage           :string                     = null;
+        private     readonly    treeImage           :string                     = null;
 
         /** current sky scroll offset */
         private                 skyOffset           :number                     = 0;

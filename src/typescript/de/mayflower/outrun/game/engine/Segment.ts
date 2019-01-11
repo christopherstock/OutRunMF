@@ -60,12 +60,12 @@
                 ctx,
                 outrun.Main.game.canvasSystem.getWidth(),
                 outrun.SettingGame.LANES,
-                this.p1.screen.x,
-                this.p1.screen.y,
-                this.p1.screen.w,
-                this.p2.screen.x,
-                this.p2.screen.y,
-                this.p2.screen.w,
+                this.p1.getScreen().x,
+                this.p1.getScreen().y,
+                this.p1.getScreen().w,
+                this.p2.getScreen().x,
+                this.p2.getScreen().y,
+                this.p2.getScreen().w,
                 this.fog,
                 this.color,
                 this.fogColor
@@ -76,9 +76,9 @@
         {
             for ( const sprite of this.sprites )
             {
-                const spriteScale :number = this.p1.screen.scale;
-                const spriteX     :number = this.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
-                const spriteY     :number = this.p1.screen.y;
+                const spriteScale :number = this.p1.getScreen().scale;
+                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+                const spriteY     :number = this.p1.getScreen().y;
 
                 outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, this.clip);
             }
