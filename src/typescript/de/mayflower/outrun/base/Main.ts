@@ -10,16 +10,14 @@
     *   TODO Primal
     *   =====================
     *   TODO Add FPS counter via Lib.
-    *
     *   TODO Add class curve?
-    *   TODO Clear all TODOs.
-    *
     *   TODO improve delta calculation in OutRun.start() .. check FPS!
     *
     *   ==============================
     *   TODO Refactorings
     *   ==============================
     *   TODO Improve SettingGame.ROAD_WIDTH (currently half road width!)
+    *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
     *
     *   ==============================
     *   TODO Secondary - game creation

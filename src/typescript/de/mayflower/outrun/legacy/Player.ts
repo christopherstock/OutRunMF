@@ -129,22 +129,22 @@
             outrun.Drawing2D.drawSprite( ctx, resolution, roadWidth, sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
         }
 
-        public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment )
+        public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
         {
             this.x = this.x - ( dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL );
         }
 
-        public clipBoundsForX()
+        public clipBoundsForX() : void
         {
             this.x = outrun.MathUtil.limit( this.x, -3, 3 );
         }
 
-        public clipSpeed()
+        public clipSpeed() : void
         {
             this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.MAX_SPEED );
         }
 
-        public checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera )
+        public checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera ) : void
         {
             if ((this.x < -1) || (this.x > 1)) {
 
@@ -153,10 +153,12 @@
                     this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.OFF_ROAD_DECELERATION, dt);
 
                 // check player collision with sprite
-                for ( const sprite of playerSegment.getSprites() ) {
-                    const spriteW:number = outrun.Main.game.imageSystem.getImage(sprite.source).width * outrun.SettingGame.SPRITE_SCALE;
+                for ( const sprite of playerSegment.getSprites() )
+                {
+                    const spriteW:number = outrun.Main.game.imageSystem.getImage( sprite.getSource() ).width * outrun.SettingGame.SPRITE_SCALE;
 
-                    if (outrun.MathUtil.overlap(this.x, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
+                    if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getOffset() + spriteW / 2 * ( sprite.getOffset() > 0 ? 1 : -1 ), spriteW, 0 ) )
+                    {
                         this.speed = outrun.SettingGame.MAX_SPEED / 5;
                         camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
                         break;

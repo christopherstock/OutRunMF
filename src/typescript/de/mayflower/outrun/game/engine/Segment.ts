@@ -135,10 +135,10 @@
             for ( const sprite of this.sprites )
             {
                 const spriteScale :number = this.p1.getScreen().scale;
-                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.getOffset() * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
                 const spriteY     :number = this.p1.getScreen().y;
 
-                outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, this.clip);
+                outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.ROAD_WIDTH, sprite.getSource(), spriteScale, spriteX, spriteY, (sprite.getOffset() < 0 ? -1 : 0), -1, this.clip );
             }
         }
 

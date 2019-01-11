@@ -228,13 +228,13 @@
         protected abstract createSprites() : void;
 
         /** ************************************************************************************************************
-        *   TODO to class segment!
+        *   Adds a sprite to the segment with the specified index.
         ***************************************************************************************************************/
-        protected addSprite( n:number, source:string, offset:number ) : void
+        protected addSprite( index:number, source:string, offset:number ) : void
         {
-            if ( this.segments.length > n )
+            if ( this.segments.length > index )
             {
-                this.segments[ n ].addSprite( new outrun.Sprite( source, offset )  );
+                this.segments[ index ].addSprite( new outrun.Sprite( source, offset )  );
             }
         }
 
@@ -258,7 +258,6 @@
         ***************************************************************************************************************/
         private createCars() : void
         {
-            // TODO duplicated in segment.cars - remove one of both??
             this.cars = [];
 
             for ( let i:number = 0; i < this.carCount; i++ )
