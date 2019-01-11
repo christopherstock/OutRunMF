@@ -3,13 +3,9 @@
 
     /** ****************************************************************************************************************
     *   Represents one segment of the road.
-    *
-    *   TODO add private!
     *******************************************************************************************************************/
     export class Segment
     {
-        public                          p1              :outrun.SegmentPoint    = null;
-        public                          p2              :outrun.SegmentPoint    = null;
         public                          cars            :outrun.Car[]           = null;
         public                          color           :outrun.ColorCombo      = null;
         public                          fogColor        :string                 = null;
@@ -17,7 +13,11 @@
         public                          fog             :number                 = null;
         public                          clip            :number                 = 0;
         public                          curve           :number                 = 0;
-        public                          index           :number                 = 0;
+
+        private         readonly        index           :number                 = 0;
+
+        private         readonly        p1              :outrun.SegmentPoint    = null;
+        private         readonly        p2              :outrun.SegmentPoint    = null;
 
         private         readonly        sprites         :outrun.Sprite[]        = null;
 
@@ -47,6 +47,21 @@
             this.fog      = fog;
             this.clip     = clip;
             this.fogColor = fogColor;
+        }
+
+        public getIndex() : number
+        {
+            return this.index;
+        }
+
+        public getP1() : outrun.SegmentPoint
+        {
+            return this.p1;
+        }
+
+        public getP2() : outrun.SegmentPoint
+        {
+            return this.p2;
         }
 
         public addSprite( sprite:outrun.Sprite ) : void

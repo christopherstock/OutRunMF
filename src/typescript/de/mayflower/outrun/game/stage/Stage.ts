@@ -171,7 +171,7 @@
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
 
             // TODO to player!
-            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.p1.getWorld().y, playerSegment.p2.getWorld().y, playerPercent);
+            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.getP1().getWorld().y, playerSegment.getP2().getWorld().y, playerPercent);
 
             let   maxY          :number = outrun.Main.game.canvasSystem.getHeight();
             let   x             :number = 0;
@@ -189,23 +189,23 @@
 
             for ( let n:number = 0; n < outrun.SettingGame.DRAW_DISTANCE; n++ )
             {
-                const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];
+                const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
 
                 // TODO remove bad practice!
-                segment.looped = segment.index < baseSegment.index;
+                segment.looped = segment.getIndex() < baseSegment.getIndex();
                 segment.fog = outrun.MathUtil.exponentialFog(n / outrun.SettingGame.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY);
                 segment.clip = maxY;
 
-                outrun.SegmentPoint.project( segment.p1, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
-                outrun.SegmentPoint.project( segment.p2, (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
+                outrun.SegmentPoint.project( segment.getP1(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
+                outrun.SegmentPoint.project( segment.getP2(), (this.player.getX() * outrun.SettingGame.ROAD_WIDTH) - x - dx, playerY + outrun.SettingGame.CAMERA_HEIGHT, this.camera.getZ() - (segment.looped ? this.stageLength : 0), this.camera.getDepth(), outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), outrun.SettingGame.ROAD_WIDTH );
 
                 x = x + dx;
                 dx = dx + segment.curve;
 
                 if (
-                    (segment.p1.getCamera().z <= this.camera.getDepth() ) || // behind us
-                    (segment.p2.getScreen().y >= segment.p1.getScreen().y)     || // back face cull
-                    (segment.p2.getScreen().y >= maxY)                       // clip by (already rendered) hill
+                    (segment.getP1().getCamera().z <= this.camera.getDepth() ) || // behind us
+                    (segment.getP2().getScreen().y >= segment.getP1().getScreen().y)     || // back face cull
+                    (segment.getP2().getScreen().y >= maxY)                       // clip by (already rendered) hill
                 ) {
                     continue;
                 }
@@ -214,13 +214,13 @@
                 segment.draw( ctx );
 
                 // assign maxY ?
-                maxY = segment.p1.getScreen().y;
+                maxY = segment.getP1().getScreen().y;
             }
 
             // draw all segments
             for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
-                const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];
+                const segment:outrun.Segment = this.segments[ ( baseSegment.getIndex() + n ) % this.segments.length ];
 
                 for ( const car of segment.cars )
                 {
@@ -273,8 +273,8 @@
         protected setStartAndFinish( playerZ:number ) : void
         {
             // set start and finish
-            this.segments[ this.findSegment( playerZ ).index + 2 ].color = outrun.SettingColor.START;
-            this.segments[ this.findSegment( playerZ ).index + 3 ].color = outrun.SettingColor.START;
+            this.segments[ this.findSegment( playerZ ).getIndex() + 2 ].color = outrun.SettingColor.START;
+            this.segments[ this.findSegment( playerZ ).getIndex() + 3 ].color = outrun.SettingColor.START;
             for (let n:number = 0; n < outrun.SettingGame.RUMBLE_LENGTH; n++ )
             {
                 this.segments[ this.segments.length - 1 - n ].color = outrun.SettingColor.FINISH;
@@ -319,5 +319,10 @@
                 segment.cars.push( car );
                 this.cars.push(    car );
             }
+        }
+
+        public static findSegment( segments:outrun.Segment[], z:number ) : outrun.Segment
+        {
+            return segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % segments.length ];
         }
     }

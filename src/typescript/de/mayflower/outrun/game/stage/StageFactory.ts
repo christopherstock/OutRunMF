@@ -183,6 +183,6 @@
         ***************************************************************************************************************/
         private static lastY( segments:outrun.Segment[] ) : number
         {
-            return ( segments.length === 0 ? 0 : segments[ segments.length - 1 ].p2.getWorld().y );
+            return ( segments.length === 0 ? 0 : segments[ segments.length - 1 ].getP2().getWorld().y );
         }
     }

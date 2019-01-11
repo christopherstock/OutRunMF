@@ -47,7 +47,7 @@
 
         public update( dt:number, segments:outrun.Segment[], player:outrun.Player, playerSegment:outrun.Segment, playerW:number, stageLength:number ) : void
         {
-            const oldSegment:outrun.Segment = Car.findSegment( segments, this.z );
+            const oldSegment:outrun.Segment = outrun.Stage.findSegment( segments, this.z );
 
             this.offset = this.offset + this.updateCarOffset( segments, player, oldSegment, playerSegment, playerW );
             this.z = outrun.MathUtil.increase( this.z, dt * this.speed, stageLength );
@@ -55,7 +55,7 @@
             // this is useful for interpolation during rendering phase
             this.percent = outrun.MathUtil.percentRemaining( this.z, outrun.SettingGame.SEGMENT_LENGTH );
 
-            const newSegment:outrun.Segment = Car.findSegment( segments, this.z );
+            const newSegment:outrun.Segment = outrun.Stage.findSegment( segments, this.z );
 
             if ( oldSegment !== newSegment )
             {
@@ -73,16 +73,16 @@
             const lookahead :number = 20;
             const carW      :number = outrun.Main.game.imageSystem.getImage( this.sprite ).width * outrun.SettingGame.SPRITE_SCALE;
 
-            let   dir       :number = 0;    // TODO create enum for direction
+            let   dir       :number = 0;
             let   otherCarW :number = 0;
 
             // optimization, dont bother steering around other cars when 'out of sight' of the player
-            if ((carSegment.index - playerSegment.index) > outrun.SettingGame.DRAW_DISTANCE)
+            if ( ( carSegment.getIndex() - playerSegment.getIndex() ) > outrun.SettingGame.DRAW_DISTANCE )
                 return 0;
 
             for ( let i:number = 1; i < lookahead; i++ )
             {
-                const segment:outrun.Segment = segments[(carSegment.index + i) % segments.length];
+                const segment:outrun.Segment = segments[(carSegment.getIndex() + i) % segments.length];
 
                 if ((segment === playerSegment) && ( this.speed > player.getSpeed() ) && (outrun.MathUtil.overlap(player.getX(), playerW, this.offset, carW, 1.2))) {
                     if (player.getX() > 0.5)
@@ -91,7 +91,9 @@
                         dir = 1;
                     else
                         dir = ( this.offset > player.getX() ) ? 1 : -1;
-                    return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+
+                    // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+                    return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.MAX_SPEED;
                 }
 
                 for ( const otherCar of segment.cars )
@@ -121,16 +123,10 @@
 
         public draw( ctx:CanvasRenderingContext2D, resolution:number, segment:outrun.Segment ) : void
         {
-            const spriteScale :number = outrun.MathUtil.interpolate(segment.p1.getScreen().scale, segment.p2.getScreen().scale, this.percent);
-            const spriteX     :number = outrun.MathUtil.interpolate(segment.p1.getScreen().x,     segment.p2.getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
-            const spriteY     :number = outrun.MathUtil.interpolate(segment.p1.getScreen().y,     segment.p2.getScreen().y, this.percent);
+            const spriteScale :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().scale, segment.getP2().getScreen().scale, this.percent);
+            const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+            const spriteY     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().y,     segment.getP2().getScreen().y, this.percent);
 
             outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
-        }
-
-        // TODO prune!
-        public static findSegment( segments:outrun.Segment[], z:number ) : outrun.Segment
-        {
-            return segments[ Math.floor( z / outrun.SettingGame.SEGMENT_LENGTH ) % segments.length ];
         }
     }

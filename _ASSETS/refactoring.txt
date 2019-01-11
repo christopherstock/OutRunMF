@@ -33,6 +33,11 @@ Refactoring Methods:
 - (simple) for loops with iterator to foreach (if possible)
 - Add 'readonly' for non-static fields that are only assigned in the constructor!
 - remove redundant field namings (Player.playerX)
+- introduce enums
+    if (player.getX() > 0.5)
+        dir = -1;
+    else if (player.getX() < -0.5)
+        dir = 1;
 
 Tools that support:
 ===================

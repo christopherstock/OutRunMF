@@ -104,15 +104,15 @@
                     - (
                         camera.getDepth() / this.z * outrun.MathUtil.interpolate
                         (
-                            playerSegment.p1.getCamera().y,
-                            playerSegment.p2.getCamera().y,
+                            playerSegment.getP1().getCamera().y,
+                            playerSegment.getP2().getCamera().y,
                             playerPercent
                         )
                         * outrun.Main.game.canvasSystem.getHeight() / 2
                     )
                 ),
                 this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ),
-                playerSegment.p2.getWorld().y - playerSegment.p1.getWorld().y
+                playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y
             );
         }
 
@@ -145,7 +145,7 @@
 
                     if (outrun.MathUtil.overlap(this.x, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW, 0)) {
                         this.speed = outrun.SettingGame.MAX_SPEED / 5;
-                        camera.setZ( outrun.MathUtil.increase(playerSegment.p1.getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
+                        camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
                         break;
                     }
                 }
