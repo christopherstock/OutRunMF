@@ -65,12 +65,7 @@
             // specify canvas resolution according to its current height
             this.resolution = newHeight / CanvasSystem.RESOLUTION_DIVIDER;
 
-            outrun.Debug.canvas.log
-            (
-                'Updated canvas dimensions to [' + newWidth + 'x' + newHeight + '] '
-                + 'resolution [' + this.resolution   + ']'
-                + 'changed ['    + dimensionsChanged + ']'
-            );
+            outrun.Debug.canvas.log( ' Updated canvas dimensions to [' + newWidth + 'x' + newHeight + ']' );
 
             return dimensionsChanged;
         }

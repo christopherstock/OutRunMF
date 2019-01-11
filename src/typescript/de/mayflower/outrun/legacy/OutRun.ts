@@ -24,12 +24,13 @@
         }
 
         /** ************************************************************************************************************
-        *   Resets the legacy game to its initial defaults.
+        *   Changes to the specified level.
+        *
+        *   @param newLevel The level to change to.
         ***************************************************************************************************************/
-        public reset() : void
+        public changeToLevel( newLevel:outrun.Stage ) : void
         {
-            // rebuild the stage TODO create enum for different levels?
-            this.stage = new outrun.LevelPreset();
+            this.stage = newLevel;
             this.stage.init();
         }
 

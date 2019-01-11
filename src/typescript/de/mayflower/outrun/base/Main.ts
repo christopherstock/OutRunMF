@@ -15,11 +15,10 @@
     *   TODO Add class curve?
     *   TODO Clear all TODOs.
     *
-    *   TODO Enable additional segment forms left or right of the road (seaside?).
-    *
     *   ==============================
     *   TODO Secondary - game creation
     *   ==============================
+    *   TODO Enable additional segment forms left or right of the road (seaside?).
     *   TODO New images and sprites.
     *   TODO New stage system for creating different stages.
     *   TODO Extract level creation to separate Factory / StageBuilder class?

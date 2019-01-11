@@ -1,5 +1,5 @@
 
-    import * as orts from '..';
+    import * as outrun from '..';
 
     /** ****************************************************************************************************************
     *   The key system that manages all pressed keys.
@@ -36,7 +36,7 @@
             {
                 this.keysPressed[ keyCode ] = true;
 
-                orts.Debug.key.log( 'key pressed ['  + keyCode + ']' );
+                outrun.Debug.key.log( 'key pressed ['  + keyCode + ']' );
             }
         };
 
@@ -52,7 +52,7 @@
             this.keysPressed[     keyCode ] = false;
             this.keysNeedRelease[ keyCode ] = false;
 
-            orts.Debug.key.log( 'key released ['  + keyCode + ']' );
+            outrun.Debug.key.log( 'key released ['  + keyCode + ']' );
         };
 
         /** ************************************************************************************************************
@@ -85,7 +85,7 @@
         ***************************************************************************************************************/
         public releaseAllKeys() : void
         {
-            orts.Debug.key.log( 'releasing all keys' );
+            outrun.Debug.key.log( 'releasing all keys' );
 
             this.keysPressed = [];
         }

@@ -1,5 +1,5 @@
 
-    import * as orts from '..';
+    import * as outrun from '..';
 
     /** ****************************************************************************************************************
     *   Manages the game logic.
@@ -7,33 +7,33 @@
     export class Game
     {
         /** The key system that manages pressed keys. */
-        public              keySystem               :orts.KeySystem             = null;
+        public              keySystem               :outrun.KeySystem             = null;
         /** The canvas system that manages the canvas. */
-        public              canvasSystem            :orts.CanvasSystem          = null;
+        public              canvasSystem            :outrun.CanvasSystem          = null;
         /** The image system that manages all images. */
-        public              imageSystem             :orts.ImageSystem           = null;
+        public              imageSystem             :outrun.ImageSystem           = null;
 
-        public              outRun                  :orts.OutRun                = null;
+        public              outRun                  :outrun.OutRun                = null;
 
         /** ************************************************************************************************************
         *   Inits the game from scratch.
         ***************************************************************************************************************/
         public init() : void
         {
-            orts.Debug.init.log( 'Init game engine' );
+            outrun.Debug.init.log( 'Init game engine' );
 
-            orts.Debug.init.log( 'Init key system' );
-            this.keySystem = new orts.KeySystem();
+            outrun.Debug.init.log( 'Init key system' );
+            this.keySystem = new outrun.KeySystem();
 
-            orts.Debug.init.log( 'Init canvas system' );
-            this.canvasSystem = new orts.CanvasSystem();
+            outrun.Debug.init.log( 'Init canvas system' );
+            this.canvasSystem = new outrun.CanvasSystem();
             this.canvasSystem.updateDimensions();
 
-            orts.Debug.init.log( 'Init window resize system' );
+            outrun.Debug.init.log( 'Init window resize system' );
             window.addEventListener( 'resize', this.onWindowResize );
 
-            orts.Debug.init.log( 'Init image system' );
-            this.imageSystem = new orts.ImageSystem( orts.ImageFile.FILE_NAMES, this.onImagesLoaded );
+            outrun.Debug.init.log( 'Init image system' );
+            this.imageSystem = new outrun.ImageSystem( outrun.ImageFile.FILE_NAMES, this.onImagesLoaded );
         }
 
         /** ************************************************************************************************************
@@ -42,8 +42,8 @@
         public onImagesLoaded=() : void =>
         {
             // start legacy game loop
-            this.outRun = new orts.OutRun( this.canvasSystem );
-            this.outRun.reset();
+            this.outRun = new outrun.OutRun( this.canvasSystem );
+            this.outRun.changeToLevel( new outrun.LevelTest() );
             this.outRun.start();
         };
 
