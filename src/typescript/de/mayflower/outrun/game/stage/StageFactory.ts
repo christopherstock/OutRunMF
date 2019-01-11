@@ -151,7 +151,6 @@
             const n:number = segments.length;
             const lastY:number = StageFactory.lastY( segments );
 
-            // TODO introcude class Segment
             segments.push
             (
                 new outrun.Segment

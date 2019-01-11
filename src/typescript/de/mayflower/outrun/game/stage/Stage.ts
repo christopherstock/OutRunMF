@@ -179,7 +179,7 @@
         *
         *   TODO extract resolution to CanvasSystem here!
         ***************************************************************************************************************/
-        public render( ctx:CanvasRenderingContext2D, resolution:number ) : void
+        public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             const baseSegment   :outrun.Segment = this.findSegment(this.camera.getZ());
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
@@ -233,7 +233,7 @@
                 maxY = segment.p1.screen.y;
             }
 
-            // TODO
+            // draw all segments
             for (let n:number = ( outrun.SettingGame.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.index + n) % this.segments.length];

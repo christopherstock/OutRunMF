@@ -48,7 +48,7 @@
             const frame:()=>void = (): void =>
             {
                 this.update( this.STEP );
-                this.render();
+                this.draw();
 
                 requestAnimationFrame( frame );
             };
@@ -100,7 +100,7 @@
             ctx.clearRect( 0, 0, this.canvasSystem.getWidth(), this.canvasSystem.getHeight() );
 
             // draw stage
-            this.stage.render( ctx, this.resolution );
+            this.stage.draw( ctx, this.resolution );
 
             // draw HUD?
         }
