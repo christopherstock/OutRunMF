@@ -59,6 +59,7 @@
             }
         }
 
+        // TODO remove width and height and replace with canvasSystem.getWidth..!
         public static sprite( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
             const image:HTMLImageElement = outrun.Main.game.imageSystem.getImage( sprite );

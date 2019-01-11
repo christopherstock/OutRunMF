@@ -72,6 +72,18 @@
             );
         }
 
+        public drawSprites( ctx:CanvasRenderingContext2D, resolution:number ) : void
+        {
+            for ( const sprite of this.sprites )
+            {
+                const spriteScale :number = this.p1.screen.scale;
+                const spriteX     :number = this.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
+                const spriteY     :number = this.p1.screen.y;
+
+                outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, this.clip);
+            }
+        }
+
         public getSprites() : outrun.Sprite[]
         {
             return this.sprites;

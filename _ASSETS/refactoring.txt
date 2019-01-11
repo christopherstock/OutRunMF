@@ -2,6 +2,7 @@
 Introduction:
 =============
 s. "Martin Fowler" - Refactoring has never been more important!
+- KISS == Technical debts and no structure??
 
 Refactoring Methods:
 ====================

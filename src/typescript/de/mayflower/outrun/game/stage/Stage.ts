@@ -225,19 +225,10 @@
 
                 for ( const car of segment.cars )
                 {
-                    spriteScale = outrun.MathUtil.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
-                    spriteX = outrun.MathUtil.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
-                    spriteY = outrun.MathUtil.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
-                    outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, car.getSprite(), spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+                    car.draw( ctx, resolution, segment );
                 }
 
-                for ( const sprite of segment.getSprites() )
-                {
-                    spriteScale = segment.p1.screen.scale;
-                    spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * outrun.SettingGame.ROAD_WIDTH * outrun.Main.game.canvasSystem.getWidth() / 2);
-                    spriteY = segment.p1.screen.y;
-                    outrun.Drawing2D.sprite(ctx, outrun.Main.game.canvasSystem.getWidth(), outrun.Main.game.canvasSystem.getHeight(), resolution, outrun.SettingGame.ROAD_WIDTH, sprite.source, spriteScale, spriteX, spriteY, (sprite.offset < 0 ? -1 : 0), -1, segment.clip);
-                }
+                segment.drawSprites( ctx, resolution );
 
                 if (segment === playerSegment) {
 
@@ -259,7 +250,7 @@
             {
                 const oldSegment:outrun.Segment = this.findSegment(car.z);
 
-                car.offset = car.offset + this.updateCarOffset( car, oldSegment, playerSegment, playerW );
+                car.offset = car.offset + car.updateCarOffset( this.segments, this.player, oldSegment, playerSegment, playerW );
                 car.z = outrun.MathUtil.increase( car.z, dt * car.speed, this.stageLength );
 
                 // this is useful for interpolation during rendering phase
@@ -344,59 +335,5 @@
                 segment.cars.push( car );
                 this.cars.push(    car );
             }
-        }
-
-        /** ************************************************************************************************************
-        *   Updates the offset for the player car.
-        ***************************************************************************************************************/
-        private updateCarOffset( car:outrun.Car, carSegment:outrun.Segment, playerSegment:outrun.Segment, playerW:number ) : number
-        {
-            const lookahead :number = 20;
-            const carW      :number = outrun.Main.game.imageSystem.getImage( car.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
-
-            let   dir       :number = 0;    // TODO create enum for direction
-            let   otherCarW :number = 0;
-
-            // optimization, dont bother steering around other cars when 'out of sight' of the player
-            if ((carSegment.index - playerSegment.index) > outrun.SettingGame.DRAW_DISTANCE)
-                return 0;
-
-            for ( let i:number = 1; i < lookahead; i++ )
-            {
-                const segment:outrun.Segment = this.segments[(carSegment.index + i) % this.segments.length];
-
-                if ((segment === playerSegment) && (car.speed > this.player.speed) && (outrun.MathUtil.overlap(this.player.getX(), playerW, car.offset, carW, 1.2))) {
-                    if (this.player.getX() > 0.5)
-                        dir = -1;
-                    else if (this.player.getX() < -0.5)
-                        dir = 1;
-                    else
-                        dir = ( car.offset > this.player.getX() ) ? 1 : -1;
-                    return dir / i * (car.speed - this.player.speed) / outrun.SettingGame.MAX_SPEED; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
-                }
-
-                for ( const otherCar of segment.cars )
-                {
-                    otherCarW = outrun.Main.game.imageSystem.getImage( otherCar.getSprite() ).width * outrun.SettingGame.SPRITE_SCALE;
-                    if ( ( car.speed > otherCar.speed ) && outrun.MathUtil.overlap( car.offset, carW, otherCar.offset, otherCarW, 1.2 ) )
-                    {
-                        if ( otherCar.offset > 0.5 )
-                            dir = -1;
-                        else if ( otherCar.offset < -0.5 )
-                            dir = 1;
-                        else
-                            dir = ( car.offset > otherCar.offset ) ? 1 : -1;
-                        return dir / i * ( car.speed - otherCar.speed ) / outrun.SettingGame.MAX_SPEED;
-                    }
-                }
-            }
-
-            // if no cars ahead, but I have somehow ended up off road, then steer back on
-            if (car.offset < -0.9)
-                return 0.1;
-            else if (car.offset > 0.9)
-                return -0.1;
-            else
-                return 0;
         }
     }

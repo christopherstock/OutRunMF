@@ -16,6 +16,11 @@
     *   TODO Clear all TODOs.
     *
     *   ==============================
+    *   TODO Refactorings
+    *   ==============================
+    *   TODO Improve SettingGame.ROAD_WIDTH (currently half road width!)
+    *
+    *   ==============================
     *   TODO Secondary - game creation
     *   ==============================
     *   TODO Enable additional segment forms left or right of the road (seaside?).
@@ -27,6 +32,7 @@
     *   TODO Combine different road widths? ( different lane counts etc.)
     *   TODO prune finsh line?
     *   TODO Enable fullscreen mode.
+    *   TODO More speed for car!
     *
     *   =====================
     *   TODO Code Quality

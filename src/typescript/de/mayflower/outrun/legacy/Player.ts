@@ -69,7 +69,7 @@
 
         ) : void
         {
-            Player.player(
+            Player.drawPlayer(
                 ctx,
                 outrun.Main.game.canvasSystem.getWidth(),
                 outrun.Main.game.canvasSystem.getHeight(),
@@ -126,8 +126,8 @@
             }
         }
 
-        // TODO resolve static method!
-        public static player( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, speedPercent:number, scale:number, destX:number, destY:number, steer:number, updown:number ) : void
+        // TODO merge with Drawing2D.drawSprite() ?
+        private static drawPlayer( ctx:CanvasRenderingContext2D, width:number, height:number, resolution:number, roadWidth:number, speedPercent:number, scale:number, destX:number, destY:number, steer:number, updown:number ) : void
         {
             const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
             let   sprite :string;
