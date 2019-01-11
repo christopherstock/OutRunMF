@@ -6,7 +6,7 @@
     *
     *   TODO to non-static 'StageBuilder'! Add track color fields!
     *******************************************************************************************************************/
-    export abstract class StageFactory
+    export class StageBuilder
     {
         /** ************************************************************************************************************
         *   Adds a straight segment of road to the specified array.
@@ -16,7 +16,7 @@
         ***************************************************************************************************************/
         public static addStraight( segments:outrun.Segment[], num:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, 0, 0 );
+            StageBuilder.addRoad( segments, num, num, num, 0, 0 );
         }
 
         /** ************************************************************************************************************
@@ -24,7 +24,7 @@
         ***************************************************************************************************************/
         public static addHill( segments:outrun.Segment[], num:number, height:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, 0, height );
+            StageBuilder.addRoad( segments, num, num, num, 0, height );
         }
 
         /** ************************************************************************************************************
@@ -32,7 +32,7 @@
         ***************************************************************************************************************/
         public static addCurve( segments:outrun.Segment[], num:number, curve:number, height:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, curve, height );
+            StageBuilder.addRoad( segments, num, num, num, curve, height );
         }
 
         /** ************************************************************************************************************
@@ -40,12 +40,12 @@
         ***************************************************************************************************************/
         public static addLowRollingHills( segments:outrun.Segment[], num:number, height:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, 0, height / 2 );
-            StageFactory.addRoad( segments, num, num, num, 0, -height );
-            StageFactory.addRoad( segments, num, num, num, outrun.Road.CURVE.EASY, height );
-            StageFactory.addRoad( segments, num, num, num, 0, 0 );
-            StageFactory.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, height / 2 );
-            StageFactory.addRoad( segments, num, num, num, 0, 0 );
+            StageBuilder.addRoad( segments, num, num, num, 0, height / 2 );
+            StageBuilder.addRoad( segments, num, num, num, 0, -height );
+            StageBuilder.addRoad( segments, num, num, num, outrun.Road.CURVE.EASY, height );
+            StageBuilder.addRoad( segments, num, num, num, 0, 0 );
+            StageBuilder.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, height / 2 );
+            StageBuilder.addRoad( segments, num, num, num, 0, 0 );
         }
 
         /** ************************************************************************************************************
@@ -54,11 +54,11 @@
         // tslint:disable:max-line-length
         public static addSCurves( segments:outrun.Segment[] ) : void
         {
-            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE    );
-            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM  );
-            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.EASY,    -outrun.Road.HILL.LOW    );
-            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.MEDIUM  );
-            StageFactory.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.MEDIUM );
+            StageBuilder.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE    );
+            StageBuilder.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM  );
+            StageBuilder.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.EASY,    -outrun.Road.HILL.LOW    );
+            StageBuilder.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.MEDIUM  );
+            StageBuilder.addRoad( segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.MEDIUM );
         }
 
         /** ************************************************************************************************************
@@ -66,14 +66,14 @@
         ***************************************************************************************************************/
         public static addBumps( segments:outrun.Segment[] ) : void
         {
-            StageFactory.addRoad( segments, 10, 10, 10, 0, 5  );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, -2 );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, -5 );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, 8  );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, 5  );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, -7 );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, 5  );
-            StageFactory.addRoad( segments, 10, 10, 10, 0, -2 );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, 5  );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, -2 );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, -5 );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, 8  );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, 5  );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, -7 );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, 5  );
+            StageBuilder.addRoad( segments, 10, 10, 10, 0, -2 );
         }
 
         /** ************************************************************************************************************
@@ -81,7 +81,7 @@
         ***************************************************************************************************************/
         public static addDownhillToEnd( segments:outrun.Segment[], num:number ) : void
         {
-            StageFactory.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, -StageFactory.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
+            StageBuilder.addRoad( segments, num, num, num, -outrun.Road.CURVE.EASY, -StageBuilder.lastY( segments ) / outrun.SettingGame.SEGMENT_LENGTH );
         }
 
         /** ************************************************************************************************************
@@ -98,13 +98,13 @@
         )
         : void
         {
-            const startY :number = StageFactory.lastY( segments );
+            const startY :number = StageBuilder.lastY( segments );
             const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
             const total  :number = ( enter + hold + leave );
 
             for ( let n:number = 0; n < enter; n++ )
             {
-                StageFactory.addSegment
+                StageBuilder.addSegment
                 (
                     segments,
                     outrun.MathUtil.easeIn( 0, curve, n / enter ),
@@ -114,7 +114,7 @@
 
             for ( let n:number = 0; n < hold; n++ )
             {
-                StageFactory.addSegment
+                StageBuilder.addSegment
                 (
                     segments,
                     curve,
@@ -124,7 +124,7 @@
 
             for ( let n:number = 0; n < leave; n++ )
             {
-                StageFactory.addSegment
+                StageBuilder.addSegment
                 (
                     segments,
                     outrun.MathUtil.easeInOut( curve, 0, n / leave ),
@@ -149,7 +149,7 @@
         : void
         {
             const n:number = segments.length;
-            const lastY:number = StageFactory.lastY( segments );
+            const lastY:number = StageBuilder.lastY( segments );
 
             segments.push
             (

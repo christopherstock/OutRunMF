@@ -36,25 +36,27 @@
         // tslint:disable:max-line-length
         protected createRoad( playerZ:number ) : void
         {
-            outrun.StageFactory.addStraight(        this.segments, outrun.Road.LENGTH.LONG );
-            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
+            const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
+
+            outrun.StageBuilder.addStraight(        this.segments, outrun.Road.LENGTH.LONG );
+            outrun.StageBuilder.addCurve(           this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
 /*
-            outrun.StageFactory.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addBumps(           this.segments );
-            outrun.StageFactory.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
-            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);
-            outrun.StageFactory.addStraight(        this.segments, outrun.Road.LENGTH.MEDIUM );
-            outrun.StageFactory.addHill(            this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.HILL.HIGH);
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.LONG, -outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE);
-            outrun.StageFactory.addHill(            this.segments, outrun.Road.LENGTH.LONG, outrun.Road.HILL.HIGH);
-            outrun.StageFactory.addCurve(           this.segments, outrun.Road.LENGTH.LONG, outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.LOW);
-            outrun.StageFactory.addBumps(           this.segments );
-            outrun.StageFactory.addHill(            this.segments, outrun.Road.LENGTH.LONG, -outrun.Road.HILL.MEDIUM);
-            outrun.StageFactory.addStraight(        this.segments, outrun.Road.LENGTH.MEDIUM );
-            outrun.StageFactory.addSCurves(         this.segments );
-            outrun.StageFactory.addDownhillToEnd(   this.segments, outrun.Road.LENGTH.DOUBLE_LONG );
+            outrun.StageBuilder.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
+            outrun.StageBuilder.addSCurves(         this.segments );
+            outrun.StageBuilder.addBumps(           this.segments );
+            outrun.StageBuilder.addLowRollingHills( this.segments, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
+            outrun.StageBuilder.addCurve(           this.segments, outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);
+            outrun.StageBuilder.addStraight(        this.segments, outrun.Road.LENGTH.MEDIUM );
+            outrun.StageBuilder.addHill(            this.segments, outrun.Road.LENGTH.MEDIUM, outrun.Road.HILL.HIGH);
+            outrun.StageBuilder.addSCurves(         this.segments );
+            outrun.StageBuilder.addCurve(           this.segments, outrun.Road.LENGTH.LONG, -outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE);
+            outrun.StageBuilder.addHill(            this.segments, outrun.Road.LENGTH.LONG, outrun.Road.HILL.HIGH);
+            outrun.StageBuilder.addCurve(           this.segments, outrun.Road.LENGTH.LONG, outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.LOW);
+            outrun.StageBuilder.addBumps(           this.segments );
+            outrun.StageBuilder.addHill(            this.segments, outrun.Road.LENGTH.LONG, -outrun.Road.HILL.MEDIUM);
+            outrun.StageBuilder.addStraight(        this.segments, outrun.Road.LENGTH.MEDIUM );
+            outrun.StageBuilder.addSCurves(         this.segments );
+            outrun.StageBuilder.addDownhillToEnd(   this.segments, outrun.Road.LENGTH.DOUBLE_LONG );
 */
         }
 

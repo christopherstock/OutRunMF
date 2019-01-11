@@ -19,7 +19,7 @@
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';
-    export * from './game/stage/StageFactory';
+    export * from './game/stage/StageBuilder';
 
     export * from './game/stage/level/LevelPreset';
     export * from './game/stage/level/LevelTest';
