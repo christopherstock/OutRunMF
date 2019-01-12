@@ -8,18 +8,15 @@
     export * from './game/engine/Engine';
     export * from './game/engine/Background';
     export * from './game/engine/Camera';
-    export * from './game/object/Car';
     export * from './game/engine/ColorCombo';
-    export * from './game/object/Player';
     export * from './game/engine/Segment';
     export * from './game/engine/SegmentPoint';
-    export * from './game/object/Obstacle';
     export * from './game/engine/Vector';
 
-    export * from './base/setting/SettingColor';
-    export * from './base/setting/SettingDebug';
-    export * from './base/setting/SettingEngine';
-    export * from './base/setting/SettingGame';
+    export * from './game/object/GameObject';
+    export * from './game/object/Car';
+    export * from './game/object/Obstacle';
+    export * from './game/object/Player';
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';
@@ -27,6 +24,11 @@
 
     export * from './game/stage/level/LevelPreset';
     export * from './game/stage/level/LevelTest';
+
+    export * from './base/setting/SettingColor';
+    export * from './base/setting/SettingDebug';
+    export * from './base/setting/SettingEngine';
+    export * from './base/setting/SettingGame';
 
     export * from './hid/KeyCodes';
     export * from './hid/KeySystem';

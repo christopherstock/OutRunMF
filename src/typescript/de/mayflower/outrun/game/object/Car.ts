@@ -4,24 +4,22 @@
     /** ****************************************************************************************************************
     *   Represents one impartial and CPU-driven car.
     *******************************************************************************************************************/
-    export class Car
+    export class Car extends outrun.GameObject
     {
         private                         x                               :number                     = 0;
         private                         z                               :number                     = 0;
         private         readonly        speed                           :number                     = 0;
-
-        /** The image ID of this car's sprite. */
-        private         readonly        sprite                          :string                     = null;
 
         /** Unknown field .. */
         private                         percent                         :number                     = 0;
 
         public constructor( offset:number, z:number, sprite:string, speed:number )
         {
-            this.x  = offset;
-            this.z       = z;
-            this.sprite  = sprite;
-            this.speed   = speed;
+            super( sprite );
+
+            this.x      = offset;
+            this.z      = z;
+            this.speed  = speed;
         }
 
         public getSprite() : string

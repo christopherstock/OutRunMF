@@ -24,8 +24,9 @@
     *   TODO New stage system for creating different stages.
     *   TODO Extract level creation to separate Factory / StageBuilder class?
     *   TODO Add sound effects?
-    *   TODO Combine different road widths? ( different lane counts etc.)
+    *   TODO Combine different road widths in one level?? ( different lane counts etc.)
     *   TODO prune finsh line?
+    *   TODO Create new segments? Widening and narrowing the road etc.?
     *   TODO Stage.createCars: create speed map for all cars.
     *
     *   ==============================

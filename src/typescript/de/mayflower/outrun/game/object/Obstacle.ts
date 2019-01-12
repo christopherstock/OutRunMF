@@ -1,16 +1,17 @@
 
+    import * as outrun from '../..';
+
     /** ****************************************************************************************************************
     *   Represents one obstacle.
     *******************************************************************************************************************/
-    export class Obstacle
+    export class Obstacle extends outrun.GameObject
     {
-        private             readonly    sprite                      :string                 = null;
-
         private             readonly    x                           :number                 = null;
 
-        public constructor( source:string, x:number )
+        public constructor( sprite:string, x:number )
         {
-            this.sprite = source;
+            super( sprite );
+
             this.x      = x;
         }
 

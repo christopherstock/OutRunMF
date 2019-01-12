@@ -4,7 +4,7 @@
     /** ****************************************************************************************************************
     *   The legacy player.
     *******************************************************************************************************************/
-    export class Player
+    export class Player extends outrun.GameObject
     {
         /** Indicates if the 'steer left' key is pressed this game tick. */
         private                     keyLeft             :boolean                    = false;
@@ -15,9 +15,6 @@
         /** Indicates if the 'slower' key is pressed this game tick. */
         private                     keySlower           :boolean                    = false;
 
-        /** The image ID of the player's current sprite. */
-        private                     sprite              :string                     = null;
-
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
         /** player relative z distance from camera (computed) */
@@ -27,6 +24,8 @@
 
         public constructor( z:number )
         {
+            super( outrun.ImageFile.PLAYER_STRAIGHT );
+
             this.z = z;
         }
 
@@ -117,15 +116,15 @@
             // determine sprite
             if ( steer < 0 )
             {
-                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT;
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
             }
             else if ( steer > 0 )
             {
-                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT;
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
             }
             else
             {
-                this.sprite = ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT;
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT );
             }
 
             // draw player
