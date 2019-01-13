@@ -52,12 +52,25 @@
             this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
         }
 
-        public update( dx:number, dt:number, playerSegment:outrun.Segment ) : void
+        public update
+        (
+            dx            :number,
+            dt            :number,
+            playerSegment :outrun.Segment,
+            speedPercent  :number,
+            playerW       :number,
+            stageLength   :number,
+            camera        :outrun.Camera
+        )
+        : void
         {
-            // steer
-            if (this.keyLeft)
+            // check keys for player
+            this.handlePlayerKeys();
+
+            // steer according to keys
+            if ( this.keyLeft )
                 this.x = this.x - dx;
-            else if (this.keyRight)
+            else if ( this.keyRight )
                 this.x = this.x + dx;
 
             // accelerate or decelerate
@@ -85,6 +98,33 @@
             {
                 this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT );
             }
+
+            // check centrifugal force modification if player is in a curve
+            this.checkCentrifugalForce( dx, speedPercent, playerSegment );
+
+            // check if player is off-road
+            this.checkOffroad( playerSegment, playerW, dt, stageLength, camera );
+
+            // browse all cars
+            for ( const car of playerSegment.cars ) {
+
+                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
+
+                if ( this.getSpeed() > car.getSpeed() ) {
+
+                    // check if player is colliding?
+                    if ( this.checkCollidingWithCar( car, playerW, carW, camera, stageLength ) )
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // dont ever let it go too far out of bounds
+            this.clipBoundsForX();
+
+            // clip maximum speed
+            this.clipSpeed();
         }
 
         public checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean

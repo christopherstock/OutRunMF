@@ -122,40 +122,19 @@
             // update player segment ( for smooth collisions ... :( )
             this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
-            // check keys for player
-            this.player.handlePlayerKeys();
-
             // update player
-            this.player.update( dx, dt, this.playerSegment );
+            this.player.update
+            (
+                dx,
+                dt,
+                this.playerSegment,
+                speedPercent,
+                playerW,
+                this.stageLength,
+                this.camera
+            );
 
-            // check centrifugal force modification if player is in a curve
-            this.player.checkCentrifugalForce( dx, speedPercent, this.playerSegment );
-
-            // check if player is off-road
-            this.player.checkOffroad( this.playerSegment, playerW, dt, this.stageLength, this.camera );
-
-            // browse all cars
-            for ( const car of this.playerSegment.cars ) {
-
-                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
-
-                if ( this.player.getSpeed() > car.getSpeed() ) {
-
-                    // check if player is colliding?
-                    if ( this.player.checkCollidingWithCar( car, playerW, carW, this.camera, this.stageLength ) )
-                    {
-                        break;
-                    }
-                }
-            }
-
-            // dont ever let it go too far out of bounds
-            this.player.clipBoundsForX();
-
-            // clip maximum speed
-            this.player.clipSpeed();
-
-            // update bg offsets
+            // update backgrounds
             this.background.updateOffsets( this.playerSegment, this.camera, startPosition );
         }
 
@@ -167,15 +146,12 @@
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            // TODO extract to update!
-            const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
-            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-
-            // update player segment TODO remove redundancy and move to update() ?
+            // update player segment again
             this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
+            const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
+            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-
             const playerY       :number = outrun.MathUtil.interpolate
             (
                 this.playerSegment.getP1().getWorld().y,
@@ -187,12 +163,13 @@
             let   x             :number = 0;
             let   dx            :number = -(baseSegment.curve * basePercent);
 
-            // fill canvas with sky color
+            // clear/fill canvas with sky color
             outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.engine.canvasSystem.getWidth(), outrun.Main.game.engine.canvasSystem.getHeight(), this.skyColor );
 
             // draw the bg
             this.background.draw( ctx, resolution, playerY );
 
+            // browse all segments from far to near
             for ( let n:number = 0; n < outrun.SettingEngine.DRAW_DISTANCE; n++ )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
@@ -217,15 +194,12 @@
                     continue;
                 }
 
-                // draw segment
+                // draw segment road
                 segment.draw( ctx );
 
                 // assign maxY ?
                 maxY = segment.getP1().getScreen().y;
             }
-
-
-
 
             // draw all segments from far to near
             for ( let n:number = ( outrun.SettingEngine.DRAW_DISTANCE - 1 ); n > 0; n-- )
