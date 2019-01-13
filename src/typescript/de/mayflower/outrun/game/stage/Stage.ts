@@ -100,10 +100,10 @@
             // update player segment
             this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
-            const playerW       :number         = 80 * outrun.SettingEngine.SPRITE_SCALE;
-            const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
-            const dx            :number         = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const startPosition :number         = this.camera.getZ();
+            const playerW       :number = 80 * outrun.SettingEngine.SPRITE_SCALE;
+            const speedPercent  :number = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
+            const dx            :number = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
+            const startPosition :number = this.camera.getZ();
 
             // update cars
             this.updateCars( dt, this.playerSegment, playerW );
@@ -126,7 +126,7 @@
             this.player.handlePlayerKeys();
 
             // update player
-            this.player.update( dx, dt );
+            this.player.update( dx, dt, this.playerSegment );
 
             // check centrifugal force modification if player is in a curve
             this.player.checkCentrifugalForce( dx, speedPercent, this.playerSegment );
@@ -224,18 +224,24 @@
                 maxY = segment.getP1().getScreen().y;
             }
 
-            // draw all segments
-            for (let n:number = ( outrun.SettingEngine.DRAW_DISTANCE - 1 ); n > 0; n-- )
+
+
+
+            // draw all segments from far to near
+            for ( let n:number = ( outrun.SettingEngine.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
                 const segment:outrun.Segment = this.segments[ ( baseSegment.getIndex() + n ) % this.segments.length ];
 
+                // draw cars
                 for ( const car of segment.cars )
                 {
                     car.draw( ctx, resolution, segment );
                 }
 
+                // draw sprites
                 segment.drawSprites( ctx, resolution );
 
+                // draw player
                 if (segment === this.playerSegment) {
 
                     this.player.draw( ctx, resolution, this.playerSegment, this.camera, playerPercent );
@@ -295,10 +301,13 @@
                     Math.random() * this.segments.length
                 ) * outrun.SettingGame.SEGMENT_LENGTH;
                 const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
-
                 const speed   :number         = (
                     ( outrun.SettingGame.PLAYER_MAX_SPEED / 4 )
-                    + ( Math.random() * outrun.SettingGame.PLAYER_MAX_SPEED / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 ) )
+                    + (
+                        Math.random()
+                        * outrun.SettingGame.PLAYER_MAX_SPEED
+                        / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 )
+                    )
                 );
                 const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );

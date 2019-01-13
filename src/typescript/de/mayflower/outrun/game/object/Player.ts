@@ -52,7 +52,7 @@
             this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
         }
 
-        public update( dx:number, dt:number ) : void
+        public update( dx:number, dt:number, playerSegment:outrun.Segment ) : void
         {
             // steer
             if (this.keyLeft)
@@ -67,6 +67,24 @@
                 this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_BREAKING_RATE, dt );
             else
                 this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_RATE_NATURAL, dt );
+
+            // determine next sprite
+            const steer  :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
+            const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
+
+            // determine sprite
+            if ( steer < 0 )
+            {
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
+            }
+            else if ( steer > 0 )
+            {
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
+            }
+            else
+            {
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT );
+            }
         }
 
         public checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
@@ -93,6 +111,7 @@
         : void
         {
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
+            const bounce       :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
             const scale        :number = ( camera.getDepth() / this.z );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
@@ -108,27 +127,20 @@
                 )
             );
 
-            // TODO to update!
-            const steer  :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
-            const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
-            const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-
-            // determine sprite
-            if ( steer < 0 )
-            {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
-            }
-            else if ( steer > 0 )
-            {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
-            }
-            else
-            {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT );
-            }
-
             // draw player
-            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.sprite, scale, destX, destY + bounce, -0.5, -1, 0 );
+            outrun.Drawing2D.drawSprite
+            (
+                ctx,
+                resolution,
+                outrun.SettingGame.HALF_ROAD_WIDTH,
+                this.sprite,
+                scale,
+                destX,
+                destY + bounce,
+                -0.5,
+                -1,
+                0
+            );
         }
 
         public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
