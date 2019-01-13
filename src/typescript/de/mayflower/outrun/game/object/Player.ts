@@ -44,14 +44,6 @@
             return this.speed;
         }
 
-        public handlePlayerKeys() : void
-        {
-            this.keyLeft   = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
-            this.keyRight  = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
-            this.keyFaster = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
-            this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
-        }
-
         public update
         (
             dx            :number,
@@ -127,19 +119,6 @@
             this.clipSpeed();
         }
 
-        public checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
-        {
-            if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
-
-                this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
-                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.z, stageLength ) );
-
-                return true;
-            }
-
-            return false;
-        }
-
         public draw
         (
             ctx           :CanvasRenderingContext2D,
@@ -183,22 +162,43 @@
             );
         }
 
-        public checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
+        private handlePlayerKeys() : void
+        {
+            this.keyLeft   = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
+            this.keyRight  = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
+            this.keyFaster = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
+            this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
+        }
+
+        private checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
+        {
+            if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
+
+                this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
+                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.z, stageLength ) );
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
         {
             this.x = this.x - ( dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL );
         }
 
-        public clipBoundsForX() : void
+        private clipBoundsForX() : void
         {
             this.x = outrun.MathUtil.limit( this.x, -3, 3 );
         }
 
-        public clipSpeed() : void
+        private clipSpeed() : void
         {
             this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
         }
 
-        public checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera ) : void
+        private checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera ) : void
         {
             if ((this.x < -1) || (this.x > 1)) {
 

@@ -36,4 +36,17 @@
         {
             return ( outrun.SettingEngine.CAMERA_HEIGHT * this.getDepth() );
         }
+
+        public update( dt:number, playerSpeed:number, stageLength:number ) : void
+        {
+            this.z =
+            (
+                outrun.MathUtil.increase
+                (
+                    this.z,
+                    dt * playerSpeed,
+                    stageLength
+                )
+            );
+        }
     }

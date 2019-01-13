@@ -109,15 +109,7 @@
             this.updateCars( dt, this.playerSegment, playerW );
 
             // update camera ( this currently affects the player!! )
-            this.camera.setZ
-            (
-                outrun.MathUtil.increase
-                (
-                    this.camera.getZ(),
-                    dt * this.player.getSpeed(),
-                    this.stageLength
-                )
-            );
+            this.camera.update( dt, this.player.getSpeed(), this.stageLength );
 
             // update player segment ( for smooth collisions ... :( )
             this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
