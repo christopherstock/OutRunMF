@@ -27,6 +27,9 @@
         /** z length of entire track (computed) */
         private                     stageLength         :number                     = 0;
 
+        /** The segment where the player is currently located. */
+        private                     playerSegment       :outrun.Segment             = null;
+
         /** array of cars on the road */
         private                     cars                :outrun.Car[]               = [];
 
@@ -94,19 +97,27 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-/*
-            console.log( 'playerZ ' + this.player.getZ() );
-            console.log( 'cameraZ ' + this.camera.getZ() );
-*/
-            const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            // update player segment
+            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+
             const playerW       :number         = 80 * outrun.SettingEngine.SPRITE_SCALE;
             const speedPercent  :number         = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
             const dx            :number         = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const startPosition :number         = this.camera.getZ();
 
-            this.updateCars( dt, playerSegment, playerW );
+            // update cars
+            this.updateCars( dt, this.playerSegment, playerW );
 
-            this.camera.setZ( outrun.MathUtil.increase(this.camera.getZ(), dt * this.player.getSpeed(), this.stageLength) );
+            // update camera ( this currently affects the player!! )
+            this.camera.setZ
+            (
+                outrun.MathUtil.increase
+                (
+                    this.camera.getZ(),
+                    dt * this.player.getSpeed(),
+                    this.stageLength
+                )
+            );
 
             // check keys for player
             this.player.handlePlayerKeys();
@@ -115,13 +126,13 @@
             this.player.update( dx, dt );
 
             // check centrifugal force modification if player is in a curve
-            this.player.checkCentrifugalForce( dx, speedPercent, playerSegment );
+            this.player.checkCentrifugalForce( dx, speedPercent, this.playerSegment );
 
             // check if player is off-road
-            this.player.checkOffroad( playerSegment, playerW, dt, this.stageLength, this.camera );
+            this.player.checkOffroad( this.playerSegment, playerW, dt, this.stageLength, this.camera );
 
             // browse all cars
-            for ( const car of playerSegment.cars ) {
+            for ( const car of this.playerSegment.cars ) {
 
                 const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
@@ -142,7 +153,7 @@
             this.player.clipSpeed();
 
             // update bg offsets
-            this.background.updateOffsets( playerSegment, this.camera, startPosition );
+            this.background.updateOffsets( this.playerSegment, this.camera, startPosition );
         }
 
         /** ************************************************************************************************************
@@ -153,12 +164,21 @@
         ***************************************************************************************************************/
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
+            // TODO extract to update!
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerSegment :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+
+            // update player segment TODO remove redundancy and move to update() ?
+            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
 
-            const playerY       :number = outrun.MathUtil.interpolate(playerSegment.getP1().getWorld().y, playerSegment.getP2().getWorld().y, playerPercent);
+            const playerY       :number = outrun.MathUtil.interpolate
+            (
+                this.playerSegment.getP1().getWorld().y,
+                this.playerSegment.getP2().getWorld().y,
+                playerPercent
+            );
 
             let   maxY          :number = outrun.Main.game.engine.canvasSystem.getHeight();
             let   x             :number = 0;
@@ -213,9 +233,9 @@
 
                 segment.drawSprites( ctx, resolution );
 
-                if (segment === playerSegment) {
+                if (segment === this.playerSegment) {
 
-                    this.player.draw( ctx, resolution, playerSegment, this.camera, playerPercent );
+                    this.player.draw( ctx, resolution, this.playerSegment, this.camera, playerPercent );
                 }
             }
         }
