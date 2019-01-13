@@ -17,6 +17,7 @@ Refactoring Methods:
 - Order variables, fields and methods by visibility, type (number, boolean, string, object, collections ) and static state.
   This helps grouping members and extract them later!
 - Group members by their logical corresponding
+- Redundant calculated (local) fields into non-static fields.
 - Extract/Separate grouped members to new class
 - Add const for non-changing values!
 - Remove static (global) fields and turn into non-static fields with propagated context in the constructor.

@@ -119,6 +119,9 @@
                 )
             );
 
+            // update player segment ( for smooth collisions ... :( )
+            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+
             // check keys for player
             this.player.handlePlayerKeys();
 
