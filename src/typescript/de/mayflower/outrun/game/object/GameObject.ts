@@ -9,7 +9,7 @@
         /** The image ID of this car's sprite. */
         protected                           sprite                          :string                 = null;
 
-        public constructor( sprite:string )
+        protected constructor( sprite:string )
         {
             this.sprite = sprite;
         }

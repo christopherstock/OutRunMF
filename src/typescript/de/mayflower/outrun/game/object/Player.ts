@@ -89,7 +89,6 @@
             playerSegment :outrun.Segment,
             camera        :outrun.Camera,
             playerPercent :number
-
         )
         : void
         {
@@ -109,6 +108,7 @@
                 )
             );
 
+            // TODO to update!
             const steer  :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
             const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
             const bounce :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );

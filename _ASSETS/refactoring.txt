@@ -64,6 +64,7 @@ Constructive refactorings:
 - Create constructors from direct object instanciations (forced on making fields private) => newPoint = { x: 0, y: 0, z: 0 }
 - cluster and separate on more than 7 items per folder, package, class, methods, fields, parameters and so on ..
 => Create abstract parent classes and extract shared fields and shared methods to parent class!
+=> Unify same behaviour, formally split into different implementations: GameObject.draw() !
 
 Results:
 ==========================

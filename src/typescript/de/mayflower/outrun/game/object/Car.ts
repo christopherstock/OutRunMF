@@ -62,7 +62,13 @@
             }
         }
 
-        public draw( ctx:CanvasRenderingContext2D, resolution:number, segment:outrun.Segment ) : void
+        public draw
+        (
+            ctx:CanvasRenderingContext2D,
+            resolution:number,
+            segment:outrun.Segment
+        )
+        : void
         {
             const spriteScale :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().scale, segment.getP2().getScreen().scale, this.percent);
             const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.x * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);

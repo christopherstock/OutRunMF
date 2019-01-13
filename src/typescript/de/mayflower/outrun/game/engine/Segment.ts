@@ -19,34 +19,34 @@
         private         readonly        p1              :outrun.SegmentPoint    = null;
         private         readonly        p2              :outrun.SegmentPoint    = null;
 
-        private         readonly        sprites         :outrun.Obstacle[]        = null;
+        private         readonly        obstacles       :outrun.Obstacle[]        = null;
 
         public constructor
         (
-            index    :number,
-            p1       :outrun.SegmentPoint,
-            p2       :outrun.SegmentPoint,
-            curve    :number,
-            sprites  :outrun.Obstacle[],
-            cars     :outrun.Car[],
-            color    :outrun.ColorCombo,
-            looped   :boolean,
-            fog      :number,
-            clip     :number,
-            fogColor :string
+            index     :number,
+            p1        :outrun.SegmentPoint,
+            p2        :outrun.SegmentPoint,
+            curve     :number,
+            obstacles :outrun.Obstacle[],
+            cars      :outrun.Car[],
+            color     :outrun.ColorCombo,
+            looped    :boolean,
+            fog       :number,
+            clip      :number,
+            fogColor  :string
         )
         {
-            this.index    = index;
-            this.p1       = p1;
-            this.p2       = p2;
-            this.curve    = curve;
-            this.sprites  = sprites;
-            this.cars     = cars;
-            this.color    = color;
-            this.looped   = looped;
-            this.fog      = fog;
-            this.clip     = clip;
-            this.fogColor = fogColor;
+            this.index     = index;
+            this.p1        = p1;
+            this.p2        = p2;
+            this.curve     = curve;
+            this.obstacles = obstacles;
+            this.cars      = cars;
+            this.color     = color;
+            this.looped    = looped;
+            this.fog       = fog;
+            this.clip      = clip;
+            this.fogColor  = fogColor;
         }
 
         public getIndex() : number
@@ -66,7 +66,7 @@
 
         public addSprite( sprite:outrun.Obstacle ) : void
         {
-            this.sprites.push( sprite );
+            this.obstacles.push( sprite );
         }
 
         public draw( ctx:CanvasRenderingContext2D ) : void
@@ -132,19 +132,21 @@
 
         public drawSprites( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            for ( const sprite of this.sprites )
+            for ( const obstacle of this.obstacles )
             {
-                const spriteScale :number = this.p1.getScreen().scale;
-                const spriteX     :number = this.p1.getScreen().x + (spriteScale * sprite.getX() * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
-                const spriteY     :number = this.p1.getScreen().y;
-
-                outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, sprite.getSprite(), spriteScale, spriteX, spriteY, (sprite.getX() < 0 ? -1 : 0), -1, this.clip );
+                obstacle.draw
+                (
+                    ctx,
+                    resolution,
+                    this.p1,
+                    this.clip
+                );
             }
         }
 
         public getSprites() : outrun.Obstacle[]
         {
-            return this.sprites;
+            return this.obstacles;
         }
 
         private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
