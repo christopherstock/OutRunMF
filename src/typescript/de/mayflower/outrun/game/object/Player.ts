@@ -10,6 +10,8 @@
         public                      playerSegment       :outrun.Segment             = null;
         /** player width */
         public                      width               :number                     = 0;
+        /** The current player speed in percent. */
+        public                      speedPercent        :number                     = 0;
 
         /** Indicates if the 'steer left' key is pressed this game tick. */
         private                     keyLeft             :boolean                    = false;
@@ -60,9 +62,6 @@
         (
             dx            :number,
             dt            :number,
-            playerSegment :outrun.Segment,
-            speedPercent  :number,
-            playerW       :number,
             stageLength   :number,
             camera        :outrun.Camera
         )
@@ -89,7 +88,7 @@
             this.clipSpeed();
 
             // determine next sprite
-            const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
+            const updown :number = ( this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y );
 
             // determine sprite
             if ( this.keyLeft && this.speed > 0 )
@@ -106,20 +105,20 @@
             }
 
             // check centrifugal force modification if player is in a curve
-            this.checkCentrifugalForce( dx, speedPercent, playerSegment );
+            this.checkCentrifugalForce( dx, this.speedPercent, this.playerSegment );
 
             // check if player is off-road
-            this.checkOffroad( playerSegment, playerW, dt, stageLength, camera );
+            this.checkOffroad( this.playerSegment, this.width, dt, stageLength, camera );
 
             // browse all cars
-            for ( const car of playerSegment.cars ) {
+            for ( const car of this.playerSegment.cars ) {
 
                 const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
                 if ( this.getSpeed() > car.getSpeed() ) {
 
                     // check if player is colliding?
-                    if ( this.checkCollidingWithCar( car, playerW, carW, camera, stageLength ) )
+                    if ( this.checkCollidingWithCar( car, this.width, carW, camera, stageLength ) )
                     {
                         break;
                     }

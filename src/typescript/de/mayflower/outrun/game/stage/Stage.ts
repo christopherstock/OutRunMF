@@ -95,15 +95,14 @@
         {
             // update player segment
             this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
-
-            const speedPercent  :number = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
+            this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const dx            :number = dt * 2 * speedPercent;
+            const dx            :number = ( dt * 2 * this.player.speedPercent );
             const startPosition :number = this.camera.getZ();
 
             // update cars
-            this.updateCars( dt, this.player.playerSegment, this.player.width );
+            this.updateCars( dt, this.player );
 
             // update camera ( this currently affects the player!! )
             this.camera.update( dt, this.player.getSpeed(), this.stageLength );
@@ -116,9 +115,6 @@
             (
                 dx,
                 dt,
-                this.player.playerSegment,
-                speedPercent,
-                this.player.width,
                 this.stageLength,
                 this.camera
             );
@@ -251,15 +247,14 @@
         /** ************************************************************************************************************
         *   Updates the cars in the game world.
         *
-        *   @param dt            The delta time to update the game.
-        *   @param playerSegment The segment the player is currently in.
-        *   @param playerW       The current width of the player.
+        *   @param dt     The delta time to update the game.
+        *   @param player The player.
         ***************************************************************************************************************/
-        private updateCars( dt:number, playerSegment:outrun.Segment, playerW:number ) : void
+        private updateCars( dt:number, player:outrun.Player ) : void
         {
             for ( const car of this.cars )
             {
-                car.update( dt, this.segments, this.player, playerSegment, playerW, this.stageLength );
+                car.update( dt, this.segments, this.player, this.stageLength );
             }
         }
 

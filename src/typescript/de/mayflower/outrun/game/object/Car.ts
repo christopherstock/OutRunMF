@@ -42,11 +42,11 @@
             return this.z;
         }
 
-        public update( dt:number, segments:outrun.Segment[], player:outrun.Player, playerSegment:outrun.Segment, playerW:number, stageLength:number ) : void
+        public update( dt:number, segments:outrun.Segment[], player:outrun.Player, stageLength:number ) : void
         {
             const oldSegment:outrun.Segment = outrun.Stage.findSegment( segments, this.z );
 
-            this.x = this.x + this.updateCarOffset( segments, player, oldSegment, playerSegment, playerW );
+            this.x = this.x + this.updateCarOffset( segments, player, oldSegment, player.playerSegment, player.width );
             this.z = outrun.MathUtil.increase( this.z, dt * this.speed, stageLength );
 
             // this is useful for interpolation during rendering phase
