@@ -76,16 +76,18 @@
             else
                 this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_RATE_NATURAL, dt );
 
+            // clip speed to 0 and maximum
+            this.clipSpeed();
+
             // determine next sprite
-            const steer  :number = ( this.speed * ( this.keyLeft ? -1 : this.keyRight ? 1 : 0 ) );
             const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
 
             // determine sprite
-            if ( steer < 0 && this.speed > 0 )
+            if ( this.keyLeft && this.speed > 0 )
             {
                 this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
             }
-            else if ( steer > 0 && this.speed > 0 )
+            else if ( this.keyRight && this.speed > 0 )
             {
                 this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
             }
@@ -117,9 +119,6 @@
 
             // dont ever let it go too far out of bounds
             this.clipBoundsForX();
-
-            // clip maximum speed
-            this.clipSpeed();
         }
 
         public draw
