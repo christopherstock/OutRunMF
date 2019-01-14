@@ -6,6 +6,9 @@
     *******************************************************************************************************************/
     export class Player extends outrun.GameObject
     {
+        /** The segment where the player is currently located. */
+        public                      playerSegment       :outrun.Segment             = null;
+
         /** Indicates if the 'steer left' key is pressed this game tick. */
         private                     keyLeft             :boolean                    = false;
         /** Indicates if the 'steer right' key is pressed this game tick. */

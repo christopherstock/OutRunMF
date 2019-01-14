@@ -6,7 +6,7 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
-        // TODO private!
+        // TODO private!?
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
         public          readonly    skyColor            :string                     = null;
@@ -28,9 +28,6 @@
 
         /** z length of entire track (computed) */
         private                     stageLength         :number                     = 0;
-
-        /** The segment where the player is currently located. TODO remove! */
-        private                     playerSegment       :outrun.Segment             = null;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
@@ -97,7 +94,7 @@
         public update( dt:number ) : void
         {
             // update player segment
-            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
             const playerW       :number = 80 * outrun.SettingEngine.SPRITE_SCALE;
             const speedPercent  :number = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
@@ -107,20 +104,20 @@
             const startPosition :number = this.camera.getZ();
 
             // update cars
-            this.updateCars( dt, this.playerSegment, playerW );
+            this.updateCars( dt, this.player.playerSegment, playerW );
 
             // update camera ( this currently affects the player!! )
             this.camera.update( dt, this.player.getSpeed(), this.stageLength );
 
             // update player segment ( for smooth collisions ... :( )
-            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
             // update player
             this.player.update
             (
                 dx,
                 dt,
-                this.playerSegment,
+                this.player.playerSegment,
                 speedPercent,
                 playerW,
                 this.stageLength,
@@ -128,7 +125,7 @@
             );
 
             // update backgrounds
-            this.background.updateOffsets( this.playerSegment, this.camera, startPosition );
+            this.background.updateOffsets( this.player.playerSegment, this.camera, startPosition );
         }
 
         /** ************************************************************************************************************
@@ -140,15 +137,15 @@
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             // update player segment again
-            this.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerY       :number = outrun.MathUtil.interpolate
             (
-                this.playerSegment.getP1().getWorld().y,
-                this.playerSegment.getP2().getWorld().y,
+                this.player.playerSegment.getP1().getWorld().y,
+                this.player.playerSegment.getP2().getWorld().y,
                 playerPercent
             );
 
@@ -209,9 +206,9 @@
                 segment.drawSprites( ctx, resolution );
 
                 // draw player
-                if (segment === this.playerSegment) {
+                if (segment === this.player.playerSegment) {
 
-                    this.player.draw( ctx, resolution, this.playerSegment, this.camera, playerPercent );
+                    this.player.draw( ctx, resolution, this.player.playerSegment, this.camera, playerPercent );
                 }
             }
         }
