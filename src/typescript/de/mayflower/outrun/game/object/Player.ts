@@ -81,11 +81,11 @@
             const updown :number = ( playerSegment.getP2().getWorld().y - playerSegment.getP1().getWorld().y );
 
             // determine sprite
-            if ( steer < 0 )
+            if ( steer < 0 && this.speed > 0 )
             {
                 this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
             }
-            else if ( steer > 0 )
+            else if ( steer > 0 && this.speed > 0 )
             {
                 this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
             }
