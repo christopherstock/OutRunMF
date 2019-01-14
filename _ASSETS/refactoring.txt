@@ -66,6 +66,8 @@ Constructive refactorings:
 - cluster and separate on more than 7 items per folder, package, class, methods, fields, parameters and so on ..
 => Create abstract parent classes and extract shared fields and shared methods to parent class!
 => Unify same behaviour, formally split into different implementations: GameObject.draw() !
+=> flatten method parameters: Car#update( dt:number, segments:outrun.Segment[], player:outrun.Player, playerSegment:outrun.Segment, playerW:number, stageLength:number ) : void
+
 
 Results:
 ==========================

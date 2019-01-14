@@ -8,6 +8,8 @@
     {
         /** The segment where the player is currently located. */
         public                      playerSegment       :outrun.Segment             = null;
+        /** player width */
+        public                      width               :number                     = 0;
 
         /** Indicates if the 'steer left' key is pressed this game tick. */
         private                     keyLeft             :boolean                    = false;
@@ -29,6 +31,8 @@
         {
             super( outrun.ImageFile.PLAYER_STRAIGHT );
 
+            this.width = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
+
             this.z = z;
         }
 
@@ -45,6 +49,11 @@
         public getSpeed() : number
         {
             return this.speed;
+        }
+
+        public getWidth() : number
+        {
+            return this.width;
         }
 
         public update

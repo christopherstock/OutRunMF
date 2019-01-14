@@ -96,7 +96,6 @@
             // update player segment
             this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
 
-            const playerW       :number = 80 * outrun.SettingEngine.SPRITE_SCALE;
             const speedPercent  :number = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
@@ -104,7 +103,7 @@
             const startPosition :number = this.camera.getZ();
 
             // update cars
-            this.updateCars( dt, this.player.playerSegment, playerW );
+            this.updateCars( dt, this.player.playerSegment, this.player.width );
 
             // update camera ( this currently affects the player!! )
             this.camera.update( dt, this.player.getSpeed(), this.stageLength );
@@ -119,7 +118,7 @@
                 dt,
                 this.player.playerSegment,
                 speedPercent,
-                playerW,
+                this.player.width,
                 this.stageLength,
                 this.camera
             );
