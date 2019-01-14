@@ -1,5 +1,5 @@
 
-    import * as outrun from '..';
+    import * as outrun from '../../..';
 
     /** ****************************************************************************************************************
     *   Loads and manages all desired images.

@@ -1,5 +1,5 @@
 
-    import * as outrun from '..';
+    import * as outrun from '../../..';
 
     /** ****************************************************************************************************************
     *   The key system that manages all pressed keys.

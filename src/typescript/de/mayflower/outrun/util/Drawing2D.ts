@@ -1,5 +1,5 @@
 
-    import * as outrun from '../index'
+    import * as outrun from '..'
 
     /** ****************************************************************************************************************
     *   canvas rendering helpers.

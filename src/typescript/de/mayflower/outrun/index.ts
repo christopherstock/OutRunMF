@@ -3,20 +3,35 @@
     export * from './base/Main';
     export * from './base/Version';
 
+    export * from './game/outrun/ColorCombo';
+
+    export * from './base/setting/SettingColor';
+    export * from './base/setting/SettingDebug';
+    export * from './base/setting/SettingEngine';
+    export * from './base/setting/SettingGame';
+
+    export * from './data/ImageFile';
+
     export * from './game/Game';
 
     export * from './game/engine/Engine';
-    export * from './game/engine/Background';
-    export * from './game/engine/Camera';
-    export * from './game/engine/ColorCombo';
-    export * from './game/engine/Segment';
-    export * from './game/engine/SegmentPoint';
-    export * from './game/engine/Vector';
+
+    export * from './game/engine/hid/KeyCodes';
+    export * from './game/engine/hid/KeySystem';
+
+    export * from './game/engine/ui/ImageSystem';
+    export * from './game/engine/ui/CanvasSystem';
 
     export * from './game/object/GameObject';
     export * from './game/object/Car';
     export * from './game/object/Obstacle';
     export * from './game/object/Player';
+
+    export * from './game/outrun/Background';
+    export * from './game/outrun/Camera';
+    export * from './game/outrun/Segment';
+    export * from './game/outrun/SegmentPoint';
+    export * from './game/outrun/Vector';
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';
@@ -25,19 +40,7 @@
     export * from './game/stage/level/LevelPreset';
     export * from './game/stage/level/LevelTest';
 
-    export * from './base/setting/SettingColor';
-    export * from './base/setting/SettingDebug';
-    export * from './base/setting/SettingEngine';
-    export * from './base/setting/SettingGame';
-
-    export * from './hid/KeyCodes';
-    export * from './hid/KeySystem';
-
-    export * from './io/ImageFile';
-    export * from './io/ImageSystem';
-
-    export * from './ui/CanvasSystem';
-    export * from './ui/Drawing2D';
+    export * from './util/Drawing2D';
 
     export * from './util/HTML';
     export * from './util/MathUtil';
