@@ -64,6 +64,11 @@
             return this.p2;
         }
 
+        public getClip() : number
+        {
+            return this.clip;
+        }
+
         public addSprite( sprite:outrun.Obstacle ) : void
         {
             this.obstacles.push( sprite );
@@ -130,21 +135,7 @@
             outrun.Drawing2D.fog( ctx, 0, y1, width, y2 - y1, this.fog, this.fogColor );
         }
 
-        public drawSprites( ctx:CanvasRenderingContext2D, resolution:number ) : void
-        {
-            for ( const obstacle of this.obstacles )
-            {
-                obstacle.draw
-                (
-                    ctx,
-                    resolution,
-                    this.p1,
-                    this.clip
-                );
-            }
-        }
-
-        public getSprites() : outrun.Obstacle[]
+        public getObstacles() : outrun.Obstacle[]
         {
             return this.obstacles;
         }

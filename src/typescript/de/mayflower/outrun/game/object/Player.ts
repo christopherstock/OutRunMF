@@ -210,7 +210,7 @@
                     this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt);
 
                 // check player collision with sprite
-                for ( const sprite of playerSegment.getSprites() )
+                for ( const sprite of playerSegment.getObstacles() )
                 {
                     const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 

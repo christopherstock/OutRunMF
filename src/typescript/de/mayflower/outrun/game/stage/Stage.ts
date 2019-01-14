@@ -202,8 +202,17 @@
                     car.draw( ctx, resolution, segment );
                 }
 
-                // draw sprites
-                segment.drawSprites( ctx, resolution );
+                // draw all sprites of this segment
+                for ( const obstacle of segment.getObstacles() )
+                {
+                    obstacle.draw
+                    (
+                        ctx,
+                        resolution,
+                        segment.getP1(),
+                        segment.getClip()
+                    );
+                }
 
                 // draw player
                 if (segment === this.player.playerSegment) {
