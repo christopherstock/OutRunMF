@@ -6,32 +6,31 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
+        // TODO private!
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
         public          readonly    skyColor            :string                     = null;
         public          readonly    fogColor            :string                     = null;
 
-        /** array of road segments */
-        protected                   segments            :outrun.Segment[]           = [];
-
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
-
+        /** The stage camera. */
+        private         readonly    camera              :outrun.Camera              = null;
         /** The player. */
         private         readonly    player              :outrun.Player              = null;
         /** The stage background. */
         private         readonly    background          :outrun.Background          = null;
-        /** The stage camera. */
-        private         readonly    camera              :outrun.Camera              = null;
+
+        /** array of cars on the road */
+        private                     cars                :outrun.Car[]               = [];
+        /** array of road segments */
+        private                     segments            :outrun.Segment[]           = [];
 
         /** z length of entire track (computed) */
         private                     stageLength         :number                     = 0;
 
-        /** The segment where the player is currently located. */
+        /** The segment where the player is currently located. TODO remove! */
         private                     playerSegment       :outrun.Segment             = null;
-
-        /** array of cars on the road */
-        private                     cars                :outrun.Car[]               = [];
 
         /** ************************************************************************************************************
         *   Creates a new stage.
@@ -80,10 +79,10 @@
             const playerZ:number = this.player.getZ();
 
             // create the road
-            this.createRoad( playerZ );
+            this.segments = this.createRoad( playerZ );
 
             // add sprites and cars
-            this.createSprites();
+            this.createSprites( this.segments.length );
             this.createCars();
 
             // assign full stage length
@@ -102,7 +101,9 @@
 
             const playerW       :number = 80 * outrun.SettingEngine.SPRITE_SCALE;
             const speedPercent  :number = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
-            const dx            :number = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
+
+            // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
+            const dx            :number = dt * 2 * speedPercent;
             const startPosition :number = this.camera.getZ();
 
             // update cars
@@ -219,13 +220,17 @@
         *   Creates the road of this stage.
         *
         *   @param playerZ The initial z position of the player.
+        *
+        *   @return All segments the road consists of.
         ***************************************************************************************************************/
-        protected abstract createRoad( playerZ:number ) : void;
+        protected abstract createRoad( playerZ:number ) : outrun.Segment[];
 
         /** ************************************************************************************************************
         *   Creates all decoration sprites for this stage.
+        *
+        *   @param segmentCount The number of segments this level consists of.
         ***************************************************************************************************************/
-        protected abstract createSprites() : void;
+        protected abstract createSprites( segmentCount:number ) : void;
 
         /** ************************************************************************************************************
         *   Adds a sprite to the segment with the specified index.

@@ -32,9 +32,11 @@
         *   Creates the road of this stage.
         *
         *   @param playerZ The initial z position of the player.
+        *
+        *   @return All segments the road consists of.
         ***************************************************************************************************************/
         // tslint:disable:max-line-length
-        protected createRoad( playerZ:number ) : void
+        protected createRoad( playerZ:number ) : outrun.Segment[]
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
@@ -60,13 +62,15 @@
             // set startGameLoop and finish
             stageBuilder.addStartAndFinish( playerZ );
 
-            this.segments = stageBuilder.assemble();
+            return stageBuilder.assemble();
         }
 
         /** ************************************************************************************************************
         *   Creates all decoration sprites for this stage.
+        *
+        *   @param segmentCount The number of segments this level consists of.
         ***************************************************************************************************************/
-        protected createSprites() : void
+        protected createSprites( segmentCount:number ) : void
         {
             this.addSprite( 20,  outrun.ImageFile.BILLBOARD07, -1 );
             this.addSprite( 40,  outrun.ImageFile.BILLBOARD06, -1 );
@@ -80,8 +84,8 @@
 
             this.addSprite( 240, outrun.ImageFile.BILLBOARD07, -1.2 );
             this.addSprite( 240, outrun.ImageFile.BILLBOARD06, 1.2 );
-            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD07, -1.2 );
-            this.addSprite( this.segments.length - 25, outrun.ImageFile.BILLBOARD06, 1.2  );
+            this.addSprite( segmentCount - 25, outrun.ImageFile.BILLBOARD07, -1.2 );
+            this.addSprite( segmentCount - 25, outrun.ImageFile.BILLBOARD06, 1.2  );
 
             for ( let n:number = 10; n < 200; n += 4 + Math.floor(n / 100) ) {
                 this.addSprite(n, outrun.ImageFile.PALM_TREE, 0.5 + Math.random() * 0.5);
@@ -94,14 +98,14 @@
                 this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE2, -1 - (Math.random() * 2));
             }
 
-            for ( let n:number = 200; n < this.segments.length; n += 3 ) {
+            for ( let n:number = 200; n < segmentCount; n += 3 ) {
                 this.addSprite(n, outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
             }
 
             let side   :number = 0;
             let offset :number = 0;
 
-            for ( let n:number = 1000; n < (this.segments.length - 50); n += 100 ) {
+            for ( let n:number = 1000; n < (segmentCount - 50); n += 100 ) {
                 side = outrun.MathUtil.randomChoice([1, -1]);
                 this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {

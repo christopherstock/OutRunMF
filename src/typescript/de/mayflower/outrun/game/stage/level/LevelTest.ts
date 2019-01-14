@@ -32,9 +32,11 @@
         *   Creates the road of this stage.
         *
         *   @param playerZ The initial z position of the player.
+        *
+        *   @return All segments the road consists of.
         ***************************************************************************************************************/
         // tslint:disable:max-line-length
-        protected createRoad( playerZ:number ) : void
+        protected createRoad( playerZ:number ) : outrun.Segment[]
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
@@ -61,13 +63,15 @@
             // set startGameLoop and finish
             stageBuilder.addStartAndFinish( playerZ );
 
-            this.segments = stageBuilder.assemble();
+            return stageBuilder.assemble();
         }
 
         /** ************************************************************************************************************
         *   Creates all decoration sprites for this stage.
+        *
+        *   @param segmentCount The number of segments this level consists of.
         ***************************************************************************************************************/
-        protected createSprites() : void
+        protected createSprites( segmentCount:number ) : void
         {
         }
     }
