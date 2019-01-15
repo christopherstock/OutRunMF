@@ -7,10 +7,16 @@
     export abstract class Stage
     {
         // TODO private and enable different segment colors per level ..
+        // TODO bundle into ColorCombo object!
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
-        public          readonly    skyColor            :string                     = null;
-        public          readonly    fogColor            :string                     = null;
+
+        /** array of cars on the road */
+        private                     cars                :outrun.Car[]               = [];
+        /** array of road segments */
+        private                     segments            :outrun.Segment[]           = [];
+        /** z length of entire track (computed) */
+        private                     stageLength         :number                     = 0;
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
@@ -20,14 +26,10 @@
         private         readonly    player              :outrun.Player              = null;
         /** The stage background. */
         private         readonly    background          :outrun.Background          = null;
-
-        /** array of cars on the road */
-        private                     cars                :outrun.Car[]               = [];
-        /** array of road segments */
-        private                     segments            :outrun.Segment[]           = [];
-
-        /** z length of entire track (computed) */
-        private                     stageLength         :number                     = 0;
+        /** The bg color of the sky for this stage */
+        private         readonly    skyColor            :string                     = null;
+        /** The color of the fog in this stage */
+        private         readonly    fogColor            :string                     = null;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
@@ -187,7 +189,7 @@
                 }
 
                 // draw segment road
-                segment.draw( ctx );
+                segment.draw( ctx, this.fogColor );
 
                 // assign maxY ?
                 maxY = segment.getP1().getScreen().y;
@@ -274,12 +276,12 @@
 
             for ( let i:number = 0; i < this.carCount; i++ )
             {
-                const offset  :number = Math.random() * outrun.MathUtil.randomChoice([-0.8, 0.8]);
+                const offset  :number = Math.random() * outrun.MathUtil.randomChoice( [ -0.8, 0.8 ] );
+                const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
                 const z       :number = Math.floor(
                     Math.random() * this.segments.length
                 ) * outrun.SettingGame.SEGMENT_LENGTH;
-                const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
-                const speed   :number         = (
+                const speed   :number = (
                     ( outrun.SettingGame.PLAYER_MAX_SPEED / 4 )
                     + (
                         Math.random()
@@ -290,6 +292,7 @@
                 const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 
+                // add to segment and to global cars collection
                 segment.cars.push( car );
                 this.cars.push(    car );
             }

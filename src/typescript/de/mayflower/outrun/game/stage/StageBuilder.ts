@@ -186,8 +186,7 @@
                     ),
                     false,
                     0,
-                    0,
-                    outrun.Main.game.stage.fogColor
+                    0
                 )
             );
         }

@@ -9,12 +9,8 @@
     *   ==============================
     *   TODO Refactorings
     *   ==============================
-    *   TODO Remove/Improve Z variable for Camera and constant Z variable for player!
-    *
+    *   TODO Remove / Improve Z variable for Camera and constant Z variable for player!
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
-    *   TODO Change 'Obstacle' to class 'Deco'.
-    *   TODO Introduce sprite field for all game objects!
-    *   TODO Create abstract parent class 'GameObject'.
     *
     *   ==============================
     *   TODO Game creation
