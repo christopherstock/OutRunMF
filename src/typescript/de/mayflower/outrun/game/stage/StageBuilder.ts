@@ -179,11 +179,8 @@
                     curve,
                     [],
                     [],
-                    (
-                        Math.floor( n / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                        ? outrun.Main.game.stage.trackColorDark
-                        : outrun.Main.game.stage.trackColorLight
-                    ),
+                    outrun.Main.game.stage.trackColorDark,
+                    outrun.Main.game.stage.trackColorLight,
                     false,
                     0,
                     0

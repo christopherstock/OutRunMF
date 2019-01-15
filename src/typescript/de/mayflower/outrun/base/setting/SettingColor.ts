@@ -13,7 +13,7 @@
         public      static      DEFAULT_DARK    :outrun.ColorCombo          = new outrun.ColorCombo( '#696969', '#009a00', '#bbbbbb', null      );
 
         public      static      RED_SKY         :string                     = '#ee7872';
-        public      static      RED_FOG         :string                     = '#ffffff'; // '#9d3a17'; // ( TREE color! )
+        public      static      RED_FOG         :string                     = '#ffffff';
         public      static      RED_LIGHT       :outrun.ColorCombo          = new outrun.ColorCombo( '#515151', '#aa5110', '#ef0000', '#ffffff' );
         public      static      RED_DARK        :outrun.ColorCombo          = new outrun.ColorCombo( '#484848', '#9a5000', '#ffffff', null      );
 

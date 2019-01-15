@@ -20,28 +20,34 @@
 
         public constructor
         (
-            index     :number,
-            p1        :outrun.SegmentPoint,
-            p2        :outrun.SegmentPoint,
-            curve     :number,
-            obstacles :outrun.Obstacle[],
-            cars      :outrun.Car[],
-            color     :outrun.ColorCombo,
-            looped    :boolean,
-            fog       :number,
-            clip      :number
+            index      :number,
+            p1         :outrun.SegmentPoint,
+            p2         :outrun.SegmentPoint,
+            curve      :number,
+            obstacles  :outrun.Obstacle[],
+            cars       :outrun.Car[],
+            colorDark  :outrun.ColorCombo,
+            colorLight :outrun.ColorCombo,
+            looped     :boolean,
+            fog        :number,
+            clip       :number
         )
         {
-            this.index     = index;
-            this.p1        = p1;
-            this.p2        = p2;
-            this.curve     = curve;
-            this.obstacles = obstacles;
-            this.cars      = cars;
-            this.color     = color;
-            this.looped    = looped;
-            this.fog       = fog;
-            this.clip      = clip;
+            this.index      = index;
+            this.p1         = p1;
+            this.p2         = p2;
+            this.curve      = curve;
+            this.obstacles  = obstacles;
+            this.cars       = cars;
+            this.looped     = looped;
+            this.fog        = fog;
+            this.clip       = clip;
+
+            this.color      = (
+                Math.floor( index / outrun.SettingGame.RUMBLE_LENGTH ) % 2
+                ? colorDark
+                : colorLight
+            );
         }
 
         public getIndex() : number

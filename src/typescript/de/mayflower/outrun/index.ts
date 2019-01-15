@@ -3,14 +3,13 @@
     export * from './base/Main';
     export * from './base/Version';
 
-    export * from './game/outrun/ColorCombo';
+    export * from './data/ColorCombo';
+    export * from './data/ImageFile';
 
     export * from './base/setting/SettingColor';
     export * from './base/setting/SettingDebug';
     export * from './base/setting/SettingEngine';
     export * from './base/setting/SettingGame';
-
-    export * from './data/ImageFile';
 
     export * from './game/Game';
 
