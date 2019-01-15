@@ -46,7 +46,14 @@
         {
             const oldSegment:outrun.Segment = outrun.Stage.findSegment( segments, this.z );
 
-            this.x = this.x + this.updateCarOffset( segments, player, oldSegment, player.playerSegment, player.width );
+            this.x = this.x + this.updateCarOffset
+            (
+                segments,
+                player,
+                oldSegment,
+                player.getPlayerSegment(),
+                player.getWidth()
+            );
             this.z = outrun.MathUtil.increase( this.z, dt * this.speed, stageLength );
 
             // this is useful for interpolation during rendering phase

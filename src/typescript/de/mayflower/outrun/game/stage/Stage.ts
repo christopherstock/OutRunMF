@@ -6,7 +6,7 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
-        // TODO private!?
+        // TODO private and enable different segment colors per level ..
         public          readonly    trackColorLight     :outrun.ColorCombo          = null;
         public          readonly    trackColorDark      :outrun.ColorCombo          = null;
         public          readonly    skyColor            :string                     = null;
@@ -94,7 +94,9 @@
         public update( dt:number ) : void
         {
             // update player segment
-            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.setPlayerSegment(
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+            );
             this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
@@ -108,7 +110,9 @@
             this.camera.update( dt, this.player.getSpeed(), this.stageLength );
 
             // update player segment ( for smooth collisions ... :( )
-            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.setPlayerSegment(
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+            );
 
             // update player
             this.player.update
@@ -120,7 +124,7 @@
             );
 
             // update backgrounds
-            this.background.updateOffsets( this.player.playerSegment, this.camera, startPosition );
+            this.background.updateOffsets( this.player.getPlayerSegment(), this.camera, startPosition );
         }
 
         /** ************************************************************************************************************
@@ -129,18 +133,21 @@
         *   @param ctx        The 2D drawing context.
         *   @param resolution The scaling factor for all images to draw.
         ***************************************************************************************************************/
+        // tslint:disable:max-line-length
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             // update player segment again
-            this.player.playerSegment = Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() );
+            this.player.setPlayerSegment(
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+            );
 
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerY       :number = outrun.MathUtil.interpolate
             (
-                this.player.playerSegment.getP1().getWorld().y,
-                this.player.playerSegment.getP2().getWorld().y,
+                this.player.getPlayerSegment().getP1().getWorld().y,
+                this.player.getPlayerSegment().getP2().getWorld().y,
                 playerPercent
             );
 
@@ -210,9 +217,9 @@
                 }
 
                 // draw player
-                if (segment === this.player.playerSegment) {
+                if ( segment === this.player.getPlayerSegment() ) {
 
-                    this.player.draw( ctx, resolution, this.player.playerSegment, this.camera, playerPercent );
+                    this.player.draw( ctx, resolution, this.player.getPlayerSegment(), this.camera, playerPercent );
                 }
             }
         }

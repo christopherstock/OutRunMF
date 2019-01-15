@@ -18,6 +18,7 @@ Refactoring Methods:
   This helps grouping members and extract them later!
 - Group members by their logical corresponding
 - Redundant calculated (local) fields into non-static fields.
+- Add 'readonly' modifier for all non-changing fields only assigned in the constructor!
 - Extract/Separate grouped members to new class
 - Add const for non-changing values!
 - Remove static (global) fields and turn into non-static fields with propagated context in the constructor.
@@ -39,6 +40,10 @@ Refactoring Methods:
         dir = -1;
     else if (player.getX() < -0.5)
         dir = 1;
+
+- Move redundant calculations to constant fields into constructor etc!
+  const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
+
 
 Tools that support:
 ===================

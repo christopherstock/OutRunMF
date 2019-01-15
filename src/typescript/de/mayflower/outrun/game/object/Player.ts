@@ -6,10 +6,6 @@
     *******************************************************************************************************************/
     export class Player extends outrun.GameObject
     {
-        /** The segment where the player is currently located. */
-        public                      playerSegment       :outrun.Segment             = null;
-        /** player width */
-        public                      width               :number                     = 0;
         /** The current player speed in percent. */
         public                      speedPercent        :number                     = 0;
 
@@ -22,20 +18,24 @@
         /** Indicates if the 'slower' key is pressed this game tick. */
         private                     keySlower           :boolean                    = false;
 
+        /** The segment where the player is currently located. */
+        private                     playerSegment       :outrun.Segment             = null;
+
+        /** current player speed */
+        private                     speed               :number                     = 0;
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
         /** player relative z distance from camera (computed) */
         private     readonly        z                   :number                     = null;
-        /** current player speed */
-        private                     speed               :number                     = 0;
+        /** player width */
+        private     readonly        width               :number                     = 0;
 
         public constructor( z:number )
         {
             super( outrun.ImageFile.PLAYER_STRAIGHT );
 
+            this.z     = z;
             this.width = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
-
-            this.z = z;
         }
 
         public getX() : number
@@ -58,6 +58,16 @@
             return this.width;
         }
 
+        public getPlayerSegment() : outrun.Segment
+        {
+            return this.playerSegment;
+        }
+
+        public setPlayerSegment( playerSegment:outrun.Segment ) : void
+        {
+            this.playerSegment = playerSegment;
+        }
+
         public update
         (
             dx            :number,
@@ -76,16 +86,8 @@
             else if ( this.keyRight )
                 this.x = this.x + dx;
 
-            // accelerate or decelerate
-            if (this.keyFaster)
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_ACCELERATION_RATE, dt );
-            else if (this.keySlower)
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_BREAKING_RATE, dt );
-            else
-                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_RATE_NATURAL, dt );
-
-            // clip speed to 0 and maximum
-            this.clipSpeed();
+            // update speed
+            this.updateSpeed( dt );
 
             // determine next sprite
             const updown :number = ( this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y );
@@ -113,6 +115,7 @@
             // browse all cars
             for ( const car of this.playerSegment.cars ) {
 
+                // TODO Move to constant car width!
                 const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 
                 if ( this.getSpeed() > car.getSpeed() ) {
@@ -203,8 +206,26 @@
             this.x = outrun.MathUtil.limit( this.x, -3, 3 );
         }
 
-        private clipSpeed() : void
+        private updateSpeed( dt:number ) : void
         {
+            // modify speed
+            if ( this.keyFaster )
+            {
+                // accelerate
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_ACCELERATION_RATE, dt );
+            }
+            else if ( this.keySlower )
+            {
+                // break
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.PLAYER_BREAKING_RATE, dt );
+            }
+            else
+            {
+                // decelerate natural
+                this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_RATE_NATURAL, dt );
+            }
+
+            // clip speed
             this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
         }
 
