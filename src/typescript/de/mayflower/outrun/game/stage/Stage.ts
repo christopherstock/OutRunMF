@@ -6,9 +6,6 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
-        // TODO private and enable different segment colors per level ..
-        public          readonly    segmentColor        :outrun.SegmentColorSet     = null;
-
         /** array of cars on the road */
         private                     cars                :outrun.Car[]               = [];
         /** array of road segments */
@@ -34,7 +31,6 @@
         *
         *   @param carCount     The number of cars to create in this stage.
         *   @param background   The background to use for this stage.
-        *   @param segmentColor The color for the segments.
         *   @param skyColor     The color of the sky.
         *   @param fogColor     The color of the fog.
         ***************************************************************************************************************/
@@ -42,7 +38,6 @@
         (
             carCount     :number,
             background   :outrun.Background,
-            segmentColor :outrun.SegmentColorSet,
             skyColor     :string,
             fogColor     :string
         )
@@ -60,7 +55,6 @@
             this.background = background;
 
             // assign track colors
-            this.segmentColor = segmentColor;
             this.skyColor     = skyColor;
             this.fogColor     = fogColor;
         }

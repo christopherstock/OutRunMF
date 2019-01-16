@@ -20,8 +20,6 @@
                     outrun.ImageFile.BG_HILL1,
                     outrun.ImageFile.BG_TREE1
                 ),
-                outrun.SettingColor.DEFAULT,
-
                 outrun.SettingColor.DEFAULT_SKY,
                 outrun.SettingColor.DEFAULT_FOG
             );
@@ -39,24 +37,24 @@
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
-            stageBuilder.addStraight(        outrun.Road.LENGTH.SHORT );
-            stageBuilder.addLowRollingHills( outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
-            stageBuilder.addSCurves();
-            stageBuilder.addCurve(           outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.LOW);
-            stageBuilder.addBumps();
-            stageBuilder.addLowRollingHills( outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
-            stageBuilder.addCurve(           outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);
-            stageBuilder.addStraight(        outrun.Road.LENGTH.MEDIUM );
-            stageBuilder.addHill(            outrun.Road.LENGTH.MEDIUM, outrun.Road.HILL.HIGH);
-            stageBuilder.addSCurves();
-            stageBuilder.addCurve(           outrun.Road.LENGTH.LONG, -outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE);
-            stageBuilder.addHill(            outrun.Road.LENGTH.LONG, outrun.Road.HILL.HIGH);
-            stageBuilder.addCurve(           outrun.Road.LENGTH.LONG, outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.LOW);
-            stageBuilder.addBumps();
-            stageBuilder.addHill(            outrun.Road.LENGTH.LONG, -outrun.Road.HILL.MEDIUM);
-            stageBuilder.addStraight(        outrun.Road.LENGTH.MEDIUM );
-            stageBuilder.addSCurves();
-            stageBuilder.addDownhillToEnd(   outrun.Road.LENGTH.DOUBLE_LONG );
+            stageBuilder.addStraight(        outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.SHORT );
+            stageBuilder.addLowRollingHills( outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
+            stageBuilder.addSCurves(         outrun.SettingColor.DEFAULT );
+            stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.LOW);
+            stageBuilder.addBumps(           outrun.SettingColor.DEFAULT );
+            stageBuilder.addLowRollingHills( outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
+            stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);
+            stageBuilder.addStraight(        outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM );
+            stageBuilder.addHill(            outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM, outrun.Road.HILL.HIGH);
+            stageBuilder.addSCurves(         outrun.SettingColor.DEFAULT );
+            stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.LONG, -outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE);
+            stageBuilder.addHill(            outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.LONG, outrun.Road.HILL.HIGH);
+            stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.LONG, outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.LOW);
+            stageBuilder.addBumps(           outrun.SettingColor.DEFAULT );
+            stageBuilder.addHill(            outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.LONG, -outrun.Road.HILL.MEDIUM);
+            stageBuilder.addStraight(        outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM );
+            stageBuilder.addSCurves(         outrun.SettingColor.DEFAULT );
+            stageBuilder.addDownhillToEnd(   outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.DOUBLE_LONG );
 
             // set startGameLoop and finish
             stageBuilder.addStartAndFinish( playerZ );

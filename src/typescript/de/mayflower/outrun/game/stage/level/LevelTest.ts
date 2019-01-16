@@ -20,8 +20,6 @@
                     outrun.ImageFile.BG_HILL2,
                     outrun.ImageFile.BG_TREE2
                 ),
-                outrun.SettingColor.RED,
-
                 outrun.SettingColor.RED_SKY,
                 outrun.SettingColor.RED_FOG
             );
@@ -39,8 +37,8 @@
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
-            stageBuilder.addStraight(        outrun.Road.LENGTH.LONG );
-            stageBuilder.addCurve(           outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
+            stageBuilder.addStraight( outrun.SettingColor.RED,     outrun.Road.LENGTH.MEDIUM );
+            stageBuilder.addCurve(    outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
 /*
             stageBuilder.addLowRollingHills( , outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
             stageBuilder.addSCurves();
