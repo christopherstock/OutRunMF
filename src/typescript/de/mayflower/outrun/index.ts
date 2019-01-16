@@ -3,8 +3,9 @@
     export * from './base/Main';
     export * from './base/Version';
 
-    export * from './data/ColorCombo';
     export * from './data/ImageFile';
+    export * from './game/engine/ui/SegmentColor';
+    export * from './game/engine/ui/SegmentColorSet';
 
     export * from './base/setting/SettingColor';
     export * from './base/setting/SettingDebug';

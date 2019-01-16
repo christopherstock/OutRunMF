@@ -7,9 +7,7 @@
     export abstract class Stage
     {
         // TODO private and enable different segment colors per level ..
-        // TODO bundle into ColorCombo object!
-        public          readonly    trackColorLight     :outrun.ColorCombo          = null;
-        public          readonly    trackColorDark      :outrun.ColorCombo          = null;
+        public          readonly    segmentColor        :outrun.SegmentColorSet     = null;
 
         /** array of cars on the road */
         private                     cars                :outrun.Car[]               = [];
@@ -34,21 +32,19 @@
         /** ************************************************************************************************************
         *   Creates a new stage.
         *
-        *   @param carCount        The number of cars to create in this stage.
-        *   @param background      The background to use for this stage.
-        *   @param trackColorLight The color for the road (light strip).
-        *   @param trackColorDark  The color for the road (dark strip).
-        *   @param skyColor        The color of the sky.
-        *   @param fogColor        The color of the fog.
+        *   @param carCount     The number of cars to create in this stage.
+        *   @param background   The background to use for this stage.
+        *   @param segmentColor The color for the segments.
+        *   @param skyColor     The color of the sky.
+        *   @param fogColor     The color of the fog.
         ***************************************************************************************************************/
         protected constructor
         (
-            carCount        :number,
-            background      :outrun.Background,
-            trackColorLight :outrun.ColorCombo,
-            trackColorDark  :outrun.ColorCombo,
-            skyColor        :string,
-            fogColor        :string
+            carCount     :number,
+            background   :outrun.Background,
+            segmentColor :outrun.SegmentColorSet,
+            skyColor     :string,
+            fogColor     :string
         )
         {
             // assign car count
@@ -64,10 +60,9 @@
             this.background = background;
 
             // assign track colors
-            this.trackColorLight = trackColorLight;
-            this.trackColorDark  = trackColorDark;
-            this.skyColor        = skyColor;
-            this.fogColor        = fogColor;
+            this.segmentColor = segmentColor;
+            this.skyColor     = skyColor;
+            this.fogColor     = fogColor;
         }
 
         /** ************************************************************************************************************

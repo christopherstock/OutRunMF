@@ -7,7 +7,7 @@
     export class Segment
     {
         public                          cars            :outrun.Car[]           = null;
-        public                          color           :outrun.ColorCombo      = null;
+        public                          color           :outrun.SegmentColor    = null;
         public                          looped          :boolean                = false;
         public                          fog             :number                 = null;
         public                          clip            :number                 = 0;
@@ -20,17 +20,16 @@
 
         public constructor
         (
-            index      :number,
-            p1         :outrun.SegmentPoint,
-            p2         :outrun.SegmentPoint,
-            curve      :number,
-            obstacles  :outrun.Obstacle[],
-            cars       :outrun.Car[],
-            colorDark  :outrun.ColorCombo,
-            colorLight :outrun.ColorCombo,
-            looped     :boolean,
-            fog        :number,
-            clip       :number
+            index     :number,
+            p1        :outrun.SegmentPoint,
+            p2        :outrun.SegmentPoint,
+            curve     :number,
+            obstacles :outrun.Obstacle[],
+            cars      :outrun.Car[],
+            color     :outrun.SegmentColorSet,
+            looped    :boolean,
+            fog       :number,
+            clip      :number
         )
         {
             this.index      = index;
@@ -45,8 +44,8 @@
 
             this.color      = (
                 Math.floor( index / outrun.SettingGame.RUMBLE_LENGTH ) % 2
-                ? colorDark
-                : colorLight
+                ? color.dark
+                : color.light
             );
         }
 
@@ -97,14 +96,14 @@
             let lanex1 :number = 0;
             let lanex2 :number = 0;
 
-            ctx.fillStyle = this.color.grass;
+            ctx.fillStyle = this.color.offroad;
             ctx.fillRect(0, y2, width, y1 - y2);
 
-            // draw rumble
+            // left rumble
             outrun.Drawing2D.polygon( ctx, x1 - w1 - r1, y1, x1 - w1, y1, x2 - w2, y2, x2 - w2 - r2, y2, this.color.rumble );
+            // right rumble
             outrun.Drawing2D.polygon( ctx, x1 + w1 + r1, y1, x1 + w1, y1, x2 + w2, y2, x2 + w2 + r2, y2, this.color.rumble );
-
-            // draw road
+            // road
             outrun.Drawing2D.polygon( ctx, x1 - w1,      y1, x1 + w1, y1, x2 + w2, y2, x2 - w2,      y2, this.color.road   );
 
             // draw lane
@@ -114,6 +113,7 @@
                 lanew2 = w2 * 2 / lanes;
                 lanex1 = x1 - w1 + lanew1;
                 lanex2 = x2 - w2 + lanew2;
+
                 for ( let lane:number = 1; lane < lanes; lane++ )
                 {
                     outrun.Drawing2D.polygon

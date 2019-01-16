@@ -20,8 +20,7 @@
                     outrun.ImageFile.BG_HILL2,
                     outrun.ImageFile.BG_TREE2
                 ),
-                outrun.SettingColor.RED_LIGHT,
-                outrun.SettingColor.RED_DARK,
+                outrun.SettingColor.RED,
 
                 outrun.SettingColor.RED_SKY,
                 outrun.SettingColor.RED_FOG

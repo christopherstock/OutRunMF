@@ -1,22 +1,23 @@
 
     /** ****************************************************************************************************************
-    *   Represents one color combination for one stripe of the road.
+    *   Specifies the colors for one road segment.
     *******************************************************************************************************************/
-    export class ColorCombo
+    export class SegmentColor
     {
+        /** The color for the road stripe. */
         public                          road                                :string                     = null;
-
-        public                          grass                               :string                     = null;
-
+        /** The offroad color. */
+        public                          offroad                             :string                     = null;
+        /** The color for the rumble stripe. */
         public                          rumble                              :string                     = null;
-
+        /** The color for the lane stripe. */
         public                          lane                                :string                     = null;
 
-        public constructor( road:string, grass:string, rumble:string, lane:string )
+        public constructor( road:string, offroad:string, rumble:string, lane:string )
         {
-            this.road   = road;
-            this.grass  = grass;
-            this.rumble = rumble;
-            this.lane   = lane;
+            this.road    = road;
+            this.offroad = offroad;
+            this.rumble  = rumble;
+            this.lane    = lane;
         }
     }

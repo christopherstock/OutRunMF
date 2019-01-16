@@ -10,6 +10,9 @@
         private                         z                               :number                     = 0;
         private         readonly        speed                           :number                     = 0;
 
+        /** The car's width. */
+        private         readonly        width                           :number                     = 0;
+
         /** Unknown field .. */
         private                         percent                         :number                     = 0;
 
@@ -20,11 +23,13 @@
             this.x      = offset;
             this.z      = z;
             this.speed  = speed;
+
+            this.width = outrun.Main.game.engine.imageSystem.getImage( sprite ).width * outrun.SettingEngine.SPRITE_SCALE;
         }
 
-        public getSprite() : string
+        public getWidth() : number
         {
-            return this.sprite;
+            return this.width;
         }
 
         public getSpeed() : number

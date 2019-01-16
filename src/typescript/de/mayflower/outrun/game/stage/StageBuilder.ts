@@ -179,8 +179,7 @@
                     curve,
                     [],
                     [],
-                    outrun.Main.game.stage.trackColorDark,
-                    outrun.Main.game.stage.trackColorLight,
+                    outrun.Main.game.stage.segmentColor,
                     false,
                     0,
                     0

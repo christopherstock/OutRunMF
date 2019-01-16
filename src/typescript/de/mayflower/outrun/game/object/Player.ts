@@ -115,13 +115,10 @@
             // browse all cars
             for ( const car of this.playerSegment.cars ) {
 
-                // TODO Move to constant car width!
-                const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
-
                 if ( this.getSpeed() > car.getSpeed() ) {
 
                     // check if player is colliding?
-                    if ( this.checkCollidingWithCar( car, this.width, carW, camera, stageLength ) )
+                    if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), camera, stageLength ) )
                     {
                         break;
                     }

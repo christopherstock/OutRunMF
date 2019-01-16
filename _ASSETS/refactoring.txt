@@ -43,6 +43,8 @@ Refactoring Methods:
 
 - Move redundant calculations to constant fields into constructor etc!
   const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
+- Clear speaking names:
+  outrun.Drawing2D.polygon( ctx, x1 - w1 - r1, y1, x1 - w1, y1, x2 - w2, y2, x2 - w2 - r2, y2, this.color.rumble );
 
 
 Tools that support:
