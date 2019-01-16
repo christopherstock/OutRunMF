@@ -11,27 +11,26 @@
     *   ==============================
     *   TODO Remove / Improve Z variable for Camera and constant Z variable for player!
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
+    *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
+    *   TODO Different road widths and lanes per level!
+    *   TODO prune finsh line (only if desired)?
+    *   TODO Minimize access to Main.game.
     *
     *   ==============================
     *   TODO Game creation
     *   ==============================
-    *   TODO Different road widths and lanes per level!
     *   TODO Enable additional segment forms left or right of the road (seaside?).
-    *   TODO New images and sprites.
-    *   TODO New stage system for creating different stages.
-    *   TODO Extract level creation to separate Factory / StageBuilder class?
-    *   TODO Add sound effects?
-    *   TODO Combine different road widths in one level?? ( different lane counts etc.)
-    *   TODO prune finsh line?
-    *   TODO Create new segments? Widening and narrowing the road etc.?
+    *   TODO Add new images and sprites and alter existent ones.
     *   TODO Stage.createCars: create speed map for all cars.
+    *   TODO Add sound effects?
+    *   TODO Create new segments? Enable widening and narrowing the road etc.?
     *
     *   ==============================
     *   TODO Secondary / Decorative features
     *   ==============================
     *   TODO Enable fullscreen mode.
-    *   TODO Add intro
-    *   TODO Add main menu?
+    *   TODO Add intro.
+    *   TODO Add main menu.
     *
     *   =====================
     *   TODO Code Quality
