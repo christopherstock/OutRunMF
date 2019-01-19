@@ -44,10 +44,10 @@
             outrun.Drawing2D.background( ctx, width, height, this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
         }
 
-        public updateOffsets( playerSegment:outrun.Segment, camera:outrun.Camera, startPosition:number ) : void
+        public updateOffsets( playerSegment:outrun.Segment, player:outrun.Player, startPosition:number ) : void
         {
-            this.skyOffset  = outrun.MathUtil.increase( this.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.hillOffset = outrun.MathUtil.increase( this.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.treeOffset = outrun.MathUtil.increase( this.treeOffset, outrun.SettingGame.TREE_SPEED * playerSegment.curve * (camera.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
+            this.skyOffset  = outrun.MathUtil.increase( this.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
+            this.hillOffset = outrun.MathUtil.increase( this.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
+            this.treeOffset = outrun.MathUtil.increase( this.treeOffset, outrun.SettingGame.TREE_SPEED * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
         }
     }

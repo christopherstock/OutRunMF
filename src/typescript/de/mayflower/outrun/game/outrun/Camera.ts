@@ -3,14 +3,13 @@
 
     /** ****************************************************************************************************************
     *   The legacy camera.
+    *
+    *   TODO remove!
     *******************************************************************************************************************/
     export class Camera
     {
         /** z distance camera is from screen (computed) */
         private     readonly    depth               :number                     = null;
-
-        /** current camera Z position (add playerZ to get player's absolute Z position) */
-        private                 z                   :number                     = 0;
 
         public constructor()
         {
@@ -22,31 +21,8 @@
             return this.depth;
         }
 
-        public getZ() : number
-        {
-            return this.z;
-        }
-
-        public setZ( z:number ) : void
-        {
-            this.z = z;
-        }
-
         public getStartupPlayerZ() : number
         {
             return ( outrun.SettingEngine.CAMERA_HEIGHT * this.getDepth() );
-        }
-
-        public update( dt:number, playerSpeed:number, stageLength:number ) : void
-        {
-            this.z =
-            (
-                outrun.MathUtil.increase
-                (
-                    this.z,
-                    dt * playerSpeed,
-                    stageLength
-                )
-            );
         }
     }

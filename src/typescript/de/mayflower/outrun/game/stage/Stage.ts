@@ -84,25 +84,25 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            // update player segment
+            // update player segment TODO refactor
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
+                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
             );
             this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const dx            :number = ( dt * 2 * this.player.speedPercent );
-            const startPosition :number = this.camera.getZ();
+            const startPosition :number = this.player.getZ();
 
             // update cars
             this.updateCars( dt, this.player );
 
-            // update camera ( this currently affects the player!! )
-            this.camera.update( dt, this.player.getSpeed(), this.stageLength );
+            // update player position
+            this.player.updatePosition( dt, this.player.getSpeed(), this.stageLength );
 
             // update player segment ( for smooth collisions ... :( )
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
+                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
             );
 
             // update player
@@ -115,7 +115,7 @@
             );
 
             // update backgrounds
-            this.background.updateOffsets( this.player.getPlayerSegment(), this.camera, startPosition );
+            this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );
         }
 
         /** ************************************************************************************************************
@@ -129,12 +129,12 @@
         {
             // update player segment again
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
+                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
             );
 
-            const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
-            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH);
+            const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.player.getZ() );
+            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
+            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.player.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerY       :number = outrun.MathUtil.interpolate
             (
                 this.player.getPlayerSegment().getP1().getWorld().y,
@@ -163,16 +163,16 @@
                 segment.clip   = maxY;
 
                 // calculate road segment projections
-                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.camera.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
-                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.camera.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
 
                 x = x + dx;
                 dx = dx + segment.curve;
 
                 if (
-                    (segment.getP1().getCamera().z <= this.camera.getDepth() ) || // behind us
-                    (segment.getP2().getScreen().y >= segment.getP1().getScreen().y)     || // back face cull
-                    (segment.getP2().getScreen().y >= maxY)                       // clip by (already rendered) hill
+                    (segment.getP1().getCamera().z <= this.camera.getDepth() )          // behind us
+                    || (segment.getP2().getScreen().y >= segment.getP1().getScreen().y) // back face cull
+                    || (segment.getP2().getScreen().y >= maxY)                          // clip by (already rendered) hill
                 ) {
                     continue;
                 }

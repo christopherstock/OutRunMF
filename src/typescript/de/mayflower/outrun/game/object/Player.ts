@@ -21,13 +21,16 @@
         /** The segment where the player is currently located. */
         private                     playerSegment       :outrun.Segment             = null;
 
-        /** current player speed */
-        private                     speed               :number                     = 0;
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
+        /** current camera Z position (add playerZ to get player's absolute Z position) */
+        private                     z                   :number                     = 0;
+
+        /** current player speed */
+        private                     speed               :number                     = 0;
+
         /** player width */
         private     readonly        width               :number                     = 0;
-
         /** player constant camera offset Z. */
         private     readonly        offsetZ             :number                     = null;
 
@@ -57,6 +60,18 @@
         public getWidth() : number
         {
             return this.width;
+        }
+
+        // TODO remove?
+        public getZ() : number
+        {
+            return this.z;
+        }
+
+        // TODO check outside usage?
+        public setZ( z:number ) : void
+        {
+            this.z = z;
         }
 
         public getPlayerSegment() : outrun.Segment
@@ -130,6 +145,20 @@
             this.clipBoundsForX();
         }
 
+        // TODO refactor!
+        public updatePosition( dt:number, playerSpeed:number, stageLength:number ) : void
+        {
+            this.z =
+            (
+                outrun.MathUtil.increase
+                (
+                    this.z,
+                    dt * playerSpeed,
+                    stageLength
+                )
+            );
+        }
+
         public draw
         (
             ctx           :CanvasRenderingContext2D,
@@ -186,7 +215,7 @@
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
                 this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
-                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength ) );
+                this.setZ( outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength ) );
 
                 return true;
             }
@@ -246,7 +275,7 @@
                         this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
 
                         // stop in front of sprite (at front of segment)
-                        camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength) );
+                        this.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength) );
                         break;
                     }
                 }
