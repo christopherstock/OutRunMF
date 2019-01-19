@@ -64,7 +64,7 @@
         ***************************************************************************************************************/
         public init() : void
         {
-            const playerZ:number = this.player.getZ();
+            const playerZ:number = this.player.getOffsetZ();
 
             // create the road
             this.segments = this.createRoad( playerZ );
@@ -86,7 +86,7 @@
         {
             // update player segment
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
             );
             this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
@@ -102,7 +102,7 @@
 
             // update player segment ( for smooth collisions ... :( )
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
             );
 
             // update player
@@ -129,12 +129,12 @@
         {
             // update player segment again
             this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getZ() )
+                Stage.findSegment( this.segments, this.camera.getZ() + this.player.getOffsetZ() )
             );
 
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.camera.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.camera.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
+            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.camera.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH);
             const playerY       :number = outrun.MathUtil.interpolate
             (
                 this.player.getPlayerSegment().getP1().getWorld().y,

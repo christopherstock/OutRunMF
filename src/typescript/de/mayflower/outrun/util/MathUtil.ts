@@ -1,6 +1,4 @@
 
-    import * as outrun from '../index'
-
     /** ****************************************************************************************************************
     *   Offers additional mathematical functionality.
     *******************************************************************************************************************/
@@ -37,14 +35,9 @@
             return Math.floor( ( Math.random() * ( max + 1 - min ) ) + min );
         }
 
-        public static randomInt( min:number, max:number ) : number
-        {
-            return Math.round( MathUtil.interpolate( min, max, Math.random() ) );
-        }
-
         public static randomChoice( options:any[] ) : any
         {
-            return options[ MathUtil.randomInt( 0, options.length - 1 ) ];
+            return options[ MathUtil.getRandomInt( 0, options.length - 1 ) ];
         }
 
         public static percentRemaining( n:number, total:number ) : number
@@ -57,14 +50,14 @@
             return v + ( accel * dt );
         }
 
-        public static interpolate( a:number, b:number, percent:number ) : number
+        public static interpolate( start:number, end:number, ratio:number ) : number
         {
-            return ( a + ( b - a ) * percent );
+            return ( start + ( ( end - start ) * ratio ) );
         }
 
-        public static easeIn( a:number, b:number, percent:number ) : number
+        public static easeIn( start:number, end:number, percent:number ) : number
         {
-            return ( a + ( b - a ) * Math.pow( percent, 2 ) );
+            return ( start + ( ( end - start ) * Math.pow( percent, 2 ) ) );
         }
 
         public static easeInOut( a:number, b:number, percent:number ) : number

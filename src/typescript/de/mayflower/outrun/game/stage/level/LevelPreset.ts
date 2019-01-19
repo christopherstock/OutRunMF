@@ -91,8 +91,8 @@
 
             for ( let n:number = 250; n < 1000; n += 5 ) {
                 this.addSprite(n, outrun.ImageFile.COLUMN, 1.1);
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE1, -1 - (Math.random() * 2));
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 5), outrun.ImageFile.TREE2, -1 - (Math.random() * 2));
+                this.addSprite(n + outrun.MathUtil.getRandomInt(0, 5), outrun.ImageFile.TREE1, -1 - (Math.random() * 2));
+                this.addSprite(n + outrun.MathUtil.getRandomInt(0, 5), outrun.ImageFile.TREE2, -1 - (Math.random() * 2));
             }
 
             for ( let n:number = 200; n < segmentCount; n += 3 ) {
@@ -104,11 +104,11 @@
 
             for ( let n:number = 1000; n < (segmentCount - 50); n += 100 ) {
                 side = outrun.MathUtil.randomChoice([1, -1]);
-                this.addSprite(n + outrun.MathUtil.randomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
+                this.addSprite(n + outrun.MathUtil.getRandomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {
                     const sprite:string = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
                     offset = side * (1.5 + Math.random());
-                    this.addSprite(n + outrun.MathUtil.randomInt(0, 50), sprite, offset);
+                    this.addSprite(n + outrun.MathUtil.getRandomInt(0, 50), sprite, offset);
                 }
             }
         }

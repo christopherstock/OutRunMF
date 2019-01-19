@@ -25,17 +25,18 @@
         private                     speed               :number                     = 0;
         /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
         private                     x                   :number                     = 0;
-        /** player relative z distance from camera (computed) */
-        private     readonly        z                   :number                     = null;
         /** player width */
         private     readonly        width               :number                     = 0;
 
-        public constructor( z:number )
+        /** player constant camera offset Z. */
+        private     readonly        offsetZ             :number                     = null;
+
+        public constructor( offsetZ:number )
         {
             super( outrun.ImageFile.PLAYER_STRAIGHT );
 
-            this.z     = z;
-            this.width = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
+            this.offsetZ = offsetZ;
+            this.width   = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
         }
 
         public getX() : number
@@ -43,9 +44,9 @@
             return this.x;
         }
 
-        public getZ() : number
+        public getOffsetZ() : number
         {
-            return this.z;
+            return this.offsetZ;
         }
 
         public getSpeed() : number
@@ -141,12 +142,12 @@
         {
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
             const bounce       :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-            const scale        :number = ( camera.getDepth() / this.z );
+            const scale        :number = ( camera.getDepth() / this.offsetZ );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
                 (outrun.Main.game.engine.canvasSystem.getHeight() / 2)
                 - (
-                    camera.getDepth() / this.z * outrun.MathUtil.interpolate
+                    camera.getDepth() / this.offsetZ * outrun.MathUtil.interpolate
                     (
                         playerSegment.getP1().getCamera().y,
                         playerSegment.getP2().getCamera().y,
@@ -185,7 +186,7 @@
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
                 this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
-                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.z, stageLength ) );
+                camera.setZ( outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength ) );
 
                 return true;
             }
@@ -241,8 +242,11 @@
 
                     if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getX() + spriteW / 2 * ( sprite.getX() > 0 ? 1 : -1 ), spriteW, 0 ) )
                     {
+                        // decrease player speed
                         this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
-                        camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.z, stageLength) ); // stop in front of sprite (at front of segment)
+
+                        // stop in front of sprite (at front of segment)
+                        camera.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength) );
                         break;
                     }
                 }
