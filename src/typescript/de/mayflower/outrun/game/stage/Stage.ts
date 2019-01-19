@@ -15,8 +15,6 @@
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
-        /** The stage camera. */
-        private         readonly    camera              :outrun.Camera              = null;
         /** The player. */
         private         readonly    player              :outrun.Player              = null;
         /** The stage background. */
@@ -45,11 +43,8 @@
             // assign car count
             this.carCount = carCount;
 
-            // create the camera
-            this.camera = new outrun.Camera();
-
             // create the player
-            this.player = new outrun.Player( this.camera.getStartupPlayerZ() );
+            this.player = new outrun.Player();
 
             // create the background
             this.background = background;
@@ -110,8 +105,7 @@
             (
                 dx,
                 dt,
-                this.stageLength,
-                this.camera
+                this.stageLength
             );
 
             // update backgrounds
@@ -163,14 +157,14 @@
                 segment.clip   = maxY;
 
                 // calculate road segment projections
-                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
-                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.camera.getDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.player.getCameraDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.player.getCameraDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
 
                 x = x + dx;
                 dx = dx + segment.curve;
 
                 if (
-                    (segment.getP1().getCamera().z <= this.camera.getDepth() )          // behind us
+                    (segment.getP1().getCamera().z <= this.player.getCameraDepth() )          // behind us
                     || (segment.getP2().getScreen().y >= segment.getP1().getScreen().y) // back face cull
                     || (segment.getP2().getScreen().y >= maxY)                          // clip by (already rendered) hill
                 ) {
@@ -208,9 +202,9 @@
                 }
 
                 // draw player
-                if ( segment === this.player.getPlayerSegment() ) {
-
-                    this.player.draw( ctx, resolution, this.player.getPlayerSegment(), this.camera, playerPercent );
+                if ( segment === this.player.getPlayerSegment() )
+                {
+                    this.player.draw( ctx, resolution, this.player.getPlayerSegment(), playerPercent );
                 }
             }
         }

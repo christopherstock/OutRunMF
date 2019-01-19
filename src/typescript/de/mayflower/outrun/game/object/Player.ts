@@ -29,17 +29,27 @@
         /** current player speed */
         private                     speed               :number                     = 0;
 
+        /** z distance camera is from screen (computed) */
+        private     readonly        cameraDepth         :number                     = null;
+
         /** player width */
         private     readonly        width               :number                     = 0;
         /** player constant camera offset Z. */
         private     readonly        offsetZ             :number                     = null;
 
-        public constructor( offsetZ:number )
+        public constructor()
         {
             super( outrun.ImageFile.PLAYER_STRAIGHT );
 
-            this.offsetZ = offsetZ;
+            this.cameraDepth = ( 1 / Math.tan( ( outrun.SettingEngine.CAMERA_FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
+
+            this.offsetZ = ( outrun.SettingEngine.CAMERA_HEIGHT * this.getCameraDepth() );
             this.width   = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
+        }
+
+        public getCameraDepth() : number
+        {
+            return this.cameraDepth;
         }
 
         public getX() : number
@@ -88,8 +98,7 @@
         (
             dx            :number,
             dt            :number,
-            stageLength   :number,
-            camera        :outrun.Camera
+            stageLength   :number
         )
         : void
         {
@@ -126,7 +135,7 @@
             this.checkCentrifugalForce( dx, this.speedPercent, this.playerSegment );
 
             // check if player is off-road
-            this.checkOffroad( this.playerSegment, this.width, dt, stageLength, camera );
+            this.checkOffroad( this.playerSegment, this.width, dt, stageLength );
 
             // browse all cars
             for ( const car of this.playerSegment.cars ) {
@@ -134,7 +143,7 @@
                 if ( this.getSpeed() > car.getSpeed() ) {
 
                     // check if player is colliding?
-                    if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), camera, stageLength ) )
+                    if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), stageLength ) )
                     {
                         break;
                     }
@@ -164,19 +173,18 @@
             ctx           :CanvasRenderingContext2D,
             resolution    :number,
             playerSegment :outrun.Segment,
-            camera        :outrun.Camera,
             playerPercent :number
         )
         : void
         {
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
             const bounce       :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-            const scale        :number = ( camera.getDepth() / this.offsetZ );
+            const scale        :number = ( this.cameraDepth / this.offsetZ );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
                 (outrun.Main.game.engine.canvasSystem.getHeight() / 2)
                 - (
-                    camera.getDepth() / this.offsetZ * outrun.MathUtil.interpolate
+                    this.cameraDepth / this.offsetZ * outrun.MathUtil.interpolate
                     (
                         playerSegment.getP1().getCamera().y,
                         playerSegment.getP2().getCamera().y,
@@ -210,7 +218,7 @@
             this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
         }
 
-        private checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, camera:outrun.Camera, stageLength:number ) : boolean
+        private checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, stageLength:number ) : boolean
         {
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
@@ -256,7 +264,7 @@
             this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
         }
 
-        private checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number, camera:outrun.Camera ) : void
+        private checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number ) : void
         {
             if ((this.x < -1) || (this.x > 1)) {
 

@@ -28,7 +28,6 @@
     export * from './game/object/Player';
 
     export * from './game/outrun/Background';
-    export * from './game/outrun/Camera';
     export * from './game/outrun/Segment';
     export * from './game/outrun/SegmentPoint';
     export * from './game/outrun/Vector';
