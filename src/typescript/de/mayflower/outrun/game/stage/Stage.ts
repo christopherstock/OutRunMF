@@ -6,17 +6,19 @@
     *******************************************************************************************************************/
     export abstract class Stage
     {
-        /** array of cars on the road */
-        private                     cars                :outrun.Car[]               = [];
         /** array of road segments */
         private                     segments            :outrun.Segment[]           = [];
         /** z length of entire track (computed) */
         private                     stageLength         :number                     = 0;
 
-        /** The number of cars to create in this stage. */
-        private         readonly    carCount            :number                     = 0;
         /** The player. */
         private         readonly    player              :outrun.Player              = null;
+
+        /** The number of cars to create in this stage. */
+        private         readonly    carCount            :number                     = 0;
+        /** array of cars on the road */
+        private                     cars                :outrun.Car[]               = [];
+
         /** The stage background. */
         private         readonly    background          :outrun.Background          = null;
         /** The bg color of the sky for this stage */
@@ -34,10 +36,10 @@
         ***************************************************************************************************************/
         protected constructor
         (
-            carCount     :number,
-            background   :outrun.Background,
-            skyColor     :string,
-            fogColor     :string
+            carCount   :number,
+            background :outrun.Background,
+            skyColor   :string,
+            fogColor   :string
         )
         {
             // assign car count
@@ -83,17 +85,16 @@
             this.player.setPlayerSegment(
                 Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
             );
-            this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const dx            :number = ( dt * 2 * this.player.speedPercent );
+            const dx            :number = ( dt * 2 * this.player.getSpeedPercent() );
             const startPosition :number = this.player.getZ();
 
             // update cars
             this.updateCars( dt, this.player );
 
             // update player position
-            this.player.updatePosition( dt, this.player.getSpeed(), this.stageLength );
+            this.player.updatePosition( dt, this.stageLength );
 
             // update player segment ( for smooth collisions ... :( )
             this.player.setPlayerSegment(
@@ -204,7 +205,7 @@
                 // draw player
                 if ( segment === this.player.getPlayerSegment() )
                 {
-                    this.player.draw( ctx, resolution, this.player.getPlayerSegment(), playerPercent );
+                    this.player.draw( ctx, resolution, playerPercent );
                 }
             }
         }

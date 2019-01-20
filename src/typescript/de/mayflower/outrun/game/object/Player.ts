@@ -7,7 +7,7 @@
     export class Player extends outrun.GameObject
     {
         /** The current player speed in percent. */
-        public                      speedPercent        :number                     = 0;
+        private                     speedPercent        :number                     = 0;
 
         /** Indicates if the 'steer left' key is pressed this game tick. */
         private                     keyLeft             :boolean                    = false;
@@ -69,7 +69,6 @@
             return this.width;
         }
 
-        // TODO remove?
         public getZ() : number
         {
             return this.z;
@@ -85,11 +84,16 @@
             this.playerSegment = playerSegment;
         }
 
+        public getSpeedPercent() : number
+        {
+            return this.speedPercent;
+        }
+
         public update
         (
-            dx            :number,
-            dt            :number,
-            stageLength   :number
+            dx          :number,
+            dt          :number,
+            stageLength :number
         )
         : void
         {
@@ -139,8 +143,8 @@
             // browse all cars
             for ( const car of this.playerSegment.cars ) {
 
-                if ( this.getSpeed() > car.getSpeed() ) {
-
+                if ( this.speed > car.getSpeed() )
+                {
                     // check if player is colliding?
                     if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), stageLength ) )
                     {
@@ -153,15 +157,14 @@
             this.clipBoundsForX();
         }
 
-        // TODO refactor!
-        public updatePosition( dt:number, playerSpeed:number, stageLength:number ) : void
+        public updatePosition( dt:number, stageLength:number ) : void
         {
             this.z =
             (
                 outrun.MathUtil.increase
                 (
                     this.z,
-                    dt * playerSpeed,
+                    dt * this.speed,
                     stageLength
                 )
             );
@@ -171,7 +174,6 @@
         (
             ctx           :CanvasRenderingContext2D,
             resolution    :number,
-            playerSegment :outrun.Segment,
             playerPercent :number
         )
         : void
@@ -190,8 +192,8 @@
                 - (
                     this.cameraDepth / this.offsetZ * outrun.MathUtil.interpolate
                     (
-                        playerSegment.getP1().getCamera().y,
-                        playerSegment.getP2().getCamera().y,
+                        this.playerSegment.getP1().getCamera().y,
+                        this.playerSegment.getP2().getCamera().y,
                         playerPercent
                     )
                     * outrun.Main.game.engine.canvasSystem.getHeight() / 2
@@ -226,7 +228,7 @@
         {
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
-                this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
+                this.speed = car.getSpeed() * ( car.getSpeed() / this.speed );
                 this.z = outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength );
 
                 return true;
@@ -242,6 +244,7 @@
 
         private clipBoundsForX() : void
         {
+            // TODO bounds to settings!
             this.x = outrun.MathUtil.limit( this.x, -3, 3 );
         }
 
@@ -266,15 +269,20 @@
 
             // clip speed
             this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
+
+            // calculate speed percentage ..
+            this.speedPercent  = this.speed / outrun.SettingGame.PLAYER_MAX_SPEED;
         }
 
         private checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number ) : void
         {
-            if ((this.x < -1) || (this.x > 1)) {
-
+            if ( ( this.x < -1 ) || ( this.x > 1 ) )
+            {
                 // clip to offroad speed
-                if (this.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
-                    this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt);
+                if ( this.speed > outrun.SettingGame.OFF_ROAD_LIMIT )
+                {
+                    this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt );
+                }
 
                 // check player collision with obstacle
                 for ( const obstacle of playerSegment.getObstacles() )
@@ -292,7 +300,7 @@
                     )
                     {
                         // decrease player speed
-                        this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
+                        this.speed = ( outrun.SettingGame.PLAYER_MAX_SPEED / 5 );
 
                         // stop in front of sprite (at front of segment)
                         this.z =

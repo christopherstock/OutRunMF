@@ -28,11 +28,11 @@
     export * from './game/object/Player';
 
     export * from './game/track/Background';
+    export * from './game/track/Road';
     export * from './game/track/Segment';
     export * from './game/track/SegmentPoint';
     export * from './game/track/Vector';
 
-    export * from './game/stage/Road';
     export * from './game/stage/Stage';
     export * from './game/stage/StageBuilder';
 

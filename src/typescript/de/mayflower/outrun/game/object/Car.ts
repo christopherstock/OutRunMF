@@ -128,9 +128,9 @@
             }
 
             // if no cars ahead, but I have somehow ended up off road, then steer back on
-            if (this.x < -0.9)
+            if ( this.x < -0.9 )
                 return 0.1;
-            else if (this.x > 0.9)
+            else if ( this.x > 0.9 )
                 return -0.1;
             else
                 return 0;
