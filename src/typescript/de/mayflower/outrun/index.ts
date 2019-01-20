@@ -27,10 +27,10 @@
     export * from './game/object/Obstacle';
     export * from './game/object/Player';
 
-    export * from './game/outrun/Background';
-    export * from './game/outrun/Segment';
-    export * from './game/outrun/SegmentPoint';
-    export * from './game/outrun/Vector';
+    export * from './game/track/Background';
+    export * from './game/track/Segment';
+    export * from './game/track/SegmentPoint';
+    export * from './game/track/Vector';
 
     export * from './game/stage/Road';
     export * from './game/stage/Stage';

@@ -1,6 +1,8 @@
 
     /** ****************************************************************************************************************
     *   Offers additional mathematical functionality.
+    *
+    *   TODO remove special methods here!
     *******************************************************************************************************************/
     export class MathUtil
     {
@@ -70,6 +72,7 @@
             return ( 1 / ( Math.pow( Math.E, ( distance * distance * density ) ) ) );
         }
 
+        // TODO clumsy .. remove and replace!
         public static increase( start:number, increment:number, max:number ) : number
         {
             let result:number = start + increment;

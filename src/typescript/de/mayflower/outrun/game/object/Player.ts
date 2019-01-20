@@ -75,12 +75,6 @@
             return this.z;
         }
 
-        // TODO check outside usage?
-        public setZ( z:number ) : void
-        {
-            this.z = z;
-        }
-
         public getPlayerSegment() : outrun.Segment
         {
             return this.playerSegment;
@@ -233,7 +227,7 @@
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
                 this.speed = car.getSpeed() * (car.getSpeed() / this.getSpeed());
-                this.setZ( outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength ) );
+                this.z = outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength );
 
                 return true;
             }
@@ -301,7 +295,7 @@
                         this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
 
                         // stop in front of sprite (at front of segment)
-                        this.setZ
+                        this.z =
                         (
                             outrun.MathUtil.increase( playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength )
                         );
