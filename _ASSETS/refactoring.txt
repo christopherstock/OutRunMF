@@ -74,6 +74,12 @@ Constructive refactorings:
 => Create abstract parent classes and extract shared fields and shared methods to parent class!
 => Unify same behaviour, formally split into different implementations: GameObject.draw() !
 => flatten method parameters: Car#update( dt:number, segments:outrun.Segment[], player:outrun.Player, playerSegment:outrun.Segment, playerW:number, stageLength:number ) : void
+=> Remove completely unused or unhandy classes (Camera!)
+=> Refactor: Move into classes from outside usage:
+    this.player.setPlayerSegment(
+        Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
+    );
+    this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 
 
 Results:

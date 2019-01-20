@@ -79,7 +79,7 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            // update player segment TODO refactor
+            // update player segment TODO refactor: move to player
             this.player.setPlayerSegment(
                 Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
             );

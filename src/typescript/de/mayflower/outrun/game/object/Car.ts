@@ -90,12 +90,7 @@
         private updateCarOffset( segments:outrun.Segment[], player:outrun.Player, carSegment:outrun.Segment, playerSegment:outrun.Segment, playerW:number ) : number
         {
             const lookahead :number = 20;
-
-            // TODO redundant! s. constructor
-            const carW      :number = this.image.width * outrun.SettingEngine.SPRITE_SCALE;
-
             let   dir       :number = 0;
-            let   otherCarW :number = 0;
 
             // optimization, dont bother steering around other cars when 'out of sight' of the player
             if ( ( carSegment.getIndex() - playerSegment.getIndex() ) > outrun.SettingEngine.DRAW_DISTANCE )
@@ -105,7 +100,7 @@
             {
                 const segment:outrun.Segment = segments[(carSegment.getIndex() + i) % segments.length];
 
-                if ((segment === playerSegment) && ( this.speed > player.getSpeed() ) && (outrun.MathUtil.overlap(player.getX(), playerW, this.x, carW, 1.2))) {
+                if ((segment === playerSegment) && ( this.speed > player.getSpeed() ) && (outrun.MathUtil.overlap(player.getX(), playerW, this.x, this.width, 1.2))) {
                     if (player.getX() > 0.5)
                         dir = -1;
                     else if (player.getX() < -0.5)
@@ -119,9 +114,7 @@
 
                 for ( const otherCar of segment.cars )
                 {
-                    // TODO redundant! s. otherCar.width!
-                    otherCarW = otherCar.image.width * outrun.SettingEngine.SPRITE_SCALE;
-                    if ( ( this.speed > otherCar.speed ) && outrun.MathUtil.overlap( this.x, carW, otherCar.x, otherCarW, 1.2 ) )
+                    if ( ( this.speed > otherCar.speed ) && outrun.MathUtil.overlap( this.x, this.width, otherCar.x, otherCar.width, 1.2 ) )
                     {
                         if ( otherCar.x > 0.5 )
                             dir = -1;
