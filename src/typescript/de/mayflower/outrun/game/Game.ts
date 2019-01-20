@@ -60,7 +60,10 @@
         ***************************************************************************************************************/
         private tick = () :void =>
         {
-            outrun.Main.game.engine.fpsMeter.tickStart();
+            if ( outrun.SettingDebug.SHOW_FPS )
+            {
+                outrun.Main.game.engine.fpsMeter.tickStart();
+            }
 
             this.checkGlobalKeys();
             this.update( outrun.SettingEngine.STEP );
@@ -70,7 +73,10 @@
                 this.engine.canvasSystem.getResolution()
             );
 
-            outrun.Main.game.engine.fpsMeter.tick();
+            if ( outrun.SettingDebug.SHOW_FPS )
+            {
+                outrun.Main.game.engine.fpsMeter.tick();
+            }
 
             requestAnimationFrame( this.tick );
         };

@@ -23,12 +23,12 @@
         }
 
         /** ************************************************************************************************************
-        *   Returns a random integer between the given mininum and maximum.
+        *   Returns a random integer between the given minimum and maximum.
         *
         *   @param min The minimum value to return by random.
         *   @param max The maximum value to return by random.
         *
-        *   @return A random integer in the specified tange.
+        *   @return A random integer in the specified range.
         ***************************************************************************************************************/
         public static getRandomInt( min:number, max:number ) : number
         {

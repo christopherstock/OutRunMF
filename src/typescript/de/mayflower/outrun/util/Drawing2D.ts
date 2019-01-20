@@ -35,30 +35,6 @@
             ctx.fill();
         }
 
-        public static background( ctx:CanvasRenderingContext2D, width:number, height:number, sprite:string, rotation:number, offset:number ) : void
-        {
-            const image:HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
-
-            const imageW:number = image.width / 2;
-            const imageH:number = image.height;
-
-            const sourceX:number = Math.floor( image.width * rotation );
-            const sourceY:number = 0;
-            const sourceW:number = Math.min( imageW, image.width - sourceX );
-            const sourceH:number = imageH;
-
-            const destX:number = 0;
-            const destY:number = offset;
-            const destW:number = Math.floor( width * ( sourceW / imageW ) );
-            const destH:number = height;
-
-            ctx.drawImage(image, sourceX, sourceY, sourceW, sourceH, destX, destY, destW, destH);
-            if ( sourceW < imageW )
-            {
-                ctx.drawImage(image, 0, sourceY, imageW - sourceW, sourceH, destW - 1, destY, width - destW, destH);
-            }
-        }
-
         public static drawSprite( ctx:CanvasRenderingContext2D, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
             const width :number           = outrun.Main.game.engine.canvasSystem.getWidth();

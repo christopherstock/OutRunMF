@@ -49,21 +49,24 @@
         ***************************************************************************************************************/
         private initFpsCounter() : void
         {
-            this.fpsMeter = new FPSMeter(
-                null,
-                {
-                    graph:    1,
-                    decimals: 1,
-                    position: 'absolute',
-                    zIndex:   10,
-                    top:      'auto',
-                    right:    '25px',
-                    bottom:   '25px',
-                    left:     'auto',
-                    margin:   '0',
-                    heat:     1,
-                }
-            );
+            if ( outrun.SettingDebug.SHOW_FPS )
+            {
+                this.fpsMeter = new FPSMeter(
+                    null,
+                    {
+                        graph:    1,
+                        decimals: 1,
+                        position: 'absolute',
+                        zIndex:   10,
+                        top:      'auto',
+                        right:    '25px',
+                        bottom:   '25px',
+                        left:     'auto',
+                        margin:   '0',
+                        heat:     1,
+                    }
+                );
+            }
         }
 
         /** ************************************************************************************************************

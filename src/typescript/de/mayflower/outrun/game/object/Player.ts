@@ -115,7 +115,10 @@
             this.updateSpeed( dt );
 
             // determine next sprite
-            const updown :number = ( this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y );
+            const updown :number =
+            (
+                this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y
+            );
 
             // determine sprite
             if ( this.keyLeft && this.speed > 0 )
@@ -128,7 +131,12 @@
             }
             else
             {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT : outrun.ImageFile.PLAYER_STRAIGHT );
+                this.setSprite
+                (
+                    ( updown > 0 )
+                    ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT
+                    : outrun.ImageFile.PLAYER_STRAIGHT
+                );
             }
 
             // check centrifugal force modification if player is in a curve
@@ -178,7 +186,12 @@
         : void
         {
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
-            const bounce       :number = ( 1.5 * Math.random() * speedPercent * resolution ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
+
+            // TODO to settings constant
+            const bounce       :number = (
+                1.5 * Math.random() * speedPercent * resolution
+            ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
+
             const scale        :number = ( this.cameraDepth / this.offsetZ );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
@@ -275,15 +288,32 @@
                 // check player collision with sprite
                 for ( const sprite of playerSegment.getObstacles() )
                 {
-                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage( sprite.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
+                    // TODO save player image in field?
+                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage
+                    (
+                        sprite.getSprite()
+                    ).width * outrun.SettingEngine.SPRITE_SCALE;
 
-                    if ( outrun.MathUtil.overlap( this.x, playerW, sprite.getX() + spriteW / 2 * ( sprite.getX() > 0 ? 1 : -1 ), spriteW, 0 ) )
+                    if
+                    (
+                        outrun.MathUtil.overlap
+                        (
+                            this.x,
+                            playerW,
+                            sprite.getX() + spriteW / 2 * ( sprite.getX() > 0 ? 1 : -1 ),
+                            spriteW,
+                            0
+                        )
+                    )
                     {
                         // decrease player speed
                         this.speed = outrun.SettingGame.PLAYER_MAX_SPEED / 5;
 
                         // stop in front of sprite (at front of segment)
-                        this.setZ( outrun.MathUtil.increase(playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength) );
+                        this.setZ
+                        (
+                            outrun.MathUtil.increase( playerSegment.getP1().getWorld().z, -this.offsetZ, stageLength )
+                        );
                         break;
                     }
                 }

@@ -4,6 +4,7 @@
     /** ****************************************************************************************************************
     *   Represents a debug group whose logging can be enabled or disabled.
     *******************************************************************************************************************/
+    // noinspection JSUnusedGlobalSymbols
     export class Debug
     {
         /** Debugs startup process. */

@@ -91,16 +91,6 @@
         }
 
         /** ************************************************************************************************************
-        *   Returns the native HTML canvas object.
-        *
-        *   @return The HTML canvas object.
-        ***************************************************************************************************************/
-        public getNativeCanvas() : HTMLCanvasElement
-        {
-            return this.canvas;
-        }
-
-        /** ************************************************************************************************************
         *   Returns the current canvas rendering context.
         *
         *   @return The 2D rendering context.

@@ -116,7 +116,7 @@
                     else
                         dir = ( this.x > player.getX() ) ? 1 : -1;
 
-                    // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+                    // the closer the cars (smaller i) and the greater the speed ratio, the larger the offset
                     return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.PLAYER_MAX_SPEED;
                 }
 
