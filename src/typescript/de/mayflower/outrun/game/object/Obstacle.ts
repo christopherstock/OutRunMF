@@ -8,16 +8,11 @@
     {
         private             readonly    x                           :number                 = null;
 
-        public constructor( sprite:string, x:number )
+        public constructor( image:HTMLImageElement, x:number )
         {
-            super( sprite );
+            super( image );
 
             this.x      = x;
-        }
-
-        public getSprite() : string
-        {
-            return this.sprite;
         }
 
         public getX() : number
@@ -38,6 +33,6 @@
             const spriteX     :number = p1.getScreen().x + (spriteScale * this.x * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
             const spriteY     :number = p1.getScreen().y;
 
-            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, (this.x < 0 ? -1 : 0), -1, clip );
+            outrun.Drawing2D.drawSprite( ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.image, spriteScale, spriteX, spriteY, (this.x < 0 ? -1 : 0), -1, clip );
         }
     }

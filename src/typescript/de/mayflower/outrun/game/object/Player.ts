@@ -32,19 +32,16 @@
         /** z distance camera is from screen (computed) */
         private     readonly        cameraDepth         :number                     = null;
 
-        /** player width */
-        private     readonly        width               :number                     = 0;
         /** player constant camera offset Z. */
         private     readonly        offsetZ             :number                     = null;
 
         public constructor()
         {
-            super( outrun.ImageFile.PLAYER_STRAIGHT );
+            super( outrun.Main.game.engine.imageSystem.getImage( outrun.ImageFile.PLAYER_STRAIGHT ) );
 
             this.cameraDepth = ( 1 / Math.tan( ( outrun.SettingEngine.CAMERA_FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
 
             this.offsetZ = ( outrun.SettingEngine.CAMERA_HEIGHT * this.getCameraDepth() );
-            this.width   = ( 80 * outrun.SettingEngine.SPRITE_SCALE );
         }
 
         public getCameraDepth() : number
@@ -213,7 +210,7 @@
                 ctx,
                 resolution,
                 outrun.SettingGame.HALF_ROAD_WIDTH,
-                this.sprite,
+                this.image,
                 scale,
                 destX,
                 destY + bounce,
@@ -285,23 +282,17 @@
                 if (this.speed > outrun.SettingGame.OFF_ROAD_LIMIT)
                     this.speed = outrun.MathUtil.accelerate(this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt);
 
-                // check player collision with sprite
-                for ( const sprite of playerSegment.getObstacles() )
+                // check player collision with obstacle
+                for ( const obstacle of playerSegment.getObstacles() )
                 {
-                    // TODO save player image in field?
-                    const spriteW:number = outrun.Main.game.engine.imageSystem.getImage
-                    (
-                        sprite.getSprite()
-                    ).width * outrun.SettingEngine.SPRITE_SCALE;
-
                     if
                     (
                         outrun.MathUtil.overlap
                         (
                             this.x,
                             playerW,
-                            sprite.getX() + spriteW / 2 * ( sprite.getX() > 0 ? 1 : -1 ),
-                            spriteW,
+                            obstacle.getX() + obstacle.getWidth() / 2 * ( obstacle.getX() > 0 ? 1 : -1 ),
+                            obstacle.getWidth(),
                             0
                         )
                     )

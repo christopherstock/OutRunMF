@@ -10,21 +10,16 @@
         private                         z                               :number                     = 0;
         private         readonly        speed                           :number                     = 0;
 
-        /** The car's width. */
-        private         readonly        width                           :number                     = 0;
-
         /** Unknown field .. */
         private                         percent                         :number                     = 0;
 
-        public constructor( offset:number, z:number, sprite:string, speed:number )
+        public constructor( offset:number, z:number, image:HTMLImageElement, speed:number )
         {
-            super( sprite );
+            super( image );
 
             this.x      = offset;
             this.z      = z;
             this.speed  = speed;
-
-            this.width = outrun.Main.game.engine.imageSystem.getImage( sprite ).width * outrun.SettingEngine.SPRITE_SCALE;
         }
 
         public getWidth() : number
@@ -86,7 +81,7 @@
             const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.x * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
             const spriteY     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().y,     segment.getP2().getScreen().y, this.percent);
 
-            outrun.Drawing2D.drawSprite(ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+            outrun.Drawing2D.drawSprite(ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.image, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
         }
 
         /** ************************************************************************************************************
@@ -95,7 +90,9 @@
         private updateCarOffset( segments:outrun.Segment[], player:outrun.Player, carSegment:outrun.Segment, playerSegment:outrun.Segment, playerW:number ) : number
         {
             const lookahead :number = 20;
-            const carW      :number = outrun.Main.game.engine.imageSystem.getImage( this.sprite ).width * outrun.SettingEngine.SPRITE_SCALE;
+
+            // TODO redundant! s. constructor
+            const carW      :number = this.image.width * outrun.SettingEngine.SPRITE_SCALE;
 
             let   dir       :number = 0;
             let   otherCarW :number = 0;
@@ -122,7 +119,8 @@
 
                 for ( const otherCar of segment.cars )
                 {
-                    otherCarW = outrun.Main.game.engine.imageSystem.getImage( otherCar.sprite ).width * outrun.SettingEngine.SPRITE_SCALE;
+                    // TODO redundant! s. otherCar.width!
+                    otherCarW = otherCar.image.width * outrun.SettingEngine.SPRITE_SCALE;
                     if ( ( this.speed > otherCar.speed ) && outrun.MathUtil.overlap( this.x, carW, otherCar.x, otherCarW, 1.2 ) )
                     {
                         if ( otherCar.x > 0.5 )

@@ -35,10 +35,9 @@
             ctx.fill();
         }
 
-        public static drawSprite( ctx:CanvasRenderingContext2D, resolution:number, roadWidth:number, sprite:string, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
+        public static drawSprite( ctx:CanvasRenderingContext2D, resolution:number, roadWidth:number, image:HTMLImageElement, scale:number, destX:number, destY:number, offsetX:number, offsetY:number, clipY:number ) : void
         {
             const width :number           = outrun.Main.game.engine.canvasSystem.getWidth();
-            const image :HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
             const destW:number  = (image.width  * scale * width / 2) * (outrun.SettingEngine.SPRITE_SCALE * roadWidth);

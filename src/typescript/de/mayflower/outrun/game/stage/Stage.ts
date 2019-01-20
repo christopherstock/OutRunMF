@@ -228,11 +228,14 @@
         /** ************************************************************************************************************
         *   Adds a sprite to the segment with the specified index.
         ***************************************************************************************************************/
-        protected addSprite( index:number, source:string, offset:number ) : void
+        protected addSprite( index:number, sprite:string, offset:number ) : void
         {
             if ( this.segments.length > index )
             {
-                this.segments[ index ].addSprite( new outrun.Obstacle( source, offset )  );
+                this.segments[ index ].addSprite
+                (
+                    new outrun.Obstacle( outrun.Main.game.engine.imageSystem.getImage( sprite ), offset )
+                );
             }
         }
 
@@ -272,7 +275,7 @@
                         / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 )
                     )
                 );
-                const car     :outrun.Car     = new outrun.Car( offset, z, sprite, speed );
+                const car     :outrun.Car     = new outrun.Car( offset, z, outrun.Main.game.engine.imageSystem.getImage( sprite ), speed );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 
                 // add to segment and to global cars collection
