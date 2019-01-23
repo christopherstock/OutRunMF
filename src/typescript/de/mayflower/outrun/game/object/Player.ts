@@ -79,6 +79,11 @@
             return this.playerSegment;
         }
 
+        public updatePlayerSegment( segments:outrun.Segment[] ) : void
+        {
+            this.playerSegment = outrun.Stage.findSegment( segments, this.z + this.offsetZ );
+        }
+
         public setPlayerSegment( playerSegment:outrun.Segment ) : void
         {
             this.playerSegment = playerSegment;

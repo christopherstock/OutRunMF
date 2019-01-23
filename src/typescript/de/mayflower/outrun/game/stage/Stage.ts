@@ -81,33 +81,20 @@
         ***************************************************************************************************************/
         public update( dt:number ) : void
         {
-            // update player segment TODO refactor: move to player
-            this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
-            );
+            this.player.updatePlayerSegment( this.segments );
 
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const dx            :number = ( dt * 2 * this.player.getSpeedPercent() );
+            const deltaX        :number = ( dt * 2 * this.player.getSpeedPercent() );
             const startPosition :number = this.player.getZ();
 
             // update cars
             this.updateCars( dt, this.player );
 
-            // update player position
             this.player.updatePosition( dt, this.stageLength );
-
-            // update player segment ( for smooth collisions ... :( )
-            this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
-            );
+            this.player.updatePlayerSegment( this.segments );
 
             // update player
-            this.player.update
-            (
-                dx,
-                dt,
-                this.stageLength
-            );
+            this.player.update( deltaX, dt, this.stageLength );
 
             // update backgrounds
             this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );
@@ -122,10 +109,8 @@
         // tslint:disable:max-line-length
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            // update player segment again
-            this.player.setPlayerSegment(
-                Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
-            );
+            // TODO remove?
+            this.player.updatePlayerSegment( this.segments );
 
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.player.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
@@ -229,11 +214,11 @@
         /** ************************************************************************************************************
         *   Adds a sprite to the segment with the specified index.
         ***************************************************************************************************************/
-        protected addSprite( index:number, sprite:string, offset:number ) : void
+        protected addObstacle( index:number, sprite:string, offset:number ) : void
         {
             if ( this.segments.length > index )
             {
-                this.segments[ index ].addSprite
+                this.segments[ index ].addObstacle
                 (
                     new outrun.Obstacle( outrun.Main.game.engine.imageSystem.getImage( sprite ), offset )
                 );

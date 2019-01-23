@@ -69,19 +69,19 @@
             return this.clip;
         }
 
-        public addSprite( sprite:outrun.Obstacle ) : void
+        public addObstacle(sprite:outrun.Obstacle ) : void
         {
             this.obstacles.push( sprite );
         }
 
         public draw( ctx:CanvasRenderingContext2D, fogColor:string ) : void
         {
-            const x1:number               = this.p1.getScreen().x;
-            const y1:number               = this.p1.getScreen().y;
-            const w1:number               = this.p1.getScreen().w;
-            const x2:number               = this.p2.getScreen().x;
-            const y2:number               = this.p2.getScreen().y;
-            const w2:number               = this.p2.getScreen().w;
+            const x1:number = this.p1.getScreen().x;
+            const y1:number = this.p1.getScreen().y;
+            const w1:number = this.p1.getScreen().w;
+            const x2:number = this.p2.getScreen().x;
+            const y2:number = this.p2.getScreen().y;
+            const w2:number = this.p2.getScreen().w;
 
             const width:number = outrun.Main.game.engine.canvasSystem.getWidth();
             const lanes:number = outrun.SettingGame.LANES;
