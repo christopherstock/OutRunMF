@@ -37,6 +37,8 @@
 
         /** top speed (ensure we can't move more than 1 segment in a single frame to make collision detection easier) */
         public  static  readonly    PLAYER_MAX_SPEED            :number             = SettingGame.SEGMENT_LENGTH / outrun.SettingEngine.STEP;
+        /** maximum multiplier for player bouncing */
+        public  static  readonly    PLAYER_MAX_BOUNCE           :number             = 1.5;
         /** acceleration rate - tuned until it 'felt' right */
         public  static  readonly    PLAYER_ACCELERATION_RATE    :number             = SettingGame.PLAYER_MAX_SPEED / 5;
         /** deceleration rate when braking */

@@ -33,4 +33,7 @@
 
         /** The relative path from index.html where all image resources reside. */
         public  static  readonly    PATH_IMAGE                  :string             = 'res/image/legacy/';
+
+        /** The maximum X bounds for player movement. Clips player when offroad. */
+        public  static  readonly    ROAD_MAX_BOUNDS             :number             = 3.0;
     }

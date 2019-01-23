@@ -179,12 +179,9 @@
         : void
         {
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
-
-            // TODO to settings constant
             const bounce       :number = (
-                1.5 * Math.random() * speedPercent * resolution
+                outrun.SettingGame.PLAYER_MAX_BOUNCE * Math.random() * speedPercent * resolution
             ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
-
             const scale        :number = ( this.cameraDepth / this.offsetZ );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
@@ -243,10 +240,17 @@
             this.x = this.x - ( dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL );
         }
 
+        /** ************************************************************************************************************
+        *   Clips the player to the maximum bounds when offroad.
+        ***************************************************************************************************************/
         private clipBoundsForX() : void
         {
-            // TODO bounds to settings!
-            this.x = outrun.MathUtil.limit( this.x, -3, 3 );
+            this.x = outrun.MathUtil.limit
+            (
+                this.x,
+                -outrun.SettingEngine.ROAD_MAX_BOUNDS,
+                outrun.SettingEngine.ROAD_MAX_BOUNDS
+            );
         }
 
         private updateSpeed( dt:number ) : void
