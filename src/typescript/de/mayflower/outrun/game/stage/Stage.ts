@@ -276,8 +276,8 @@
         {
             for ( let i:number = 0; i < this.carCount; i++ )
             {
-                const offset  :number = Math.random() * outrun.MathUtil.randomChoice( [ -0.8, 0.8 ] );
-                const sprite  :string = outrun.MathUtil.randomChoice( outrun.ImageFile.CARS );
+                const offset  :number = Math.random() * outrun.MathUtil.getRandomElement( [ -0.8, 0.8 ] );
+                const sprite  :string = outrun.MathUtil.getRandomElement( outrun.ImageFile.CARS );
                 const z       :number = Math.floor(
                     Math.random() * this.segments.length
                 ) * outrun.SettingGame.SEGMENT_LENGTH;

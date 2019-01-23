@@ -19,7 +19,16 @@
             return parseInt( String( num ), 10 );
         }
 
-        public static limit( value:number, min:number, max:number ) : number
+        /** ************************************************************************************************************
+        *   Clips the given values inside the min and max bounds.
+        *
+        *   @param value The value to clip.
+        *   @param min   The minimum bound to clip the value.
+        *   @param max   The maximum bound to clip the value.
+        *
+        *   @return The clipped value.
+        ***************************************************************************************************************/
+        public static clip( value:number, min:number, max:number ) : number
         {
             return Math.max( min, Math.min( value, max ) );
         }
@@ -37,9 +46,16 @@
             return Math.floor( ( Math.random() * ( max + 1 - min ) ) + min );
         }
 
-        public static randomChoice( options:any[] ) : any
+        /** ************************************************************************************************************
+        *   Returns a random element of the given collection.
+        *
+        *   @param collection The collection to return a random element from.
+        *
+        *   @return A random element of the collection.
+        ***************************************************************************************************************/
+        public static getRandomElement( collection:any[] ) : any
         {
-            return options[ MathUtil.getRandomInt( 0, options.length - 1 ) ];
+            return collection[ MathUtil.getRandomInt( 0, collection.length - 1 ) ];
         }
 
         public static percentRemaining( n:number, total:number ) : number

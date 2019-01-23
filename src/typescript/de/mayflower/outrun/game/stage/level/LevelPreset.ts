@@ -96,17 +96,17 @@
             }
 
             for ( let n:number = 200; n < segmentCount; n += 3 ) {
-                this.addObstacle(n, outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS), outrun.MathUtil.randomChoice([1, -1]) * (2 + Math.random() * 5));
+                this.addObstacle(n, outrun.MathUtil.getRandomElement(outrun.ImageFile.PLANTS), outrun.MathUtil.getRandomElement([1, -1]) * (2 + Math.random() * 5));
             }
 
             let side   :number = 0;
             let offset :number = 0;
 
             for ( let n:number = 1000; n < (segmentCount - 50); n += 100 ) {
-                side = outrun.MathUtil.randomChoice([1, -1]);
-                this.addObstacle(n + outrun.MathUtil.getRandomInt(0, 50), outrun.MathUtil.randomChoice(outrun.ImageFile.BILLBOARDS), -side);
+                side = outrun.MathUtil.getRandomElement([1, -1]);
+                this.addObstacle(n + outrun.MathUtil.getRandomInt(0, 50), outrun.MathUtil.getRandomElement(outrun.ImageFile.BILLBOARDS), -side);
                 for ( let i:number = 0; i < 20; i++ ) {
-                    const sprite:string = outrun.MathUtil.randomChoice(outrun.ImageFile.PLANTS);
+                    const sprite:string = outrun.MathUtil.getRandomElement(outrun.ImageFile.PLANTS);
                     offset = side * (1.5 + Math.random());
                     this.addObstacle(n + outrun.MathUtil.getRandomInt(0, 50), sprite, offset);
                 }

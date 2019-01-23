@@ -181,7 +181,7 @@
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
             const bounce       :number = (
                 outrun.SettingGame.PLAYER_MAX_BOUNCE * Math.random() * speedPercent * resolution
-            ) * outrun.MathUtil.randomChoice( [ -1, 1 ] );
+            ) * outrun.MathUtil.getRandomElement( [ -1, 1 ] );
             const scale        :number = ( this.cameraDepth / this.offsetZ );
             const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
             const destY        :number = (
@@ -245,7 +245,7 @@
         ***************************************************************************************************************/
         private clipBoundsForX() : void
         {
-            this.x = outrun.MathUtil.limit
+            this.x = outrun.MathUtil.clip
             (
                 this.x,
                 -outrun.SettingEngine.ROAD_MAX_BOUNDS,
@@ -273,7 +273,7 @@
             }
 
             // clip speed
-            this.speed = outrun.MathUtil.limit( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
+            this.speed = outrun.MathUtil.clip( this.speed, 0, outrun.SettingGame.PLAYER_MAX_SPEED );
 
             // calculate speed percentage ..
             this.speedPercent  = this.speed / outrun.SettingGame.PLAYER_MAX_SPEED;
