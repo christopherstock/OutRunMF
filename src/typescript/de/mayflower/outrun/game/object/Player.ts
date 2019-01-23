@@ -84,11 +84,6 @@
             this.playerSegment = outrun.Stage.findSegment( segments, this.z + this.offsetZ );
         }
 
-        public setPlayerSegment( playerSegment:outrun.Segment ) : void
-        {
-            this.playerSegment = playerSegment;
-        }
-
         public getSpeedPercent() : number
         {
             return this.speedPercent;
@@ -233,6 +228,7 @@
         {
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
+                // decelerate the player
                 this.speed = car.getSpeed() * ( car.getSpeed() / this.speed );
                 this.z = outrun.MathUtil.increase( car.getZ(), -this.offsetZ, stageLength );
 

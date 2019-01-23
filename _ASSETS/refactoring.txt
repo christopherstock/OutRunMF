@@ -83,6 +83,7 @@ Constructive refactorings:
         Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
     );
     this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
+=> Remove public setter not being used outside
 
 
 Results:

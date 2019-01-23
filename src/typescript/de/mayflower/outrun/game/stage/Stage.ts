@@ -8,7 +8,7 @@
     {
         /** array of road segments */
         private                     segments            :outrun.Segment[]           = [];
-        /** z length of entire track (computed) */
+        /** computed z length of the entire track */
         private                     stageLength         :number                     = 0;
 
         /** The player. */
@@ -109,30 +109,27 @@
         // tslint:disable:max-line-length
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
-            // TODO remove?
-            this.player.updatePlayerSegment( this.segments );
-
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.player.getZ() );
-            const basePercent   :number         = outrun.MathUtil.percentRemaining(this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerPercent :number         = outrun.MathUtil.percentRemaining(this.player.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH);
-            const playerY       :number = outrun.MathUtil.interpolate
+            const basePercent   :number         = outrun.MathUtil.percentRemaining( this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH );
+            const playerPercent :number         = outrun.MathUtil.percentRemaining( this.player.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH );
+            const playerY       :number         = outrun.MathUtil.interpolate
             (
                 this.player.getPlayerSegment().getP1().getWorld().y,
                 this.player.getPlayerSegment().getP2().getWorld().y,
                 playerPercent
             );
 
-            let   maxY          :number = outrun.Main.game.engine.canvasSystem.getHeight();
-            let   x             :number = 0;
-            let   dx            :number = -(baseSegment.curve * basePercent);
+            let   maxY          :number         = outrun.Main.game.engine.canvasSystem.getHeight();
+            let   x             :number         = 0;
+            let   dx            :number         = -(baseSegment.curve * basePercent);
 
-            // clear/fill canvas with sky color
+            // fill canvas with sky color
             outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.engine.canvasSystem.getWidth(), outrun.Main.game.engine.canvasSystem.getHeight(), this.skyColor );
 
-            // draw the bg
+            // draw bg
             this.background.draw( ctx, resolution, playerY );
 
-            // browse all segments from far to near
+            // draw road
             for ( let n:number = 0; n < outrun.SettingEngine.DRAW_DISTANCE; n++ )
             {
                 const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
@@ -164,7 +161,7 @@
                 maxY = segment.getP1().getScreen().y;
             }
 
-            // draw all segments from far to near
+            // draw all cars, obstacles and player
             for ( let n:number = ( outrun.SettingEngine.DRAW_DISTANCE - 1 ); n > 0; n-- )
             {
                 const segment:outrun.Segment = this.segments[ ( baseSegment.getIndex() + n ) % this.segments.length ];
@@ -175,7 +172,7 @@
                     car.draw( ctx, resolution, segment );
                 }
 
-                // draw all sprites of this segment
+                // draw all obstacles of this segment
                 for ( const obstacle of segment.getObstacles() )
                 {
                     obstacle.draw

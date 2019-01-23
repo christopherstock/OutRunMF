@@ -6,11 +6,14 @@
     *******************************************************************************************************************/
     export class Car extends outrun.GameObject
     {
+        /** Current position X */
         private                         x                               :number                     = 0;
+        /** Current position Z */
         private                         z                               :number                     = 0;
+        /** Constant speed */
         private         readonly        speed                           :number                     = 0;
 
-        /** Unknown field .. */
+        /** This is useful for interpolation during rendering phase */
         private                         percent                         :number                     = 0;
 
         public constructor( offset:number, z:number, image:HTMLImageElement, speed:number )
