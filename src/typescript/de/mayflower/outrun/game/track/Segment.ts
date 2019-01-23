@@ -6,6 +6,8 @@
     *******************************************************************************************************************/
     export class Segment
     {
+        // TODO all private!?
+
         public                          cars            :outrun.Car[]           = null;
         public                          color           :outrun.SegmentColor    = null;
         public                          looped          :boolean                = false;
@@ -100,11 +102,47 @@
             ctx.fillRect(0, y2, width, y1 - y2);
 
             // left rumble
-            outrun.Drawing2D.polygon( ctx, x1 - w1 - r1, y1, x1 - w1, y1, x2 - w2, y2, x2 - w2 - r2, y2, this.color.rumble );
+            outrun.Drawing2D.polygon
+            (
+                ctx,
+                x1 - w1 - r1,
+                y1,
+                x1 - w1,
+                y1,
+                x2 - w2,
+                y2,
+                x2 - w2 - r2,
+                y2,
+                this.color.rumble
+            );
             // right rumble
-            outrun.Drawing2D.polygon( ctx, x1 + w1 + r1, y1, x1 + w1, y1, x2 + w2, y2, x2 + w2 + r2, y2, this.color.rumble );
+            outrun.Drawing2D.polygon
+            (
+                ctx,
+                x1 + w1 + r1,
+                y1,
+                x1 + w1,
+                y1,
+                x2 + w2,
+                y2,
+                x2 + w2 + r2,
+                y2,
+                this.color.rumble
+            );
             // road
-            outrun.Drawing2D.polygon( ctx, x1 - w1,      y1, x1 + w1, y1, x2 + w2, y2, x2 - w2,      y2, this.color.road   );
+            outrun.Drawing2D.polygon
+            (
+                ctx,
+                x1 - w1,
+                y1,
+                x1 + w1,
+                y1,
+                x2 + w2,
+                y2,
+                x2 - w2,
+                y2,
+                this.color.road
+            );
 
             // draw lane
             if ( this.color.lane )

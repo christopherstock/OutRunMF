@@ -40,32 +40,32 @@
         public updateDimensions() : boolean
         {
             // assign inner window dimensions as new dimensions
-            let newWidth  :number = window.innerWidth;
-            let newHeight :number = window.innerHeight;
+            let width  :number = window.innerWidth;
+            let height :number = window.innerHeight;
 
             // clip to minimum canvas dimensions
-            if ( newWidth  < outrun.SettingEngine.CANVAS_MIN_WIDTH  ) newWidth  = outrun.SettingEngine.CANVAS_MIN_WIDTH;
-            if ( newHeight < outrun.SettingEngine.CANVAS_MIN_HEIGHT ) newHeight = outrun.SettingEngine.CANVAS_MIN_HEIGHT;
+            if ( width  < outrun.SettingEngine.CANVAS_MIN_WIDTH  ) width  = outrun.SettingEngine.CANVAS_MIN_WIDTH;
+            if ( height < outrun.SettingEngine.CANVAS_MIN_HEIGHT ) height = outrun.SettingEngine.CANVAS_MIN_HEIGHT;
 
             // clip to maximum canvas dimensions
-            if ( newWidth  > outrun.SettingEngine.CANVAS_MAX_WIDTH  ) newWidth  = outrun.SettingEngine.CANVAS_MAX_WIDTH;
-            if ( newHeight > outrun.SettingEngine.CANVAS_MAX_HEIGHT ) newHeight = outrun.SettingEngine.CANVAS_MAX_HEIGHT;
+            if ( width  > outrun.SettingEngine.CANVAS_MAX_WIDTH  ) width  = outrun.SettingEngine.CANVAS_MAX_WIDTH;
+            if ( height > outrun.SettingEngine.CANVAS_MAX_HEIGHT ) height = outrun.SettingEngine.CANVAS_MAX_HEIGHT;
 
             // determine dimension change
             const dimensionsChanged:boolean =
             (
-                   this.canvas.width  !== newWidth
-                || this.canvas.height !== newHeight
+                   this.canvas.width  !== width
+                || this.canvas.height !== height
             );
 
             // assign new dimensions to HTML5 canvas
-            this.canvas.width  = newWidth;
-            this.canvas.height = newHeight;
+            this.canvas.width  = width;
+            this.canvas.height = height;
 
             // specify canvas resolution according to its current height
-            this.resolution = newHeight / CanvasSystem.RESOLUTION_DIVIDER;
+            this.resolution = height / CanvasSystem.RESOLUTION_DIVIDER;
 
-            outrun.Debug.canvas.log( ' Updated canvas dimensions to [' + newWidth + 'x' + newHeight + ']' );
+            outrun.Debug.canvas.log( ' Updated canvas dimensions to [' + width + 'x' + height + ']' );
 
             return dimensionsChanged;
         }

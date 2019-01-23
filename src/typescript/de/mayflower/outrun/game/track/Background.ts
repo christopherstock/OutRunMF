@@ -39,19 +39,66 @@
             const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
             const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
 
-            Background.drawBg( ctx, width, height, this.skyImage,  this.skyOffset,  resolution * outrun.SettingGame.SKY_SPEED  * playerY );
-            Background.drawBg( ctx, width, height, this.hillImage, this.hillOffset, resolution * outrun.SettingGame.HILL_SPEED * playerY );
-            Background.drawBg( ctx, width, height, this.treeImage, this.treeOffset, resolution * outrun.SettingGame.TREE_SPEED * playerY );
+            Background.drawBg(
+                ctx,
+                width,
+                height,
+                this.skyImage,
+                this.skyOffset,
+                resolution * outrun.SettingGame.SKY_SPEED  * playerY
+            );
+            Background.drawBg(
+                ctx,
+                width,
+                height,
+                this.hillImage,
+                this.hillOffset,
+                resolution * outrun.SettingGame.HILL_SPEED * playerY
+            );
+            Background.drawBg(
+                ctx,
+                width,
+                height,
+                this.treeImage,
+                this.treeOffset,
+                resolution * outrun.SettingGame.TREE_SPEED * playerY
+            );
         }
 
         public updateOffsets( playerSegment:outrun.Segment, player:outrun.Player, startPosition:number ) : void
         {
-            this.skyOffset  = outrun.MathUtil.increase( this.skyOffset,  outrun.SettingGame.SKY_SPEED  * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.hillOffset = outrun.MathUtil.increase( this.hillOffset, outrun.SettingGame.HILL_SPEED * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
-            this.treeOffset = outrun.MathUtil.increase( this.treeOffset, outrun.SettingGame.TREE_SPEED * playerSegment.curve * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH, 1 );
+            this.skyOffset  = outrun.MathUtil.increase(
+                this.skyOffset,
+                outrun.SettingGame.SKY_SPEED
+                * playerSegment.curve
+                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                1
+            );
+            this.hillOffset = outrun.MathUtil.increase(
+                this.hillOffset,
+                outrun.SettingGame.HILL_SPEED
+                * playerSegment.curve
+                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                1
+            );
+            this.treeOffset = outrun.MathUtil.increase(
+                this.treeOffset,
+                outrun.SettingGame.TREE_SPEED
+                * playerSegment.curve
+                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                1
+            );
         }
 
-        private static drawBg( ctx:CanvasRenderingContext2D, width:number, height:number, sprite:string, rotation:number, offset:number ) : void
+        private static drawBg(
+            ctx      :CanvasRenderingContext2D,
+            width    :number,
+            height   :number,
+            sprite   :string,
+            rotation :number,
+            offset   :number
+        )
+        : void
         {
             const image:HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
 

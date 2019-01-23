@@ -192,8 +192,8 @@
                 - (
                     this.cameraDepth / this.offsetZ * outrun.MathUtil.interpolate
                     (
-                        this.playerSegment.getP1().getCamera().y,
-                        this.playerSegment.getP2().getCamera().y,
+                        this.playerSegment.getP1().getPlayer().y,
+                        this.playerSegment.getP2().getPlayer().y,
                         playerPercent
                     )
                     * outrun.Main.game.engine.canvasSystem.getHeight() / 2

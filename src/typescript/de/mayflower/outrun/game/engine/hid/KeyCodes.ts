@@ -2,7 +2,6 @@
     /** ****************************************************************************************************************
     *   All key codes that are used in the game.
     *******************************************************************************************************************/
-    // noinspection JSUnusedGlobalSymbols
     export abstract class KeyCodes
     {
         /** The keycode that represents the 'ARROW LEFT' key. */

@@ -106,12 +106,17 @@
         *   @param ctx        The 2D drawing context.
         *   @param resolution The scaling factor for all images to draw.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
         public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
         {
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.player.getZ() );
-            const basePercent   :number         = outrun.MathUtil.percentRemaining( this.player.getZ(), outrun.SettingGame.SEGMENT_LENGTH );
-            const playerPercent :number         = outrun.MathUtil.percentRemaining( this.player.getZ() + this.player.getOffsetZ(), outrun.SettingGame.SEGMENT_LENGTH );
+            const basePercent   :number         = outrun.MathUtil.percentRemaining(
+                this.player.getZ(),
+                outrun.SettingGame.SEGMENT_LENGTH
+            );
+            const playerPercent :number         = outrun.MathUtil.percentRemaining(
+                this.player.getZ() + this.player.getOffsetZ(),
+                outrun.SettingGame.SEGMENT_LENGTH
+            );
             const playerY       :number         = outrun.MathUtil.interpolate
             (
                 this.player.getPlayerSegment().getP1().getWorld().y,
@@ -124,7 +129,14 @@
             let   dx            :number         = -(baseSegment.curve * basePercent);
 
             // fill canvas with sky color
-            outrun.Drawing2D.rect( ctx, 0, 0, outrun.Main.game.engine.canvasSystem.getWidth(), outrun.Main.game.engine.canvasSystem.getHeight(), this.skyColor );
+            outrun.Drawing2D.rect(
+                ctx,
+                0,
+                0,
+                outrun.Main.game.engine.canvasSystem.getWidth(),
+                outrun.Main.game.engine.canvasSystem.getHeight(),
+                this.skyColor
+            );
 
             // draw bg
             this.background.draw( ctx, resolution, playerY );
@@ -136,20 +148,39 @@
 
                 // assign new segment properties
                 segment.looped = segment.getIndex() < baseSegment.getIndex();
-                segment.fog    = outrun.MathUtil.exponentialFog( n / outrun.SettingEngine.DRAW_DISTANCE, outrun.SettingGame.FOG_DENSITY );
+                segment.fog    = outrun.MathUtil.exponentialFog
+                (
+                    n / outrun.SettingEngine.DRAW_DISTANCE,
+                    outrun.SettingGame.FOG_DENSITY
+                );
                 segment.clip   = maxY;
 
                 // calculate road segment projections
-                segment.getP1().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,      playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.player.getCameraDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
-                segment.getP2().updateProjectionPoints( ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx, playerY + outrun.SettingEngine.CAMERA_HEIGHT, this.player.getZ() - ( segment.looped ? this.stageLength : 0 ), this.player.getCameraDepth(), outrun.SettingGame.HALF_ROAD_WIDTH );
+                segment.getP1().updateProjectionPoints(
+                    ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,
+                    playerY + outrun.SettingEngine.CAMERA_HEIGHT,
+                    this.player.getZ() - ( segment.looped ? this.stageLength : 0 ),
+                    this.player.getCameraDepth(),
+                    outrun.SettingGame.HALF_ROAD_WIDTH
+                );
+                segment.getP2().updateProjectionPoints(
+                    ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx,
+                    playerY + outrun.SettingEngine.CAMERA_HEIGHT,
+                    this.player.getZ() - ( segment.looped ? this.stageLength : 0 ),
+                    this.player.getCameraDepth(),
+                    outrun.SettingGame.HALF_ROAD_WIDTH
+                );
 
-                x = x + dx;
+                x  = x + dx;
                 dx = dx + segment.curve;
 
                 if (
-                    (segment.getP1().getCamera().z <= this.player.getCameraDepth() )          // behind us
-                    || (segment.getP2().getScreen().y >= segment.getP1().getScreen().y) // back face cull
-                    || (segment.getP2().getScreen().y >= maxY)                          // clip by (already rendered) hill
+                    // behind us
+                    (segment.getP1().getPlayer().z <= this.player.getCameraDepth() )
+                    // back face cull
+                    || (segment.getP2().getScreen().y >= segment.getP1().getScreen().y)
+                    // clip by (already rendered) hill
+                    || (segment.getP2().getScreen().y >= maxY)
                 ) {
                     continue;
                 }
@@ -258,7 +289,13 @@
                         / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 )
                     )
                 );
-                const car     :outrun.Car     = new outrun.Car( offset, z, outrun.Main.game.engine.imageSystem.getImage( sprite ), speed );
+                const car      :outrun.Car     = new outrun.Car
+                (
+                    offset,
+                    z,
+                    outrun.Main.game.engine.imageSystem.getImage( sprite ),
+                    speed
+                );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 
                 // add to segment and to global cars collection

@@ -80,17 +80,54 @@
         )
         : void
         {
-            const spriteScale :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().scale, segment.getP2().getScreen().scale, this.percent);
-            const spriteX     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().x,     segment.getP2().getScreen().x, this.percent) + (spriteScale * this.x * outrun.SettingGame.HALF_ROAD_WIDTH * outrun.Main.game.engine.canvasSystem.getWidth() / 2);
-            const spriteY     :number = outrun.MathUtil.interpolate(segment.getP1().getScreen().y,     segment.getP2().getScreen().y, this.percent);
+            const spriteScale :number = outrun.MathUtil.interpolate(
+                segment.getP1().getScreen().scale,
+                segment.getP2().getScreen().scale,
+                this.percent
+            );
+            const spriteX     :number = outrun.MathUtil.interpolate(
+                segment.getP1().getScreen().x,
+                segment.getP2().getScreen().x,
+                this.percent
+            )
+            + (
+                spriteScale
+                * this.x
+                * outrun.SettingGame.HALF_ROAD_WIDTH
+                * ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 )
+            );
+            const spriteY     :number = outrun.MathUtil.interpolate(
+                segment.getP1().getScreen().y,
+                segment.getP2().getScreen().y,
+                this.percent
+            );
 
-            outrun.Drawing2D.drawSprite(ctx, resolution, outrun.SettingGame.HALF_ROAD_WIDTH, this.image, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
+            outrun.Drawing2D.drawSprite(
+                ctx,
+                resolution,
+                outrun.SettingGame.HALF_ROAD_WIDTH,
+                this.image,
+                spriteScale,
+                spriteX,
+                spriteY,
+                -0.5,
+                -1,
+                segment.clip
+            );
         }
 
         /** ************************************************************************************************************
         *   Updates the offset for this car.
         ***************************************************************************************************************/
-        private updateCarOffset( segments:outrun.Segment[], player:outrun.Player, carSegment:outrun.Segment, playerSegment:outrun.Segment, playerW:number ) : number
+        private updateCarOffset
+        (
+            segments      :outrun.Segment[],
+            player        :outrun.Player,
+            carSegment    :outrun.Segment,
+            playerSegment :outrun.Segment,
+            playerW       :number
+        )
+        : number
         {
             const lookahead :number = 20;
             let   dir       :number = 0;
@@ -103,7 +140,12 @@
             {
                 const segment:outrun.Segment = segments[(carSegment.getIndex() + i) % segments.length];
 
-                if ((segment === playerSegment) && ( this.speed > player.getSpeed() ) && (outrun.MathUtil.overlap(player.getX(), playerW, this.x, this.width, 1.2))) {
+                // check if cars drives into player
+                if (
+                    (segment === playerSegment)
+                    && ( this.speed > player.getSpeed() )
+                    && (outrun.MathUtil.overlap(player.getX(), playerW, this.x, this.width, 1.2))
+                ) {
                     if (player.getX() > 0.5)
                         dir = -1;
                     else if (player.getX() < -0.5)
@@ -115,9 +157,13 @@
                     return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.PLAYER_MAX_SPEED;
                 }
 
+                // check if car drives into a different car
                 for ( const otherCar of segment.cars )
                 {
-                    if ( ( this.speed > otherCar.speed ) && outrun.MathUtil.overlap( this.x, this.width, otherCar.x, otherCar.width, 1.2 ) )
+                    if (
+                        ( this.speed > otherCar.speed )
+                        && outrun.MathUtil.overlap( this.x, this.width, otherCar.x, otherCar.width, 1.2 )
+                    )
                     {
                         if ( otherCar.x > 0.5 )
                             dir = -1;
