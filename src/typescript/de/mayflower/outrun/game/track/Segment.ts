@@ -6,19 +6,18 @@
     *******************************************************************************************************************/
     export class Segment
     {
-        // TODO all private!?
-
-        public                          cars            :outrun.Car[]           = null;
-        public                          color           :outrun.SegmentColor    = null;
-        public                          looped          :boolean                = false;
-        public                          fog             :number                 = null;
-        public                          clip            :number                 = 0;
-        public                          curve           :number                 = 0;
-
         private         readonly        index           :number                 = 0;
         private         readonly        p1              :outrun.SegmentPoint    = null;
         private         readonly        p2              :outrun.SegmentPoint    = null;
         private         readonly        obstacles       :outrun.Obstacle[]      = null;
+
+        private         readonly        cars            :outrun.Car[]           = null;
+        private         readonly        curve           :number                 = 0;
+
+        private                         color           :outrun.SegmentColor    = null;
+        private                         looped          :boolean                = false;
+        private                         fog             :number                 = null;
+        private                         clip            :number                 = 0;
 
         public constructor
         (
@@ -71,9 +70,41 @@
             return this.clip;
         }
 
-        public addObstacle(sprite:outrun.Obstacle ) : void
+        public getCars() : outrun.Car[]
+        {
+            return this.cars;
+        }
+
+        public getCurve() : number
+        {
+            return this.curve;
+        }
+
+        public getObstacles() : outrun.Obstacle[]
+        {
+            return this.obstacles;
+        }
+
+        public isLooped() : boolean
+        {
+            return this.looped;
+        }
+
+        public addObstacle( sprite:outrun.Obstacle ) : void
         {
             this.obstacles.push( sprite );
+        }
+
+        public setColor( color:outrun.SegmentColor ) : void
+        {
+            this.color = color;
+        }
+
+        public updateProperties( looped:boolean, fog:number, clip:number ) : void
+        {
+            this.looped = looped;
+            this.fog    = fog;
+            this.clip   = clip;
         }
 
         public draw( ctx:CanvasRenderingContext2D, fogColor:string ) : void
@@ -172,11 +203,6 @@
 
             // draw fog
             outrun.Drawing2D.fog( ctx, 0, y1, width, y2 - y1, this.fog, fogColor );
-        }
-
-        public getObstacles() : outrun.Obstacle[]
-        {
-            return this.obstacles;
         }
 
         private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number

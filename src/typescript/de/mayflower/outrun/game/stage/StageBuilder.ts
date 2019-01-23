@@ -102,11 +102,11 @@
         public addStartAndFinish( playerZ:number ) : void
         {
             // set startGameLoop and finish
-            this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 2 ].color = outrun.SettingColor.START;
-            this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 3 ].color = outrun.SettingColor.START;
+            this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 2 ].setColor( outrun.SettingColor.START );
+            this.segments[ outrun.Stage.findSegment( this.segments, playerZ ).getIndex() + 3 ].setColor( outrun.SettingColor.START );
             for (let n:number = 0; n < outrun.SettingGame.RUMBLE_LENGTH; n++ )
             {
-                this.segments[ this.segments.length - 1 - n ].color = outrun.SettingColor.FINISH;
+                this.segments[ this.segments.length - 1 - n ].setColor( outrun.SettingColor.FINISH );
             }
         }
 

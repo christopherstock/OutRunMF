@@ -85,6 +85,18 @@ Constructive refactorings:
     this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 => Remove public setter not being used outside
 
+=> Bundle setters or field accesses to one public function and make all fields private!
+
+    // assign new segment properties
+    segment.looped = segment.getIndex() < baseSegment.getIndex();
+    segment.fog    = outrun.MathUtil.exponentialFog
+    (
+        n / outrun.SettingEngine.DRAW_DISTANCE,
+        outrun.SettingGame.FOG_DENSITY
+    );
+    segment.clip = maxY;
+
+
 
 Results:
 ==========================

@@ -126,7 +126,7 @@
 
             let   maxY          :number         = outrun.Main.game.engine.canvasSystem.getHeight();
             let   x             :number         = 0;
-            let   dx            :number         = -(baseSegment.curve * basePercent);
+            let   dx            :number         = -(baseSegment.getCurve() * basePercent);
 
             // fill canvas with sky color
             outrun.Drawing2D.rect(
@@ -147,32 +147,34 @@
                 const segment:outrun.Segment = this.segments[(baseSegment.getIndex() + n) % this.segments.length];
 
                 // assign new segment properties
-                segment.looped = segment.getIndex() < baseSegment.getIndex();
-                segment.fog    = outrun.MathUtil.exponentialFog
-                (
-                    n / outrun.SettingEngine.DRAW_DISTANCE,
-                    outrun.SettingGame.FOG_DENSITY
+                segment.updateProperties(
+                    segment.getIndex() < baseSegment.getIndex(),
+                    outrun.MathUtil.exponentialFog
+                    (
+                        n / outrun.SettingEngine.DRAW_DISTANCE,
+                        outrun.SettingGame.FOG_DENSITY
+                    ),
+                    maxY
                 );
-                segment.clip   = maxY;
 
                 // calculate road segment projections
                 segment.getP1().updateProjectionPoints(
                     ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
-                    this.player.getZ() - ( segment.looped ? this.stageLength : 0 ),
+                    this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
                     this.player.getCameraDepth(),
                     outrun.SettingGame.HALF_ROAD_WIDTH
                 );
                 segment.getP2().updateProjectionPoints(
                     ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
-                    this.player.getZ() - ( segment.looped ? this.stageLength : 0 ),
+                    this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
                     this.player.getCameraDepth(),
                     outrun.SettingGame.HALF_ROAD_WIDTH
                 );
 
                 x  = x + dx;
-                dx = dx + segment.curve;
+                dx = dx + segment.getCurve();
 
                 if (
                     // behind us
@@ -198,7 +200,7 @@
                 const segment:outrun.Segment = this.segments[ ( baseSegment.getIndex() + n ) % this.segments.length ];
 
                 // draw cars
-                for ( const car of segment.cars )
+                for ( const car of segment.getCars() )
                 {
                     car.draw( ctx, resolution, segment );
                 }
@@ -272,8 +274,6 @@
         ***************************************************************************************************************/
         private createCars() : void
         {
-            this.cars = [];
-
             for ( let i:number = 0; i < this.carCount; i++ )
             {
                 const offset  :number = Math.random() * outrun.MathUtil.randomChoice( [ -0.8, 0.8 ] );
@@ -299,8 +299,8 @@
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 
                 // add to segment and to global cars collection
-                segment.cars.push( car );
-                this.cars.push(    car );
+                segment.getCars().push( car );
+                this.cars.push( car );
             }
         }
 

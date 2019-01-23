@@ -141,7 +141,7 @@
             this.checkOffroad( this.playerSegment, this.width, dt, stageLength );
 
             // browse all cars
-            for ( const car of this.playerSegment.cars ) {
+            for ( const car of this.playerSegment.getCars() ) {
 
                 if ( this.speed > car.getSpeed() )
                 {
@@ -237,7 +237,7 @@
 
         private checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
         {
-            this.x = this.x - ( dx * speedPercent * playerSegment.curve * outrun.SettingGame.CENTRIFUGAL );
+            this.x = this.x - ( dx * speedPercent * playerSegment.getCurve() * outrun.SettingGame.CENTRIFUGAL );
         }
 
         /** ************************************************************************************************************

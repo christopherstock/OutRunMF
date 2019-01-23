@@ -70,21 +70,21 @@
             this.skyOffset  = outrun.MathUtil.increase(
                 this.skyOffset,
                 outrun.SettingGame.SKY_SPEED
-                * playerSegment.curve
+                * playerSegment.getCurve()
                 * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );
             this.hillOffset = outrun.MathUtil.increase(
                 this.hillOffset,
                 outrun.SettingGame.HILL_SPEED
-                * playerSegment.curve
+                * playerSegment.getCurve()
                 * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );
             this.treeOffset = outrun.MathUtil.increase(
                 this.treeOffset,
                 outrun.SettingGame.TREE_SPEED
-                * playerSegment.curve
+                * playerSegment.getCurve()
                 * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );

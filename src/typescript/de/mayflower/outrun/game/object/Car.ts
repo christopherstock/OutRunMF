@@ -66,9 +66,9 @@
 
             if ( oldSegment !== newSegment )
             {
-                const index:number = oldSegment.cars.indexOf( this );
-                oldSegment.cars.splice( index, 1 );
-                newSegment.cars.push( this );
+                const index:number = oldSegment.getCars().indexOf( this );
+                oldSegment.getCars().splice( index, 1 );
+                newSegment.getCars().push( this );
             }
         }
 
@@ -112,7 +112,7 @@
                 spriteY,
                 -0.5,
                 -1,
-                segment.clip
+                segment.getClip()
             );
         }
 
@@ -158,7 +158,7 @@
                 }
 
                 // check if car drives into a different car
-                for ( const otherCar of segment.cars )
+                for ( const otherCar of segment.getCars() )
                 {
                     if (
                         ( this.speed > otherCar.speed )
