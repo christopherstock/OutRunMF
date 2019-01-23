@@ -12,6 +12,7 @@ Refactoring Methods:
 - Renaming ( clear speaking names )
 - Introduce classes ( From {} to Sprite, Car etc. )
 - Extract methods ( separate logical units )
+- Ensure that every variable has a value! remove constructs like: ( offsetX || 0 )
 - Add documentation ( where it adds value )
 - Add typings (!) from JS to TS conversion
 - Order variables, fields and methods by visibility, type (number, boolean, string, object, collections ) and static state.

@@ -129,7 +129,7 @@
             let   dx            :number         = -(baseSegment.getCurve() * basePercent);
 
             // fill canvas with sky color
-            outrun.Drawing2D.rect(
+            outrun.Drawing2D.drawRect(
                 ctx,
                 0,
                 0,

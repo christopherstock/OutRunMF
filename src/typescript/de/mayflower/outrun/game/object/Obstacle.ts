@@ -39,7 +39,7 @@
             );
             const spriteY     :number = p1.getScreen().y;
 
-            outrun.Drawing2D.drawSprite
+            outrun.Drawing2D.drawImage
             (
                 ctx,
                 resolution,

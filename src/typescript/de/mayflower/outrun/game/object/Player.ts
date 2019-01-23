@@ -198,7 +198,7 @@
             );
 
             // draw player
-            outrun.Drawing2D.drawSprite
+            outrun.Drawing2D.drawImage
             (
                 ctx,
                 resolution,

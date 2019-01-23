@@ -133,7 +133,7 @@
             ctx.fillRect(0, y2, width, y1 - y2);
 
             // left rumble
-            outrun.Drawing2D.polygon
+            outrun.Drawing2D.drawPolygon
             (
                 ctx,
                 x1 - w1 - r1,
@@ -147,7 +147,7 @@
                 this.color.rumble
             );
             // right rumble
-            outrun.Drawing2D.polygon
+            outrun.Drawing2D.drawPolygon
             (
                 ctx,
                 x1 + w1 + r1,
@@ -161,7 +161,7 @@
                 this.color.rumble
             );
             // road
-            outrun.Drawing2D.polygon
+            outrun.Drawing2D.drawPolygon
             (
                 ctx,
                 x1 - w1,
@@ -185,7 +185,7 @@
 
                 for ( let lane:number = 1; lane < lanes; lane++ )
                 {
-                    outrun.Drawing2D.polygon
+                    outrun.Drawing2D.drawPolygon
                     (
                         ctx,
                         lanex1 - l1 / 2,
@@ -202,7 +202,10 @@
             }
 
             // draw fog
-            outrun.Drawing2D.fog( ctx, 0, y1, width, y2 - y1, this.fog, fogColor );
+            if ( this.fog < 1.0 )
+            {
+                outrun.Drawing2D.drawRect( ctx, 0, y1, width, y2 - y1, fogColor, ( 1 - this.fog ) );
+            }
         }
 
         private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
