@@ -1,8 +1,6 @@
 
     /** ****************************************************************************************************************
     *   Offers additional mathematical functionality.
-    *
-    *   TODO remove special methods here!
     *******************************************************************************************************************/
     export class MathUtil
     {
@@ -58,14 +56,48 @@
             return collection[ MathUtil.getRandomInt( 0, collection.length - 1 ) ];
         }
 
-        public static percentRemaining( n:number, total:number ) : number
+        /** ************************************************************************************************************
+        *   Modifies the specified speed with the given delta and acceleration rate.
+        *
+        *   @param speed        The base speed.
+        *   @param acceleration The acceleration rate. May be negative for deceleration.
+        *   @param delta        The speed delta.
+        *
+        *   @return The modified speed.
+        ***************************************************************************************************************/
+        public static accelerate( speed:number, acceleration:number, delta:number ) : number
         {
-            return ( ( n % total ) / total );
+            return ( speed + ( acceleration * delta ) );
         }
 
-        public static accelerate( v:number, accel:number, dt:number ) : number
+        /** ************************************************************************************************************
+        *   Determines if two lines overlap.
+        *
+        *   @param x1           The CENTER point of the 1st line.
+        *   @param width1       The width of the 1st line.
+        *   @param x2           The CENTER point of the 2nd line.
+        *   @param width2       The width of the 2nd line.
+        *   @param percent      The width modifier for overlap check.
+        *                       Values lower 1.0 allow collision tolerance.
+        *
+        *   @return <code>true</code> if the two lines overlap.
+        ***************************************************************************************************************/
+        public static overlap( x1:number, width1:number, x2:number, width2:number, percent:number ) : boolean
         {
-            return v + ( accel * dt );
+            // note that x1 and x2 are the center points!
+            const half :number = percent / 2;
+
+            const min1 :number = x1 - ( width1 * half );
+            const max1 :number = x1 + ( width1 * half );
+            const min2 :number = x2 - ( width2 * half );
+            const max2 :number = x2 + ( width2 * half );
+
+            return ! ( ( max1 < min2 ) || ( min1 > max2 ) );
+        }
+
+        public static percentRemaining( value:number, total:number ) : number
+        {
+            return ( ( value % total ) / total );
         }
 
         public static interpolate( start:number, end:number, ratio:number ) : number
@@ -88,26 +120,20 @@
             return ( 1 / ( Math.pow( Math.E, ( distance * distance * density ) ) ) );
         }
 
-        // TODO clumsy .. remove and replace!
         public static increase( start:number, increment:number, max:number ) : number
         {
-            let result:number = start + increment;
-            while (result >= max)
+            let result:number = ( start + increment );
+
+            while ( result >= max )
+            {
                 result -= max;
-            while (result < 0)
+            }
+
+            while ( result < 0 )
+            {
                 result += max;
+            }
 
             return result;
-        }
-
-        public static overlap( x1:number, w1:number, x2:number, w2:number, percent:number ) : boolean
-        {
-            const half :number = ( percent || 1 ) / 2;
-            const min1 :number = x1 - ( w1 * half );
-            const max1 :number = x1 + ( w1 * half );
-            const min2 :number = x2 - ( w2 * half );
-            const max2 :number = x2 + ( w2 * half );
-
-            return ! ( ( max1 < min2 ) || ( min1 > max2 ) );
         }
     }

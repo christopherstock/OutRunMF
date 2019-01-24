@@ -223,6 +223,7 @@
 
         private checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, stageLength:number ) : boolean
         {
+            // check player colliding with other car
             if ( outrun.MathUtil.overlap( this.x, playerW, car.getOffset(), carW, 0.8 ) ) {
 
                 // decelerate the player
@@ -279,14 +280,14 @@
             this.speedPercent  = this.speed / outrun.SettingGame.PLAYER_MAX_SPEED;
         }
 
-        private checkOffroad( playerSegment:outrun.Segment, playerW:number, dt:number, stageLength:number ) : void
+        private checkOffroad( playerSegment:outrun.Segment, playerW:number, delta:number, stageLength:number ) : void
         {
             if ( ( this.x < -1 ) || ( this.x > 1 ) )
             {
                 // clip to offroad speed
                 if ( this.speed > outrun.SettingGame.OFF_ROAD_LIMIT )
                 {
-                    this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, dt );
+                    this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, delta );
                 }
 
                 // check player collision with obstacle
@@ -300,7 +301,7 @@
                             playerW,
                             obstacle.getX() + obstacle.getWidth() / 2 * ( obstacle.getX() > 0 ? 1 : -1 ),
                             obstacle.getWidth(),
-                            0
+                            1.0
                         )
                     )
                     {

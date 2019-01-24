@@ -50,6 +50,7 @@ Refactoring Methods:
   outrun.Drawing2D.polygon( ctx, x1 - w1 - r1, y1, x1 - w1, y1, x2 - w2, y2, x2 - w2 - r2, y2, this.color.rumble );
 - Rename packages according to new functionality!
 - remove or move too special 'helper' functions
+- Remove one functin call with '0' and turn into '1'! remove: ( percent || 1 )
 
 Tools that support:
 ===================

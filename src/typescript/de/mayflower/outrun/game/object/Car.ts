@@ -140,7 +140,7 @@
             {
                 const segment:outrun.Segment = segments[(carSegment.getIndex() + i) % segments.length];
 
-                // check if cars drives into player
+                // check if car drives into player
                 if (
                     (segment === playerSegment)
                     && ( this.speed > player.getSpeed() )
