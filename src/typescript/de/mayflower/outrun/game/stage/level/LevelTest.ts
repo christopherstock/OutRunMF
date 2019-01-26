@@ -38,34 +38,23 @@
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
             stageBuilder.addStraight( outrun.SettingColor.RED, 25 );
-            stageBuilder.addHill(     outrun.SettingColor.RED, 25, outrun.Road.HILL.HIGH );
+            stageBuilder.addHill(     outrun.SettingColor.RED, 25, outrun.Road.HILL.EXTREME );
             stageBuilder.addStraight( outrun.SettingColor.RED, 25 );
-            stageBuilder.addHill(     outrun.SettingColor.RED, 25, -outrun.Road.HILL.HIGH );
+            stageBuilder.addHill(     outrun.SettingColor.RED, 25, -outrun.Road.HILL.EXTREME );
 
 
 /*
-            stageBuilder.addStraight( outrun.SettingColor.RED,     25 );
             stageBuilder.addCurve(    outrun.SettingColor.DEFAULT, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE );
-            stageBuilder.addStraight( outrun.SettingColor.RED,     25 );
-            stageBuilder.addStraight( outrun.SettingColor.RED,     25 );
-*/
-
-/*
             stageBuilder.addLowRollingHills( , outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
             stageBuilder.addSCurves();
             stageBuilder.addBumps();
             stageBuilder.addLowRollingHills( outrun.Road.LENGTH.SHORT, outrun.Road.HILL.LOW );
             stageBuilder.addCurve(           outrun.Road.LENGTH.LONG * 2, outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.MEDIUM);
-            stageBuilder.addStraight(        outrun.Road.LENGTH.MEDIUM );
-            stageBuilder.addHill(            outrun.Road.LENGTH.MEDIUM, outrun.Road.HILL.HIGH);
             stageBuilder.addSCurves();
             stageBuilder.addCurve(           outrun.Road.LENGTH.LONG, -outrun.Road.CURVE.MEDIUM, outrun.Road.HILL.NONE);
             stageBuilder.addCurve(           outrun.Road.LENGTH.LONG, outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.LOW);
             stageBuilder.addBumps();
-            stageBuilder.addHill(            outrun.Road.LENGTH.LONG, -outrun.Road.HILL.MEDIUM);
-            stageBuilder.addStraight(        outrun.Road.LENGTH.MEDIUM );
             stageBuilder.addSCurves();
-            stageBuilder.addDownhillToEnd(   outrun.Road.LENGTH.DOUBLE_LONG );
 */
 /*
             // set startGameLoop and finish

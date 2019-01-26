@@ -1,6 +1,8 @@
 
     /** ****************************************************************************************************************
     *   Constants for customizing road sections.
+    *
+    *   TODO refactor to enums
     *******************************************************************************************************************/
     export abstract class Road
     {
@@ -17,10 +19,11 @@
         /** Specifies attributes for the height of hills. */
         public      static      readonly        HILL                :any                    =
         {
-            NONE:   0,
-            LOW:    20,
-            MEDIUM: 40,
-            HIGH:   60,
+            NONE:    0,
+            LOW:     20,
+            MEDIUM:  40,
+            HIGH:    60,
+            EXTREME: 100,
         };
 
         /** Specifies attributes for the severity of curves. */

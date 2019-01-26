@@ -8,6 +8,7 @@
 
         public                  x                               :number             = 0;
 
+        /** The elevation. */
         public                  y                               :number             = 0;
 
         public                  z                               :number             = 0;

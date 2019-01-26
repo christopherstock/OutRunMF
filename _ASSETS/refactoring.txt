@@ -98,7 +98,19 @@ Constructive refactorings:
     );
     segment.clip = maxY;
 
+=> Move value classes to enums!
 
+    /** Specifies attributes for the length of the road. */
+    public      static      readonly        LENGTH              :any                    =
+    {
+        NONE:        0,
+        SHORT:       25,
+        MEDIUM:      50,
+        LONG:        100,
+        DOUBLE_LONG: 200,
+    };
+
+=> Create tests and cover certain business logic methods with TSUnit tests.
 
 Results:
 ==========================

@@ -27,6 +27,7 @@
 
         /** ************************************************************************************************************
         *   Adds straight road segments to the stage segments.
+        *   TODO merge with #addHill?
         *
         *   @param color The color for the straight segments.
         *   @param count The number of straight segments to add.
@@ -98,7 +99,7 @@
         }
 
         /** ************************************************************************************************************
-        *
+        *   TODO Remove this method by a generic road creation method!
         ***************************************************************************************************************/
         public addDownhillToEnd( color:outrun.SegmentColorSet, num:number ) : void
         {
