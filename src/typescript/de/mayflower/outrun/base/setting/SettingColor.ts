@@ -21,6 +21,10 @@
         public      static      RED_DARK        :outrun.SegmentColor        = new outrun.SegmentColor( '#484848', '#9a5000', '#ffffff', null      );
         public      static      RED             :outrun.SegmentColorSet     = new outrun.SegmentColorSet( SettingColor.RED_LIGHT, SettingColor.RED_DARK );
 
+        public      static      GREEN_LIGHT     :outrun.SegmentColor        = new outrun.SegmentColor( '#515151', '#51aa10', '#00ef00', '#ffffff' );
+        public      static      GREEN_DARK      :outrun.SegmentColor        = new outrun.SegmentColor( '#484848', '#509a00', '#ffffff', null      );
+        public      static      GREEN           :outrun.SegmentColorSet     = new outrun.SegmentColorSet( SettingColor.GREEN_LIGHT, SettingColor.GREEN_DARK );
+
         public      static      START           :outrun.SegmentColor        = new outrun.SegmentColor( 'white',   'white',   'white',   null      );
         public      static      FINISH          :outrun.SegmentColor        = new outrun.SegmentColor( 'black',   'black',   'black',   null      );
     }

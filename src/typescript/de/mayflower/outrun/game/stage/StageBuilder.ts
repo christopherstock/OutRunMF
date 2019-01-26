@@ -2,39 +2,50 @@
     import * as outrun from '../..'
 
     /** ****************************************************************************************************************
-    *   Creates stage segments.
+    *   Creates all segments for one stage.
     *******************************************************************************************************************/
     export class StageBuilder
     {
-        private                 readonly                segments                        :outrun.Segment[]       = null;
+        /** The collection of segments one stage consists of. */
+        private                 readonly            segments                :outrun.Segment[]       = null;
 
+        /** ************************************************************************************************************
+        *   Creates a new stage builder.
+        ***************************************************************************************************************/
         public constructor()
         {
             this.segments = [];
         }
 
+        /** ************************************************************************************************************
+        *   Returns all segments being created by this stage builder.
+        ***************************************************************************************************************/
         public assemble() : outrun.Segment[]
         {
             return this.segments;
         }
 
         /** ************************************************************************************************************
-        *   Adds straight road segments to the specified array.
+        *   Adds straight road segments to the stage segments.
         *
         *   @param color The color for the straight segments.
         *   @param count The number of straight segments to add.
         ***************************************************************************************************************/
         public addStraight( color:outrun.SegmentColorSet, count:number ) : void
         {
-            this.addRoad( count, count, count, 0, 0, color );
+            this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, 0, color );
         }
 
         /** ************************************************************************************************************
+        *   Adds straight road segments with an ascend or descend to the stage segments.
         *
+        *   @param color  The color for the straight segments.
+        *   @param count  The number of straight segments to add.
+        *   @param height The height delta of this hill.
         ***************************************************************************************************************/
-        public addHill( color:outrun.SegmentColorSet, num:number, height:number ) : void
+        public addHill( color:outrun.SegmentColorSet, count:number, height:number ) : void
         {
-            this.addRoad( num, num, num, 0, height, color );
+            this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, height, color );
         }
 
         /** ************************************************************************************************************
@@ -118,14 +129,17 @@
             enter :number,
             hold  :number,
             leave :number,
+
             curve :number,
             y     :number,
             color :outrun.SegmentColorSet
         )
         : void
         {
+            // calculate elevation
             const startY :number = this.lastY();
             const endY   :number = startY + (outrun.MathUtil.toInt( y ) * outrun.SettingGame.SEGMENT_LENGTH);
+
             const total  :number = ( enter + hold + leave );
 
             for ( let n:number = 0; n < enter; n++ )
@@ -168,19 +182,19 @@
         ***************************************************************************************************************/
         private addSegment( curve:number, y:number, color:outrun.SegmentColorSet ) : void
         {
-            const n:number = this.segments.length;
-            const lastY:number = this.lastY();
+            const index :number = this.segments.length;
+            const lastY :number = this.lastY();
 
             this.segments.push
             (
                 new outrun.Segment
                 (
-                    n,
+                    index,
                     new outrun.SegmentPoint(
-                        new outrun.Vector( lastY, n * outrun.SettingGame.SEGMENT_LENGTH )
+                        new outrun.Vector( lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     new outrun.SegmentPoint(
-                        new outrun.Vector( y, ( n + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
+                        new outrun.Vector( y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     curve,
                     [],

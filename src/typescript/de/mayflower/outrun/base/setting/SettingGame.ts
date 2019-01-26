@@ -29,7 +29,7 @@
         public  static  readonly    LANES                       :number             = 4;
         /** length of a single segment */
         public  static  readonly    SEGMENT_LENGTH              :number             = 200;
-        /** number of segments per red/white rumble strip */
+        /** number of segments per red/white strip */
         public  static  readonly    RUMBLE_LENGTH               :number             = 3;
 
         /** exponential fog density */
