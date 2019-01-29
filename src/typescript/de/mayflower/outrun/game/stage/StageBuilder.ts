@@ -27,14 +27,13 @@
 
         /** ************************************************************************************************************
         *   Adds straight road segments to the stage segments.
-        *   TODO merge with #addHill?
         *
         *   @param color The color for the straight segments.
         *   @param count The number of straight segments to add.
         ***************************************************************************************************************/
         public addStraight( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
         {
-            this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, 0, color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, outrun.RoadHill.NONE, color );
         }
 
         /** ************************************************************************************************************
@@ -46,15 +45,26 @@
         ***************************************************************************************************************/
         public addHill( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number ) : void
         {
-            this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, height, color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, height, color );
         }
 
         /** ************************************************************************************************************
+        *   Adds a curve to the stage segments.
         *
+        *   @param color  The color for the straight segments.
+        *   @param count  The number of straight segments to add.
+        *   @param curve      The curve situation for this road.
+        *   @param height The height delta of this hill.
         ***************************************************************************************************************/
-        public addCurve( color:outrun.SegmentColorSet, count:outrun.RoadLength, curve:outrun.RoadCurve, height:number ) : void
+        public addCurve
+        (
+            color  :outrun.SegmentColorSet,
+            count  :outrun.RoadLength,
+            curve  :outrun.RoadCurve,
+            height :number
+        )
+        : void
         {
-            // TODO try different in / outs ?
             this.addRoad( count, count, count, curve, height, color );
         }
 
@@ -179,7 +189,12 @@
         /** ************************************************************************************************************
         *   Adds a bunch of road segments to the segment stack.
         *
-        *   @param countHold The number of segments to create.
+        *   @param countEnter The number of segments to create for easing in this road.
+        *   @param countHold  The number of segments to create.
+        *   @param countLeave The number of segments to create for easing out this road.
+        *   @param curve      The curve situation for this road.
+        *   @param hill       The hill  situation for this road.
+        *   @param color      The color set for this road segment.
         ***************************************************************************************************************/
         private addRoad
         (
@@ -188,15 +203,14 @@
             countLeave :number,
 
             curve      :outrun.RoadCurve,
-            deltaY     :number,
-
+            hill       :outrun.RoadHill,
             color      :outrun.SegmentColorSet
         )
         : void
         {
             // calculate elevation
             const startY :number = this.lastY();
-            const endY   :number = startY + (outrun.MathUtil.toInt( deltaY ) * outrun.SettingGame.SEGMENT_LENGTH);
+            const endY   :number = startY + (outrun.MathUtil.toInt( hill ) * outrun.SettingGame.SEGMENT_LENGTH);
 
             const total  :number = ( countEnter + countHold + countLeave );
 
@@ -236,7 +250,7 @@
         *
         *   @param curve Specifies if this segment is a curve?
         *   @param y     The Y location of this segment.
-        *   @param color The color for this segment.
+        *   @param color The color set for this segment.
         ***************************************************************************************************************/
         private addSegment( curve:outrun.RoadCurve, y:number, color:outrun.SegmentColorSet ) : void
         {
