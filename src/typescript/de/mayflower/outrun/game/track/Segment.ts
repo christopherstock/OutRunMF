@@ -109,8 +109,11 @@
             this.clip   = clip;
         }
 
-        public draw( ctx:CanvasRenderingContext2D, fogColor:string ) : void
+        public draw( canvasSystem:outrun.CanvasSystem, fogColor:string ) : void
         {
+            const ctx         :CanvasRenderingContext2D = canvasSystem.getRenderingContext();
+            const canvasWidth :number                   = canvasSystem.getWidth();
+
             // TODO create speaking vars!
 
             const leftX  :number = this.pointLeft.getScreen().x;
@@ -121,12 +124,11 @@
             const rightY :number = this.pointRight.getScreen().y;
             const rightW :number = this.pointRight.getScreen().w;
 
-            const canvasWidth :number = outrun.Main.game.engine.canvasSystem.getWidth();
             const laneCount   :number = outrun.SettingGame.LANES;
 
-            const leftRumbleWidth      :number = Segment.calculateRumbleWidth(     leftW, laneCount );
+            const leftRumbleWidth      :number = Segment.calculateRumbleWidth(     leftW,  laneCount );
             const rightRumbleWidth     :number = Segment.calculateRumbleWidth(     rightW, laneCount );
-            const leftLaneMarkerWidth  :number = Segment.calculateLaneMarkerWidth( leftW, laneCount );
+            const leftLaneMarkerWidth  :number = Segment.calculateLaneMarkerWidth( leftW,  laneCount );
             const rightLaneMarkerWidth :number = Segment.calculateLaneMarkerWidth( rightW, laneCount );
 
             ctx.fillStyle = this.color.offroad;

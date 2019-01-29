@@ -30,14 +30,16 @@
         /** ************************************************************************************************************
         *   Draws the background for a specific scene.
         *
-        *   @param ctx        The canvas rendering context to draw onto.
-        *   @param resolution The resolution to draw the background in.
-        *   @param playerY    The player position Y for assigning the Y position of this background.
+        *   @param canvasSystem The canvas system.
+        *   @param playerY      The player position Y for assigning the Y position of this background.
         ***************************************************************************************************************/
-        public draw( ctx:CanvasRenderingContext2D, resolution:number, playerY:number ) : void
+        public draw( canvasSystem:outrun.CanvasSystem, playerY:number ) : void
         {
-            const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
-            const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
+            const ctx        :CanvasRenderingContext2D = canvasSystem.getRenderingContext();
+            const resolution :number                   = canvasSystem.getResolution();
+
+            const width  :number = canvasSystem.getWidth();
+            const height :number = canvasSystem.getHeight();
 
             Background.drawBg(
                 ctx,

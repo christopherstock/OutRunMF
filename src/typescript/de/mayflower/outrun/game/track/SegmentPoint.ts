@@ -37,16 +37,17 @@
 
         public updateProjectionPoints
         (
-            playerX     :number,
-            playerY     :number,
-            playerZ     :number,
-            cameraDepth :number,
-            roadWidth   :number
+            canvasSystem :outrun.CanvasSystem,
+            playerX      :number,
+            playerY      :number,
+            playerZ      :number,
+            cameraDepth  :number,
+            roadWidth    :number
         )
         : void
         {
-            const width  :number = outrun.Main.game.engine.canvasSystem.getWidth();
-            const height :number = outrun.Main.game.engine.canvasSystem.getHeight();
+            const width  :number = canvasSystem.getWidth();
+            const height :number = canvasSystem.getHeight();
 
             this.playerVector.x     = this.worldVector.x - playerX;
             this.playerVector.y     = this.worldVector.y - playerY;

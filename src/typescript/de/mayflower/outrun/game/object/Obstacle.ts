@@ -23,10 +23,9 @@
 
         public draw
         (
-            ctx        :CanvasRenderingContext2D,
-            resolution :number,
-            p1         :outrun.SegmentPoint,
-            clip       :number
+            canvasSystem :outrun.CanvasSystem,
+            p1           :outrun.SegmentPoint,
+            clip         :number
         )
         : void
         {
@@ -35,14 +34,13 @@
                 spriteScale
                 * this.x
                 * outrun.SettingGame.HALF_ROAD_WIDTH
-                * ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 )
+                * ( canvasSystem.getWidth() / 2 )
             );
             const spriteY     :number = p1.getScreen().y;
 
             outrun.Drawing2D.drawImage
             (
-                ctx,
-                resolution,
+                canvasSystem,
                 outrun.SettingGame.HALF_ROAD_WIDTH,
                 this.image,
                 spriteScale,

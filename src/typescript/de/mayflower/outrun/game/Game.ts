@@ -67,11 +67,7 @@
 
             this.checkGlobalKeys();
             this.update( outrun.SettingEngine.STEP );
-            this.draw
-            (
-                this.engine.canvasSystem.getCanvasContext(),
-                this.engine.canvasSystem.getResolution()
-            );
+            this.draw( this.engine.canvasSystem );
 
             if ( outrun.SettingDebug.SHOW_FPS )
             {
@@ -110,18 +106,19 @@
         }
 
         /** ************************************************************************************************************
-        *   Renders the current tick of the legacy game.
+        *   Renders the current tick of the game.
         *
-        *   @param ctx        The 2D drawing context.
-        *   @param resolution The scaling factor for all images to draw.
+        *   @param canvasSystem The canvas system.
         ***************************************************************************************************************/
-        private draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
+        private draw( canvasSystem:outrun.CanvasSystem ) : void
         {
+            const ctx:CanvasRenderingContext2D = canvasSystem.getRenderingContext();
+
             // clear canvas
             ctx.clearRect( 0, 0, this.engine.canvasSystem.getWidth(), this.engine.canvasSystem.getHeight() );
 
             // draw stage
-            this.stage.draw( ctx, resolution );
+            this.stage.draw( canvasSystem );
 
             // draw HUD?
 

@@ -170,22 +170,18 @@
             );
         }
 
-        public draw
-        (
-            ctx           :CanvasRenderingContext2D,
-            resolution    :number,
-            playerPercent :number
-        )
-        : void
+        public draw( canvasSystem :outrun.CanvasSystem, playerPercent :number ) : void
         {
+            const resolution :number = canvasSystem.getResolution();
+
             const speedPercent :number = ( this.speed / outrun.SettingGame.PLAYER_MAX_SPEED );
             const bounce       :number = (
                 outrun.SettingGame.PLAYER_MAX_BOUNCE * Math.random() * speedPercent * resolution
             ) * outrun.MathUtil.getRandomElement( [ -1, 1 ] );
             const scale        :number = ( this.cameraDepth / this.offsetZ );
-            const destX        :number = ( outrun.Main.game.engine.canvasSystem.getWidth() / 2 );
+            const destX        :number = ( canvasSystem.getWidth() / 2 );
             const destY        :number = (
-                (outrun.Main.game.engine.canvasSystem.getHeight() / 2)
+                ( canvasSystem.getHeight() / 2 )
                 - (
                     this.cameraDepth / this.offsetZ * outrun.MathUtil.interpolate
                     (
@@ -193,15 +189,14 @@
                         this.playerSegment.getP2().getPlayer().y,
                         playerPercent
                     )
-                    * outrun.Main.game.engine.canvasSystem.getHeight() / 2
+                    * canvasSystem.getHeight() / 2
                 )
             );
 
             // draw player
             outrun.Drawing2D.drawImage
             (
-                ctx,
-                resolution,
+                canvasSystem,
                 outrun.SettingGame.HALF_ROAD_WIDTH,
                 this.image,
                 scale,

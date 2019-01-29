@@ -101,13 +101,14 @@
         }
 
         /** ************************************************************************************************************
-        *   Renders the current tick of the legacy game.
+        *   Draws one tick of the stage.
         *
-        *   @param ctx        The 2D drawing context.
-        *   @param resolution The scaling factor for all images to draw.
+        *   @param canvasSystem The canvas system.
         ***************************************************************************************************************/
-        public draw( ctx:CanvasRenderingContext2D, resolution:number ) : void
+        public draw( canvasSystem:outrun.CanvasSystem ) : void
         {
+            const ctx:CanvasRenderingContext2D = canvasSystem.getRenderingContext();
+
             const baseSegment   :outrun.Segment = Stage.findSegment( this.segments, this.player.getZ() );
             const basePercent   :number         = outrun.MathUtil.percentRemaining(
                 this.player.getZ(),
@@ -124,7 +125,7 @@
                 playerPercent
             );
 
-            let   maxY          :number         = outrun.Main.game.engine.canvasSystem.getHeight();
+            let   maxY          :number         = canvasSystem.getHeight();
             let   x             :number         = 0;
             let   dx            :number         = -(baseSegment.getCurve() * basePercent);
 
@@ -133,13 +134,13 @@
                 ctx,
                 0,
                 0,
-                outrun.Main.game.engine.canvasSystem.getWidth(),
-                outrun.Main.game.engine.canvasSystem.getHeight(),
+                canvasSystem.getWidth(),
+                canvasSystem.getHeight(),
                 this.skyColor
             );
 
             // draw bg
-            this.background.draw( ctx, resolution, playerY );
+            this.background.draw( canvasSystem, playerY );
 
             // draw road
             for ( let n:number = 0; n < outrun.SettingEngine.DRAW_DISTANCE; n++ )
@@ -159,6 +160,7 @@
 
                 // calculate road segment projections
                 segment.getP1().updateProjectionPoints(
+                    canvasSystem,
                     ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
                     this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
@@ -166,6 +168,7 @@
                     outrun.SettingGame.HALF_ROAD_WIDTH
                 );
                 segment.getP2().updateProjectionPoints(
+                    canvasSystem,
                     ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
                     this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
@@ -188,7 +191,7 @@
                 }
 
                 // draw segment road
-                segment.draw( ctx, this.fogColor );
+                segment.draw( canvasSystem, this.fogColor );
 
                 // assign maxY ?
                 maxY = segment.getP1().getScreen().y;
@@ -202,7 +205,7 @@
                 // draw cars
                 for ( const car of segment.getCars() )
                 {
-                    car.draw( ctx, resolution, segment );
+                    car.draw( canvasSystem, segment );
                 }
 
                 // draw all obstacles of this segment
@@ -210,8 +213,7 @@
                 {
                     obstacle.draw
                     (
-                        ctx,
-                        resolution,
+                        canvasSystem,
                         segment.getP1(),
                         segment.getClip()
                     );
@@ -220,7 +222,7 @@
                 // draw player
                 if ( segment === this.player.getPlayerSegment() )
                 {
-                    this.player.draw( ctx, resolution, playerPercent );
+                    this.player.draw( canvasSystem, playerPercent );
                 }
             }
         }

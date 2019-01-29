@@ -81,8 +81,7 @@
         /** ************************************************************************************************************
         *   Draws an image onto the canvas context.
         *
-        *   @param ctx           The 2D rendering context.
-        *   @param resolution    The drawing resolution of the canvas.
+        *   @param canvasSystem  The canvas system to draw this image onto.
         *   @param halfRoadWidth The half width of the road.
         *   @param image         The image to draw.
         *   @param scale         The scale factor of the image draw operatiom.
@@ -94,20 +93,19 @@
         ***************************************************************************************************************/
         public static drawImage
         (
-            ctx           :CanvasRenderingContext2D,
-            resolution    :number,
+            canvasSystem  :outrun.CanvasSystem,
             halfRoadWidth :number,
             image         :HTMLImageElement,
-            scale      :number,
-            destX      :number,
-            destY      :number,
-            offsetX    :number,
-            offsetY    :number,
-            clipY      :number
+            scale         :number,
+            destX         :number,
+            destY         :number,
+            offsetX       :number,
+            offsetY       :number,
+            clipY         :number
         )
         : void
         {
-            const canvasWidth :number = outrun.Main.game.engine.canvasSystem.getWidth();
+            const canvasWidth :number = canvasSystem.getWidth();
             const scalation   :number = scale * canvasWidth / 2 * outrun.SettingEngine.SPRITE_SCALE * halfRoadWidth;
 
             //  scale for projection AND relative to roadWidth (for tweakUI)
@@ -119,9 +117,9 @@
 
             // draw image if not outside clip
             const clipH:number = clipY ? Math.max( 0, destY + destH - clipY ) : 0;
-            if (clipH < destH)
+            if ( clipH < destH )
             {
-                ctx.drawImage
+                canvasSystem.getRenderingContext().drawImage
                 (
                     image,
                     0,

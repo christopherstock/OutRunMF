@@ -12,7 +12,7 @@
         /** The native HTML5 canvas element. */
         private         readonly    canvas                  :HTMLCanvasElement              = null;
         /** The canvas rendering context. */
-        private         readonly    canvasContext           :CanvasRenderingContext2D       = null;
+        private         readonly    renderingContext        :CanvasRenderingContext2D       = null;
 
         /** The current resolution scale for drawing all images. */
         private                     resolution              :number                         = 0;
@@ -26,7 +26,7 @@
             this.canvas = document.createElement( 'canvas' );
 
             // reference 2d rendering context
-            this.canvasContext = this.canvas.getContext( '2d' );
+            this.renderingContext = this.canvas.getContext( '2d' );
 
             // append to body
             document.body.appendChild( this.canvas );
@@ -95,9 +95,9 @@
         *
         *   @return The 2D rendering context.
         ***************************************************************************************************************/
-        public getCanvasContext() : CanvasRenderingContext2D
+        public getRenderingContext() : CanvasRenderingContext2D
         {
-            return this.canvasContext;
+            return this.renderingContext;
         }
 
         /** ************************************************************************************************************
