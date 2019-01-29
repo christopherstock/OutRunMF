@@ -31,6 +31,7 @@
         };
 
         /** Specifies attributes for the severity of curves. */
+/*
         public      static      readonly        CURVE               :any                    =
         {
             NONE:    0,
@@ -40,4 +41,5 @@
             TIGHT:   8,
             EXTREME: 10,
         }
+*/
     }

@@ -1,12 +1,13 @@
 
     /** ****************************************************************************************************************
-    *   All preset road lengths for one road segment.
+    *   All preset road curves for one road segment.
     *******************************************************************************************************************/
-    export enum RoadLength
+    export enum RoadCurve
     {
-            MINIMUM     = 10,
-            SHORT       = 25,
-            MEDIUM      = 50,
-            LONG        = 100,
-            DOUBLE_LONG = 200,
+        NONE    = 0,
+        EASY    = 2,
+        MEDIUM  = 4,
+        HARD    = 6,
+        TIGHT   = 8,
+        EXTREME = 10,
     }
