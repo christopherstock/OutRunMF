@@ -32,7 +32,7 @@
         *   @param color The color for the straight segments.
         *   @param count The number of straight segments to add.
         ***************************************************************************************************************/
-        public addStraight( color:outrun.SegmentColorSet, count:number ) : void
+        public addStraight( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
         {
             this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, 0, color );
         }
@@ -44,7 +44,7 @@
         *   @param count  The number of straight segments to add.
         *   @param height The height delta of this hill.
         ***************************************************************************************************************/
-        public addHill( color:outrun.SegmentColorSet, count:number, height:number ) : void
+        public addHill( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number ) : void
         {
             this.addRoad( 0, ( count * outrun.SettingGame.RUMBLE_LENGTH ), 0, 0, height, color );
         }
@@ -52,7 +52,7 @@
         /** ************************************************************************************************************
         *
         ***************************************************************************************************************/
-        public addCurve( color:outrun.SegmentColorSet, count:number, curve:number, height:number ) : void
+        public addCurve( color:outrun.SegmentColorSet, count:outrun.RoadLength, curve:number, height:number ) : void
         {
             // TODO try different in / outs ?
             this.addRoad( count, count, count, curve, height, color );
@@ -61,7 +61,14 @@
         /** ************************************************************************************************************
         *   Creates some low rolling hills to the track.
         ***************************************************************************************************************/
-        public addLowRollingHills( color:outrun.SegmentColorSet, count:number, curve:number, height:number ) : void
+        public addLowRollingHills
+        (
+            color  :outrun.SegmentColorSet,
+            count  :outrun.RoadLength,
+            curve  :number,
+            height :number
+        )
+        : void
         {
             this.addRoad( count, count, count, outrun.Road.CURVE.NONE, height / 2,  color );
             this.addRoad( count, count, count, outrun.Road.CURVE.NONE, -height,     color );
@@ -74,7 +81,7 @@
         /** ************************************************************************************************************
         *   The LEGACY implementation of low rolling hills.
         ***************************************************************************************************************/
-        public addLowRollingHillsLegacy( color:outrun.SegmentColorSet, count:number, height:number ) : void
+        public addLowRollingHillsLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number ) : void
         {
             this.addRoad( count, count, count, outrun.Road.CURVE.NONE,  height / 2, color );
             this.addRoad( count, count, count, outrun.Road.CURVE.NONE,  -height,    color );
@@ -93,11 +100,11 @@
         // tslint:disable:max-line-length
         public addSCurves( height:number, color:outrun.SegmentColorSet ) : void
         {
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE, color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  height,                color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.EASY,    -height / 2,           color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   height / 2,            color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.MEDIUM, -height,               color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE, color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.Road.CURVE.MEDIUM,  height,                color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.Road.CURVE.EASY,    -height / 2,           color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.EASY,   height / 2,            color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.MEDIUM, -height,               color );
         }
 
         /** ************************************************************************************************************
@@ -108,26 +115,26 @@
         // tslint:disable:max-line-length
         public addSCurvesLegacy( color:outrun.SegmentColorSet ) : void
         {
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE,    color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM,  color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.CURVE.EASY,    -outrun.Road.HILL.LOW,    color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.MEDIUM,  color );
-            this.addRoad( outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, outrun.Road.LENGTH.MEDIUM, -outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.MEDIUM, color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.NONE,    color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.Road.CURVE.MEDIUM,  outrun.Road.HILL.MEDIUM,  color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.Road.CURVE.EASY,    -outrun.Road.HILL.LOW,    color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.EASY,   outrun.Road.HILL.MEDIUM,  color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.Road.CURVE.MEDIUM, -outrun.Road.HILL.MEDIUM, color );
         }
 
         /** ************************************************************************************************************
         *   Adds some bumps to the track.
         ***************************************************************************************************************/
-        public addBumps( length:number, height:number, color:outrun.SegmentColorSet) : void
+        public addBumps( count:outrun.RoadLength, height:number, color:outrun.SegmentColorSet) : void
         {
-            this.addRoad( length, length, length, 0, height,  color );
-            this.addRoad( length, length, length, 0, -height, color );
-            this.addRoad( length, length, length, 0, height,  color );
-            this.addRoad( length, length, length, 0, -height, color );
-            this.addRoad( length, length, length, 0, height,  color );
-            this.addRoad( length, length, length, 0, -height, color );
-            this.addRoad( length, length, length, 0, height,  color );
-            this.addRoad( length, length, length, 0, -height, color );
+            this.addRoad( count, count, count, 0, height,  color );
+            this.addRoad( count, count, count, 0, -height, color );
+            this.addRoad( count, count, count, 0, height,  color );
+            this.addRoad( count, count, count, 0, -height, color );
+            this.addRoad( count, count, count, 0, height,  color );
+            this.addRoad( count, count, count, 0, -height, color );
+            this.addRoad( count, count, count, 0, height,  color );
+            this.addRoad( count, count, count, 0, -height, color );
         }
 
         /** ************************************************************************************************************
@@ -148,9 +155,9 @@
         /** ************************************************************************************************************
         *   TODO Remove this method by a generic road creation method!
         ***************************************************************************************************************/
-        public addDownhillToEnd( color:outrun.SegmentColorSet, num:number ) : void
+        public addDownhillToEnd( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
         {
-            this.addRoad( num, num, num, -outrun.Road.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH, color );
+            this.addRoad( count, count, count, -outrun.Road.CURVE.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH, color );
         }
 
         /** ************************************************************************************************************

@@ -8,6 +8,7 @@
     export abstract class Road
     {
         /** Specifies attributes for the length of the road. */
+/*
         public      static      readonly        LENGTH              :any                    =
         {
             NONE:        0,
@@ -17,7 +18,7 @@
             LONG:        100,
             DOUBLE_LONG: 200,
         };
-
+*/
         /** Specifies attributes for the height of hills. */
         public      static      readonly        HILL                :any                    =
         {
