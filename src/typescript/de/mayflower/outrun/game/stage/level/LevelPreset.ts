@@ -54,7 +54,7 @@
             stageBuilder.addHill(                  outrun.SettingColor.DEFAULT, outrun.RoadLength.LONG, -outrun.RoadHill.MEDIUM);
             stageBuilder.addStraight(              outrun.SettingColor.DEFAULT, outrun.RoadLength.MEDIUM );
             stageBuilder.addSCurvesLegacy(         outrun.SettingColor.DEFAULT );
-            stageBuilder.addDownhillToEnd(         outrun.SettingColor.DEFAULT, outrun.RoadLength.DOUBLE_LONG );
+            stageBuilder.addDownhillToEndLegacy(         outrun.SettingColor.DEFAULT, outrun.RoadLength.DOUBLE_LONG );
 
             // set startGameLoop and finish
             stageBuilder.addStartAndFinish( playerZ );

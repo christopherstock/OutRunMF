@@ -163,9 +163,9 @@
         }
 
         /** ************************************************************************************************************
-        *   TODO Remove this method by a generic road creation method!
+        *   The legacy method for adding a downhill track till the level end.
         ***************************************************************************************************************/
-        public addDownhillToEnd( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
+        public addDownhillToEndLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
         {
             this.addRoad( count, count, count, -outrun.RoadCurve.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH, color );
         }
@@ -263,10 +263,10 @@
                 (
                     index,
                     new outrun.SegmentPoint(
-                        new outrun.Vector( lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
+                        new outrun.Vector( 0, lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     new outrun.SegmentPoint(
-                        new outrun.Vector( y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
+                        new outrun.Vector( 0, y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     curve,
                     [],
