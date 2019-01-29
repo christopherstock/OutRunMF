@@ -100,7 +100,7 @@
         // tslint:disable:max-line-length
         public addSCurves( height:number, color:outrun.SegmentColorSet ) : void
         {
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.Road.HILL.NONE, color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE, color );
             this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  height,                color );
             this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -height / 2,           color );
             this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   height / 2,            color );
@@ -115,11 +115,11 @@
         // tslint:disable:max-line-length
         public addSCurvesLegacy( color:outrun.SegmentColorSet ) : void
         {
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.Road.HILL.NONE,    color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  outrun.Road.HILL.MEDIUM,  color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -outrun.Road.HILL.LOW,    color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.Road.HILL.MEDIUM,  color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -outrun.Road.HILL.MEDIUM, color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE,    color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  outrun.RoadHill.MEDIUM,  color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -outrun.RoadHill.LOW,    color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.MEDIUM,  color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -outrun.RoadHill.MEDIUM, color );
         }
 
         /** ************************************************************************************************************

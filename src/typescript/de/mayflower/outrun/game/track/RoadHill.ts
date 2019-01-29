@@ -1,12 +1,13 @@
 
     /** ****************************************************************************************************************
-    *   All preset road lengths for one road segment.
+    *   All preset road hills for one road segment.
     *******************************************************************************************************************/
-    export enum RoadLength
+    export enum RoadHill
     {
-        MINIMUM     = 10,
-        SHORT       = 25,
-        MEDIUM      = 50,
-        LONG        = 100,
-        DOUBLE_LONG = 200,
+        NONE    = 0,
+        MINIMUM = 10,
+        LOW     = 20,
+        MEDIUM  = 40,
+        HIGH    = 60,
+        EXTREME = 100,
     }

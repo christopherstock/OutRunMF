@@ -28,8 +28,8 @@
     export * from './game/object/Player';
 
     export * from './game/track/Background';
-    export * from './game/track/Road';
     export * from './game/track/RoadCurve';
+    export * from './game/track/RoadHill';
     export * from './game/track/RoadLength';
     export * from './game/track/Segment';
     export * from './game/track/SegmentPoint';
