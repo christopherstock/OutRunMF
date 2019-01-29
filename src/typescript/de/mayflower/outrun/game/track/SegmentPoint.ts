@@ -54,17 +54,17 @@
 
             this.screenVector.scale = ( cameraDepth / this.playerVector.z );
 
-            this.screenVector.x     = Math.round
+            this.screenVector.x = Math.round
             (
                 ( width  / 2 )
                 + ( this.screenVector.scale * this.playerVector.x * width / 2 )
             );
-            this.screenVector.y     = Math.round
+            this.screenVector.y = Math.round
             (
                 ( height / 2 )
                 - ( this.screenVector.scale * this.playerVector.y  * height / 2 )
             );
-            this.screenVector.w     = Math.round
+            this.screenVector.w = Math.round
             (
                 ( this.screenVector.scale * roadWidth * width / 2 )
             );

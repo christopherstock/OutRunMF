@@ -7,12 +7,14 @@
     export class Segment
     {
         private         readonly        index           :number                 = 0;
-        private         readonly        p1              :outrun.SegmentPoint    = null;
-        private         readonly        p2              :outrun.SegmentPoint    = null;
+
+        private         readonly        pointLeft       :outrun.SegmentPoint    = null;
+        private         readonly        pointRight      :outrun.SegmentPoint    = null;
+
         private         readonly        obstacles       :outrun.Obstacle[]      = null;
 
         private         readonly        cars            :outrun.Car[]           = null;
-        private         readonly        curve           :number                 = 0;
+        private         readonly        curve           :outrun.RoadCurve       = 0;
 
         private                         color           :outrun.SegmentColor    = null;
         private                         looped          :boolean                = false;
@@ -21,21 +23,21 @@
 
         public constructor
         (
-            index     :number,
-            p1        :outrun.SegmentPoint,
-            p2        :outrun.SegmentPoint,
-            curve     :number,
-            obstacles :outrun.Obstacle[],
-            cars      :outrun.Car[],
-            color     :outrun.SegmentColorSet,
-            looped    :boolean,
-            fog       :number,
-            clip      :number
+            index      :number,
+            pointLeft  :outrun.SegmentPoint,
+            pointRight :outrun.SegmentPoint,
+            curve      :outrun.RoadCurve,
+            obstacles  :outrun.Obstacle[],
+            cars       :outrun.Car[],
+            color      :outrun.SegmentColorSet,
+            looped     :boolean,
+            fog        :number,
+            clip       :number
         )
         {
             this.index      = index;
-            this.p1         = p1;
-            this.p2         = p2;
+            this.pointLeft  = pointLeft;
+            this.pointRight = pointRight;
             this.curve      = curve;
             this.obstacles  = obstacles;
             this.cars       = cars;
@@ -57,12 +59,12 @@
 
         public getP1() : outrun.SegmentPoint
         {
-            return this.p1;
+            return this.pointLeft;
         }
 
         public getP2() : outrun.SegmentPoint
         {
-            return this.p2;
+            return this.pointRight;
         }
 
         public getClip() : number
@@ -75,7 +77,7 @@
             return this.cars;
         }
 
-        public getCurve() : number
+        public getCurve() : outrun.RoadCurve
         {
             return this.curve;
         }
@@ -109,90 +111,88 @@
 
         public draw( ctx:CanvasRenderingContext2D, fogColor:string ) : void
         {
-            const x1:number = this.p1.getScreen().x;
-            const y1:number = this.p1.getScreen().y;
-            const w1:number = this.p1.getScreen().w;
-            const x2:number = this.p2.getScreen().x;
-            const y2:number = this.p2.getScreen().y;
-            const w2:number = this.p2.getScreen().w;
+            // TODO create speaking vars!
 
-            const width:number = outrun.Main.game.engine.canvasSystem.getWidth();
-            const lanes:number = outrun.SettingGame.LANES;
+            const leftX  :number = this.pointLeft.getScreen().x;
+            const leftY  :number = this.pointLeft.getScreen().y;
+            const leftW  :number = this.pointLeft.getScreen().w;
 
-            const r1 :number = Segment.calculateRumbleWidth(     w1, lanes );
-            const r2 :number = Segment.calculateRumbleWidth(     w2, lanes );
-            const l1 :number = Segment.calculateLaneMarkerWidth( w1, lanes );
-            const l2 :number = Segment.calculateLaneMarkerWidth( w2, lanes );
+            const rightX :number = this.pointRight.getScreen().x;
+            const rightY :number = this.pointRight.getScreen().y;
+            const rightW :number = this.pointRight.getScreen().w;
 
-            let lanew1 :number = 0;
-            let lanew2 :number = 0;
-            let lanex1 :number = 0;
-            let lanex2 :number = 0;
+            const canvasWidth :number = outrun.Main.game.engine.canvasSystem.getWidth();
+            const laneCount   :number = outrun.SettingGame.LANES;
+
+            const leftRumbleWidth      :number = Segment.calculateRumbleWidth(     leftW, laneCount );
+            const rightRumbleWidth     :number = Segment.calculateRumbleWidth(     rightW, laneCount );
+            const leftLaneMarkerWidth  :number = Segment.calculateLaneMarkerWidth( leftW, laneCount );
+            const rightLaneMarkerWidth :number = Segment.calculateLaneMarkerWidth( rightW, laneCount );
 
             ctx.fillStyle = this.color.offroad;
-            ctx.fillRect(0, y2, width, y1 - y2);
+            ctx.fillRect(0, rightY, canvasWidth, leftY - rightY);
 
             // left rumble
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
-                x1 - w1 - r1,
-                y1,
-                x1 - w1,
-                y1,
-                x2 - w2,
-                y2,
-                x2 - w2 - r2,
-                y2,
+                leftX - leftW - leftRumbleWidth,
+                leftY,
+                leftX - leftW,
+                leftY,
+                rightX - rightW,
+                rightY,
+                rightX - rightW - rightRumbleWidth,
+                rightY,
                 this.color.rumble
             );
             // right rumble
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
-                x1 + w1 + r1,
-                y1,
-                x1 + w1,
-                y1,
-                x2 + w2,
-                y2,
-                x2 + w2 + r2,
-                y2,
+                leftX + leftW + leftRumbleWidth,
+                leftY,
+                leftX + leftW,
+                leftY,
+                rightX + rightW,
+                rightY,
+                rightX + rightW + rightRumbleWidth,
+                rightY,
                 this.color.rumble
             );
             // road
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
-                x1 - w1,
-                y1,
-                x1 + w1,
-                y1,
-                x2 + w2,
-                y2,
-                x2 - w2,
-                y2,
+                leftX - leftW,
+                leftY,
+                leftX + leftW,
+                leftY,
+                rightX + rightW,
+                rightY,
+                rightX - rightW,
+                rightY,
                 this.color.road
             );
 
             // draw lane
             if ( this.color.lane )
             {
-                lanew1 = w1 * 2 / lanes;
-                lanew2 = w2 * 2 / lanes;
-                lanex1 = x1 - w1 + lanew1;
-                lanex2 = x2 - w2 + lanew2;
+                const lanew1 :number = leftW * 2 / laneCount;
+                const lanew2 :number = rightW * 2 / laneCount;
+                let   lanex1 :number = leftX - leftW + lanew1;
+                let   lanex2 :number = rightX - rightW + lanew2;
 
-                for ( let lane:number = 1; lane < lanes; lane++ )
+                for ( let lane:number = 1; lane < laneCount; lane++ )
                 {
                     outrun.Drawing2D.drawPolygon
                     (
                         ctx,
-                        lanex1 - l1 / 2,
-                        y1, lanex1 + l1 / 2,
-                        y1, lanex2 + l2 / 2,
-                        y2, lanex2 - l2 / 2,
-                        y2,
+                        lanex1 - leftLaneMarkerWidth / 2,
+                        leftY, lanex1 + leftLaneMarkerWidth / 2,
+                        leftY, lanex2 + rightLaneMarkerWidth / 2,
+                        rightY, lanex2 - rightLaneMarkerWidth / 2,
+                        rightY,
                         this.color.lane
                     );
 
@@ -204,7 +204,7 @@
             // draw fog
             if ( this.fog < 1.0 )
             {
-                outrun.Drawing2D.drawRect( ctx, 0, y1, width, y2 - y1, fogColor, ( 1 - this.fog ) );
+                outrun.Drawing2D.drawRect( ctx, 0, leftY, canvasWidth, rightY - leftY, fogColor, ( 1 - this.fog ) );
             }
         }
 

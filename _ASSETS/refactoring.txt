@@ -111,6 +111,7 @@ Constructive refactorings:
     };
 
 => Create tests and cover certain business logic methods with TSUnit tests.
+=> Minimize all static accesses to Main.game
 
 Results:
 ==========================

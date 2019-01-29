@@ -74,9 +74,9 @@
 
         public draw
         (
-            ctx:CanvasRenderingContext2D,
-            resolution:number,
-            segment:outrun.Segment
+            ctx        :CanvasRenderingContext2D,
+            resolution :number,
+            segment    :outrun.Segment
         )
         : void
         {

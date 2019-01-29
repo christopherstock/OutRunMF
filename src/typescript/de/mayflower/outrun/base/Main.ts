@@ -9,12 +9,16 @@
     *   ==============================
     *   TODO Refactorings
     *   ==============================
-    *   TODO Remove / Improve Z variable for Camera and constant Z variable for player!
-    *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
-    *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
-    *   TODO Different road widths and lanes per level!
-    *   TODO prune finish line (only if desired)?
     *   TODO Minimize access to Main.game.
+    *
+    *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
+    *   TODO Different lane count for different segments
+    *
+    *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
+    *
+    *   TODO Different road widths and lanes per level!
+    *
+    *   TODO prune finish line (only if desired)?
     *
     *   ==============================
     *   TODO Game creation

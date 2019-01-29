@@ -62,7 +62,7 @@
         {
             if ( outrun.SettingDebug.SHOW_FPS )
             {
-                outrun.Main.game.engine.fpsMeter.tickStart();
+                this.engine.fpsMeter.tickStart();
             }
 
             this.checkGlobalKeys();
@@ -75,7 +75,7 @@
 
             if ( outrun.SettingDebug.SHOW_FPS )
             {
-                outrun.Main.game.engine.fpsMeter.tick();
+                this.engine.fpsMeter.tick();
             }
 
             requestAnimationFrame( this.tick );
@@ -96,15 +96,15 @@
         ***************************************************************************************************************/
         private checkGlobalKeys() : void
         {
-            if ( outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
+            if ( this.engine.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
             {
-                outrun.Main.game.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
+                this.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
                 this.changeToLevel( new outrun.LevelTest() );
             }
 
-            if ( outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
+            if ( this.engine.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
             {
-                outrun.Main.game.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
+                this.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
                 this.changeToLevel( new outrun.LevelPreset() );
             }
         }
