@@ -43,7 +43,7 @@
             outrun.Debug.init.log( 'Game engine fully initialized' );
 
             // switch to initial level and startGameLoop the game loop
-            this.changeToLevel( new outrun.LevelTest() );
+            this.changeToLevel( new outrun.LevelPreset() );
             this.startGameLoop();
         };
 
