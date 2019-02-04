@@ -21,10 +21,13 @@
         /** The segment where the player is currently located. */
         private                     playerSegment       :outrun.Segment             = null;
 
-        /** player x offset from center of road (-1 to 1 to stay independent of roadWidth) */
+        /** Current player x offset. ( -1 to 1 to stay independent of roadWidth ) */
         private                     x                   :number                     = 0;
-        /** current camera Z position (add playerZ to get player's absolute Z position) */
+        /** Current player Z position. */
         private                     z                   :number                     = 0;
+
+        /** Old player Z position. */
+        private                     oldZ                :number                     = 0;
 
         /** current player speed */
         private                     speed               :number                     = 0;
@@ -74,19 +77,18 @@
             return this.z;
         }
 
+        public getOldZ() : number
+        {
+            return this.oldZ;
+        }
+
         public getPlayerSegment() : outrun.Segment
         {
             return this.playerSegment;
         }
 
-        public getSpeedPercent() : number
-        {
-            return this.speedPercent;
-        }
-
         public update
         (
-            deltaX      :number,
             deltaTime   :number,
             stageLength :number,
             segments    :outrun.Segment[],
@@ -94,6 +96,12 @@
         )
         : void
         {
+            // store old Z position
+            this.oldZ = this.z;
+
+            // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
+            const deltaX :number = ( deltaTime * 2 * this.speedPercent );
+
             this.handleKeys( keySystem );
             this.updateZ( deltaTime, stageLength, segments );
             this.updateX( deltaX );

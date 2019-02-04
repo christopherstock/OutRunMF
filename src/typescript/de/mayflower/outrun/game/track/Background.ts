@@ -71,27 +71,27 @@
             );
         }
 
-        public updateOffsets( playerSegment:outrun.Segment, player:outrun.Player, startPosition:number ) : void
+        public updateOffsets( playerSegment:outrun.Segment, oldPlayerZ:number, newPlayerZ:number ) : void
         {
             this.skyOffset  = outrun.MathUtil.increase(
                 this.skyOffset,
                 outrun.SettingGame.SKY_SPEED
                 * playerSegment.getCurve()
-                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                * (newPlayerZ - oldPlayerZ) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );
             this.hillOffset = outrun.MathUtil.increase(
                 this.hillOffset,
                 outrun.SettingGame.HILL_SPEED
                 * playerSegment.getCurve()
-                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                * (newPlayerZ - oldPlayerZ) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );
             this.treeOffset = outrun.MathUtil.increase(
                 this.treeOffset,
                 outrun.SettingGame.TREE_SPEED
                 * playerSegment.getCurve()
-                * (player.getZ() - startPosition) / outrun.SettingGame.SEGMENT_LENGTH,
+                * (newPlayerZ - oldPlayerZ) / outrun.SettingGame.SEGMENT_LENGTH,
                 1
             );
         }

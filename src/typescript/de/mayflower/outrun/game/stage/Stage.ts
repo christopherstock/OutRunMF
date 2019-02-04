@@ -82,18 +82,9 @@
         ***************************************************************************************************************/
         public update( deltaTime:number, keySystem:outrun.KeySystem ) : void
         {
-            // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const deltaX        :number = ( deltaTime * 2 * this.player.getSpeedPercent() );
-            const startPosition :number = this.player.getZ();
-
-            // update player
-            this.player.update( deltaX, deltaTime, this.stageLength, this.segments, keySystem );
-
-            // update cars
+            this.player.update( deltaTime, this.stageLength, this.segments, keySystem );
             this.updateCars( deltaTime );
-
-            // update background
-            this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );
+            this.background.updateOffsets( this.player.getPlayerSegment(), this.player.getOldZ(), this.player.getZ() );
         }
 
         /** ************************************************************************************************************

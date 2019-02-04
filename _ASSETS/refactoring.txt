@@ -134,6 +134,15 @@ Constructive refactorings:
             this.updateSpeed( dt );
             this.updateSprite();
 
+=> Move local value into method/class
+
+    const deltaX     :number = ( deltaTime * 2 * this.player.getSpeedPercent() );
+
+    // update player
+    this.player.update( deltaX, deltaTime, this.stageLength, this.segments, keySystem );
+
+
+
 
 Results:
 ==========================
