@@ -9,10 +9,11 @@
         /** ************************************************************************************************************
         *   Creates the preset level that came with the OutRun JS sourcecode.
         ***************************************************************************************************************/
-        public constructor()
+        public constructor( imageSystem:outrun.ImageSystem )
         {
             super
             (
+                imageSystem,
                 200,
                 new outrun.Background
                 (

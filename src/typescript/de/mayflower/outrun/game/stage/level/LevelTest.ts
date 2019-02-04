@@ -9,10 +9,11 @@
         /** ************************************************************************************************************
         *   Creates the test level that tests various stage components.
         ***************************************************************************************************************/
-        public constructor()
+        public constructor( imageSystem:outrun.ImageSystem )
         {
             super
             (
+                imageSystem,
                 3,
                 new outrun.Background
                 (

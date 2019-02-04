@@ -11,7 +11,7 @@
         public                  engine              :outrun.Engine                  = null;
 
         /** The game stage. */
-        public                  stage               :outrun.Stage                   = null;
+        private                 stage               :outrun.Stage                   = null;
 
         /** ************************************************************************************************************
         *   Inits the game's engine.
@@ -43,7 +43,7 @@
             outrun.Debug.init.log( 'Game engine fully initialized' );
 
             // switch to initial level and startGameLoop the game loop
-            this.changeToLevel( new outrun.LevelPreset() );
+            this.changeToLevel( new outrun.LevelPreset( this.engine.imageSystem ) );
             this.startGameLoop();
         };
 
@@ -95,13 +95,13 @@
             if ( this.engine.keySystem.isPressed( outrun.KeyCodes.KEY_1 ) )
             {
                 this.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_1 );
-                this.changeToLevel( new outrun.LevelTest() );
+                this.changeToLevel( new outrun.LevelTest( this.engine.imageSystem ) );
             }
 
             if ( this.engine.keySystem.isPressed( outrun.KeyCodes.KEY_2 ) )
             {
                 this.engine.keySystem.setNeedsRelease( outrun.KeyCodes.KEY_2 );
-                this.changeToLevel( new outrun.LevelPreset() );
+                this.changeToLevel( new outrun.LevelPreset( this.engine.imageSystem ) );
             }
         }
 

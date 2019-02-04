@@ -12,48 +12,44 @@
         private                     stageLength         :number                     = 0;
 
         /** The player. */
-        private         readonly    player              :outrun.Player              = null;
+        private                     player              :outrun.Player              = null;
+        /** All cars that appear in this level. */
+        private                     cars                :outrun.Car[]               = [];
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;
-        /** array of cars on the road */
-        private                     cars                :outrun.Car[]               = [];
-
-        /** The stage background. */
-        private         readonly    background          :outrun.Background          = null;
         /** The bg color of the sky for this stage */
         private         readonly    skyColor            :string                     = null;
         /** The color of the fog in this stage */
         private         readonly    fogColor            :string                     = null;
+        /** The stage background. */
+        private         readonly    background          :outrun.Background          = null;
+        /** The image system that handles all images. */
+        private         readonly    imageSystem         :outrun.ImageSystem         = null;
 
         /** ************************************************************************************************************
         *   Creates a new stage.
         *
-        *   @param carCount     The number of cars to create in this stage.
-        *   @param background   The background to use for this stage.
-        *   @param skyColor     The color of the sky.
-        *   @param fogColor     The color of the fog.
+        *   @param imageSystem The image system that handles all images.
+        *   @param carCount    The number of cars to create in this stage.
+        *   @param background  The background to use for this stage.
+        *   @param skyColor    The color of the sky.
+        *   @param fogColor    The color of the fog.
         ***************************************************************************************************************/
         protected constructor
         (
-            carCount   :number,
-            background :outrun.Background,
-            skyColor   :string,
-            fogColor   :string
+            imageSystem :outrun.ImageSystem,
+            carCount    :number,
+            background  :outrun.Background,
+            skyColor    :string,
+            fogColor    :string
         )
         {
-            // assign car count
-            this.carCount = carCount;
-
-            // create the player
-            this.player = new outrun.Player();
-
-            // create the background
-            this.background = background;
-
-            // assign track colors
-            this.skyColor     = skyColor;
-            this.fogColor     = fogColor;
+            this.imageSystem = imageSystem;
+            this.carCount    = carCount;
+            this.background  = background;
+            this.skyColor    = skyColor;
+            this.fogColor    = fogColor;
         }
 
         /** ************************************************************************************************************
@@ -61,6 +57,9 @@
         ***************************************************************************************************************/
         public init() : void
         {
+            // create the player
+            this.player = new outrun.Player();
+
             const playerZ:number = this.player.getOffsetZ();
 
             // create the road
@@ -239,7 +238,7 @@
             {
                 this.segments[ index ].addObstacle
                 (
-                    new outrun.Obstacle( outrun.Main.game.engine.imageSystem.getImage( sprite ), offset )
+                    new outrun.Obstacle( this.imageSystem.getImage( sprite ), offset )
                 );
             }
         }
@@ -281,7 +280,7 @@
                 (
                     offset,
                     z,
-                    outrun.Main.game.engine.imageSystem.getImage( sprite ),
+                    this.imageSystem.getImage( sprite ),
                     speed
                 );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
