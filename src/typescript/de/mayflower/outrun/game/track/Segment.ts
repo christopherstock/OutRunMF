@@ -114,8 +114,6 @@
             const ctx         :CanvasRenderingContext2D = canvasSystem.getRenderingContext();
             const canvasWidth :number                   = canvasSystem.getWidth();
 
-            // TODO create speaking vars!
-
             const leftX  :number = this.pointLeft.getScreen().x;
             const leftY  :number = this.pointLeft.getScreen().y;
             const leftW  :number = this.pointLeft.getScreen().w;
@@ -124,17 +122,20 @@
             const rightY :number = this.pointRight.getScreen().y;
             const rightW :number = this.pointRight.getScreen().w;
 
+            // TODO different lane count for different road segments
             const laneCount   :number = outrun.SettingGame.LANES;
 
-            const leftRumbleWidth      :number = Segment.calculateRumbleWidth(     leftW,  laneCount );
-            const rightRumbleWidth     :number = Segment.calculateRumbleWidth(     rightW, laneCount );
-            const leftLaneMarkerWidth  :number = Segment.calculateLaneMarkerWidth( leftW,  laneCount );
-            const rightLaneMarkerWidth :number = Segment.calculateLaneMarkerWidth( rightW, laneCount );
+            const leftRumbleWidth      :number = this.calculateRumbleWidth(     leftW,  laneCount );
+            const rightRumbleWidth     :number = this.calculateRumbleWidth(     rightW, laneCount );
+            const leftLaneMarkerWidth  :number = this.calculateLaneMarkerWidth( leftW,  laneCount );
+            const rightLaneMarkerWidth :number = this.calculateLaneMarkerWidth( rightW, laneCount );
 
-            ctx.fillStyle = this.color.offroad;
-            ctx.fillRect(0, rightY, canvasWidth, leftY - rightY);
+            // TODO extract all to separate methods!
 
-            // left rumble
+            // draw offroad
+            outrun.Drawing2D.drawRect( ctx, 0, rightY, canvasWidth, leftY - rightY, this.color.offroad );
+
+            // draw left rumble
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
@@ -148,7 +149,7 @@
                 rightY,
                 this.color.rumble
             );
-            // right rumble
+            // draw right rumble
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
@@ -162,7 +163,7 @@
                 rightY,
                 this.color.rumble
             );
-            // road
+            // draw road
             outrun.Drawing2D.drawPolygon
             (
                 ctx,
@@ -210,12 +211,12 @@
             }
         }
 
-        private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+        private calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
         {
             return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
         }
 
-        private static calculateLaneMarkerWidth( projectedRoadWidth:number, lanes:number ) : number
+        private calculateLaneMarkerWidth( projectedRoadWidth:number, lanes:number ) : number
         {
             return ( projectedRoadWidth / Math.max( 32, 8 * lanes ) );
         }

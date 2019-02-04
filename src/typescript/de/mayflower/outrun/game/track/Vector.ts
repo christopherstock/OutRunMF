@@ -1,8 +1,6 @@
 
     /** ****************************************************************************************************************
     *   Represents one point in 3D space.
-    *
-    *   TODO Add typings and docs.
     *******************************************************************************************************************/
     export class Vector
     {
@@ -19,6 +17,13 @@
         /** Unknown field .. width ? */
         public                  w                               :number             = 0;
 
+        /** ************************************************************************************************************
+        *   Creates a new point in 3D space.
+        *
+        *   @param x Vector coordinate X.
+        *   @param y Vector coordinate Y.
+        *   @param z Vector coordinate Z.
+        ***************************************************************************************************************/
         public constructor( x:number, y:number, z:number )
         {
             this.x = x;

@@ -8,14 +8,12 @@
     *******************************************************************************************************************/
     export class Background
     {
-        // TODO reference images!
-
         /** The assigned image for the sky. */
-        private     readonly    skyImage            :string                     = null;
+        private     readonly    skyImage            :HTMLImageElement           = null;
         /** The assigned image for the hills. */
-        private     readonly    hillImage           :string                     = null;
+        private     readonly    hillImage           :HTMLImageElement           = null;
         /** The assigned image for the trees. */
-        private     readonly    treeImage           :string                     = null;
+        private     readonly    treeImage           :HTMLImageElement           = null;
 
         /** current sky scroll offset */
         private                 skyOffset           :number                     = 0;
@@ -26,9 +24,9 @@
 
         public constructor( skyImage:string, hillImage:string, treeImage:string )
         {
-            this.skyImage  = skyImage;
-            this.hillImage = hillImage;
-            this.treeImage = treeImage;
+            this.skyImage  = outrun.Main.game.engine.imageSystem.getImage( skyImage  );
+            this.hillImage = outrun.Main.game.engine.imageSystem.getImage( hillImage );
+            this.treeImage = outrun.Main.game.engine.imageSystem.getImage( treeImage );
         }
 
         /** ************************************************************************************************************
@@ -96,35 +94,34 @@
             );
         }
 
-        private static drawBg(
+        private static drawBg
+        (
             ctx      :CanvasRenderingContext2D,
             width    :number,
             height   :number,
-            sprite   :string,
+            image    :HTMLImageElement,
             rotation :number,
             offset   :number
         )
         : void
         {
-            const image:HTMLImageElement = outrun.Main.game.engine.imageSystem.getImage( sprite );
-
-            const imageW:number = image.width / 2;
-            const imageH:number = image.height;
+            const imageW:number  = image.width / 2;
+            const imageH:number  = image.height;
 
             const sourceX:number = Math.floor( image.width * rotation );
             const sourceY:number = 0;
             const sourceW:number = Math.min( imageW, image.width - sourceX );
             const sourceH:number = imageH;
 
-            const destX:number = 0;
-            const destY:number = offset;
-            const destW:number = Math.floor( width * ( sourceW / imageW ) );
-            const destH:number = height;
+            const destX:number   = 0;
+            const destY:number   = offset;
+            const destW:number   = Math.floor( width * ( sourceW / imageW ) );
+            const destH:number   = height;
 
-            ctx.drawImage(image, sourceX, sourceY, sourceW, sourceH, destX, destY, destW, destH);
+            ctx.drawImage( image, sourceX, sourceY, sourceW, sourceH, destX, destY, destW, destH );
             if ( sourceW < imageW )
             {
-                ctx.drawImage(image, 0, sourceY, imageW - sourceW, sourceH, destW - 1, destY, width - destW, destH);
+                ctx.drawImage( image, 0, sourceY, imageW - sourceW, sourceH, destW - 1, destY, width - destW, destH );
             }
         }
     }
