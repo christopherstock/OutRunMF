@@ -52,10 +52,11 @@
             this.x = this.x + this.updateCarOffset
             (
                 segments,
-                player,
                 oldSegment,
                 player.getPlayerSegment(),
-                player.getWidth()
+                player.getWidth(),
+                player.getSpeed(),
+                player.getX()
             );
             this.z = outrun.MathUtil.increase( this.z, dt * this.speed, stageLength );
 
@@ -120,10 +121,11 @@
         private updateCarOffset
         (
             segments      :outrun.Segment[],
-            player        :outrun.Player,
             carSegment    :outrun.Segment,
             playerSegment :outrun.Segment,
-            playerW       :number
+            playerW       :number,
+            playerSpeed   :number,
+            playerX       :number
         )
         : number
         {
@@ -141,18 +143,18 @@
                 // check if car drives into player
                 if (
                     (segment === playerSegment)
-                    && ( this.speed > player.getSpeed() )
-                    && (outrun.MathUtil.overlap(player.getX(), playerW, this.x, this.width, 1.2))
+                    && ( this.speed > playerSpeed )
+                    && (outrun.MathUtil.overlap(playerX, playerW, this.x, this.width, 1.2))
                 ) {
-                    if (player.getX() > 0.5)
+                    if (playerX > 0.5)
                         dir = -1;
-                    else if (player.getX() < -0.5)
+                    else if (playerX < -0.5)
                         dir = 1;
                     else
-                        dir = ( this.x > player.getX() ) ? 1 : -1;
+                        dir = ( this.x > playerX ) ? 1 : -1;
 
                     // the closer the cars (smaller i) and the greater the speed ratio, the larger the offset
-                    return dir / i * ( this.speed - player.getSpeed() ) / outrun.SettingGame.PLAYER_MAX_SPEED;
+                    return dir / i * ( this.speed - playerSpeed ) / outrun.SettingGame.PLAYER_MAX_SPEED;
                 }
 
                 // check if car drives into a different car

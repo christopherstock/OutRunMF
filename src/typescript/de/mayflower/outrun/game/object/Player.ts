@@ -79,11 +79,6 @@
             return this.playerSegment;
         }
 
-        public updatePlayerSegment( segments:outrun.Segment[] ) : void
-        {
-            this.playerSegment = outrun.Stage.findSegment( segments, this.z + this.offsetZ );
-        }
-
         public getSpeedPercent() : number
         {
             return this.speedPercent;
@@ -99,22 +94,42 @@
         )
         : void
         {
-            this.updatePosition( dt, stageLength );
-            this.updatePlayerSegment( segments );
-
             // check keys for player
             this.handlePlayerKeys( keySystem );
 
-            // steer according to keys
+            // TODO extract method
+
+            // update Z and segment
+            this.z =
+            (
+                outrun.MathUtil.increase
+                (
+                    this.z,
+                    dt * this.speed,
+                    stageLength
+                )
+            );
+            this.updatePlayerSegment( segments );
+
+            // TODO extract X
+
+            // update X according to speed
             if ( this.keyLeft )
+            {
                 this.x = this.x - dx;
+            }
             else if ( this.keyRight )
+            {
                 this.x = this.x + dx;
+            }
 
             // update speed
             this.updateSpeed( dt );
 
-            // determine next sprite
+
+            // TODO extract method
+
+            // assign current sprite
             const updown :number =
             (
                 this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y
@@ -139,6 +154,8 @@
                 );
             }
 
+
+
             // check centrifugal force modification if player is in a curve
             this.checkCentrifugalForce( dx, this.speedPercent, this.playerSegment );
 
@@ -160,21 +177,6 @@
 
             // dont ever let it go too far out of bounds
             this.clipBoundsForX();
-
-
-        }
-
-        private updatePosition( dt:number, stageLength:number ) : void
-        {
-            this.z =
-            (
-                outrun.MathUtil.increase
-                (
-                    this.z,
-                    dt * this.speed,
-                    stageLength
-                )
-            );
         }
 
         public draw( canvasSystem :outrun.CanvasSystem, playerPercent :number ) : void
@@ -213,6 +215,11 @@
                 -1,
                 0
             );
+        }
+
+        private updatePlayerSegment( segments:outrun.Segment[] ) : void
+        {
+            this.playerSegment = outrun.Stage.findSegment( segments, this.z + this.offsetZ );
         }
 
         private handlePlayerKeys( keySystem:outrun.KeySystem ) : void
@@ -289,7 +296,12 @@
                 // clip to offroad speed
                 if ( this.speed > outrun.SettingGame.OFF_ROAD_LIMIT )
                 {
-                    this.speed = outrun.MathUtil.accelerate( this.speed, outrun.SettingGame.DECELERATION_OFF_ROAD, delta );
+                    this.speed = outrun.MathUtil.accelerate
+                    (
+                        this.speed,
+                        outrun.SettingGame.DECELERATION_OFF_ROAD,
+                        delta
+                    );
                 }
 
                 // check player collision with obstacle

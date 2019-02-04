@@ -82,19 +82,17 @@
         ***************************************************************************************************************/
         public update( dt:number, keySystem:outrun.KeySystem ) : void
         {
-            this.player.updatePlayerSegment( this.segments );
-
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
             const deltaX        :number = ( dt * 2 * this.player.getSpeedPercent() );
             const startPosition :number = this.player.getZ();
 
-            // update cars
-            this.updateCars( dt, this.player );
-
             // update player
             this.player.update( deltaX, dt, this.stageLength, this.segments, keySystem );
 
-            // update backgrounds
+            // update cars
+            this.updateCars( dt );
+
+            // update background
             this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );
         }
 
@@ -258,10 +256,9 @@
         /** ************************************************************************************************************
         *   Updates the cars in the game world.
         *
-        *   @param dt     The delta time to update the game.
-        *   @param player The player.
+        *   @param dt The delta time to update the game.
         ***************************************************************************************************************/
-        private updateCars( dt:number, player:outrun.Player ) : void
+        private updateCars( dt:number ) : void
         {
             for ( const car of this.cars )
             {

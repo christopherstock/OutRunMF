@@ -17,6 +17,9 @@ Refactoring Methods:
 - Add typings (!) from JS to TS conversion
 - Order variables, fields and methods by visibility, type (number, boolean, string, object, collections ) and static state.
   This helps grouping members and extract them later!
+- Enable TSLint from the very 1st second!
+- Add TypeDocs from the 1st second!
+- Add Tests for new methods that implement the game logic before refactoring!
 - Group members by their logical corresponding
 - Redundant calculated (local) fields into non-static fields.
 - Add 'readonly' modifier for all non-changing fields only assigned in the constructor!
