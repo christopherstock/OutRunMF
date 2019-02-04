@@ -8,7 +8,12 @@ A TypeScript port of the famous Out Run from SEGA with Mayflower styling.
 
 - TypeScript, Node.js &amp; the Webpack Dev Server
 - Minimum code
-- Pseudo 3D 
+- Pseudo 3D
+
+## Original JS Code
+https://github.com/jakesgordon/javascript-racer<br>
+&copy; by Jake Gordon and contributors<br>
+https://codeincomplete.com/
 
 ## 1. Install all Node.js packages
 ```
