@@ -77,20 +77,20 @@
         /** ************************************************************************************************************
         *   Updates this stage for one tick of the game loop.
         *
-        *   @param dt        The delta time to update the game.
+        *   @param deltaTime The delta time to update the game.
         *   @param keySystem The key system that handles pressed keys.
         ***************************************************************************************************************/
-        public update( dt:number, keySystem:outrun.KeySystem ) : void
+        public update( deltaTime:number, keySystem:outrun.KeySystem ) : void
         {
             // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
-            const deltaX        :number = ( dt * 2 * this.player.getSpeedPercent() );
+            const deltaX        :number = ( deltaTime * 2 * this.player.getSpeedPercent() );
             const startPosition :number = this.player.getZ();
 
             // update player
-            this.player.update( deltaX, dt, this.stageLength, this.segments, keySystem );
+            this.player.update( deltaX, deltaTime, this.stageLength, this.segments, keySystem );
 
             // update cars
-            this.updateCars( dt );
+            this.updateCars( deltaTime );
 
             // update background
             this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );

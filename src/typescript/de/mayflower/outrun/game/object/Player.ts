@@ -86,96 +86,22 @@
 
         public update
         (
-            dx          :number,
-            dt          :number,
+            deltaX      :number,
+            deltaTime   :number,
             stageLength :number,
             segments    :outrun.Segment[],
             keySystem   :outrun.KeySystem
         )
         : void
         {
-            // check keys for player
-            this.handlePlayerKeys( keySystem );
-
-            // TODO extract method
-
-            // update Z and segment
-            this.z =
-            (
-                outrun.MathUtil.increase
-                (
-                    this.z,
-                    dt * this.speed,
-                    stageLength
-                )
-            );
-            this.updatePlayerSegment( segments );
-
-            // TODO extract X
-
-            // update X according to speed
-            if ( this.keyLeft )
-            {
-                this.x = this.x - dx;
-            }
-            else if ( this.keyRight )
-            {
-                this.x = this.x + dx;
-            }
-
-            // update speed
-            this.updateSpeed( dt );
-
-
-            // TODO extract method
-
-            // assign current sprite
-            const updown :number =
-            (
-                this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y
-            );
-
-            // determine sprite
-            if ( this.keyLeft && this.speed > 0 )
-            {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
-            }
-            else if ( this.keyRight && this.speed > 0 )
-            {
-                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
-            }
-            else
-            {
-                this.setSprite
-                (
-                    ( updown > 0 )
-                    ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT
-                    : outrun.ImageFile.PLAYER_STRAIGHT
-                );
-            }
-
-
-
-            // check centrifugal force modification if player is in a curve
-            this.checkCentrifugalForce( dx, this.speedPercent, this.playerSegment );
-
-            // check if player is off-road
-            this.checkOffroad( this.playerSegment, this.width, dt, stageLength );
-
-            // browse all cars
-            for ( const car of this.playerSegment.getCars() ) {
-
-                if ( this.speed > car.getSpeed() )
-                {
-                    // check if player is colliding?
-                    if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), stageLength ) )
-                    {
-                        break;
-                    }
-                }
-            }
-
-            // dont ever let it go too far out of bounds
+            this.handleKeys( keySystem );
+            this.updateZ( deltaTime, stageLength, segments );
+            this.updateX( deltaX );
+            this.updateSpeed( deltaTime );
+            this.updateSprite();
+            this.checkCentrifugalForce( deltaX, this.speedPercent, this.playerSegment );
+            this.checkOffroad( this.playerSegment, this.width, deltaTime, stageLength );
+            this.checkCarColliding( stageLength );
             this.clipBoundsForX();
         }
 
@@ -222,7 +148,7 @@
             this.playerSegment = outrun.Stage.findSegment( segments, this.z + this.offsetZ );
         }
 
-        private handlePlayerKeys( keySystem:outrun.KeySystem ) : void
+        private handleKeys( keySystem:outrun.KeySystem ) : void
         {
             this.keyLeft   = keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
             this.keyRight  = keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
@@ -245,9 +171,28 @@
             return false;
         }
 
+        /** ************************************************************************************************************
+        *   Checks centrifugal force modification if player is in a curve.
+        ***************************************************************************************************************/
         private checkCentrifugalForce( dx:number, speedPercent:number, playerSegment:outrun.Segment ) : void
         {
             this.x = this.x - ( dx * speedPercent * playerSegment.getCurve() * outrun.SettingGame.CENTRIFUGAL );
+        }
+
+        private checkCarColliding( stageLength:number ) : void
+        {
+            // browse all cars
+            for ( const car of this.playerSegment.getCars() ) {
+
+                if ( this.speed > car.getSpeed() )
+                {
+                    // check if player is colliding?
+                    if ( this.checkCollidingWithCar( car, this.width, car.getWidth(), stageLength ) )
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         /** ************************************************************************************************************
@@ -289,6 +234,9 @@
             this.speedPercent  = this.speed / outrun.SettingGame.PLAYER_MAX_SPEED;
         }
 
+        /** ************************************************************************************************************
+        *   Checks if the player is offroad and modifies the speed and possibly playerZ.
+        ***************************************************************************************************************/
         private checkOffroad( playerSegment:outrun.Segment, playerW:number, delta:number, stageLength:number ) : void
         {
             if ( ( this.x < -1 ) || ( this.x > 1 ) )
@@ -330,6 +278,62 @@
                         break;
                     }
                 }
+            }
+        }
+
+        private updateZ( dt:number, stageLength:number, segments:outrun.Segment[] ) : void
+        {
+            // update Z and segment
+            this.z =
+            (
+                outrun.MathUtil.increase
+                (
+                    this.z,
+                    dt * this.speed,
+                    stageLength
+                )
+            );
+            this.updatePlayerSegment( segments );
+        }
+
+        private updateX( dx:number ) : void
+        {
+            // update X according to speed
+            if ( this.keyLeft )
+            {
+                this.x = this.x - dx;
+            }
+            else if ( this.keyRight )
+            {
+                this.x = this.x + dx;
+            }
+        }
+
+        private updateSprite() : void
+        {
+            // assign current sprite
+            const updown :number =
+            (
+                this.playerSegment.getP2().getWorld().y - this.playerSegment.getP1().getWorld().y
+            );
+
+            // determine sprite
+            if ( this.keyLeft && this.speed > 0 )
+            {
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_LEFT : outrun.ImageFile.PLAYER_LEFT );
+            }
+            else if ( this.keyRight && this.speed > 0 )
+            {
+                this.setSprite( ( updown > 0 ) ? outrun.ImageFile.PLAYER_UPHILL_RIGHT : outrun.ImageFile.PLAYER_RIGHT );
+            }
+            else
+            {
+                this.setSprite
+                (
+                    ( updown > 0 )
+                    ? outrun.ImageFile.PLAYER_UPHILL_STRAIGHT
+                    : outrun.ImageFile.PLAYER_STRAIGHT
+                );
             }
         }
     }

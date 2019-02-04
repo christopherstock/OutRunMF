@@ -116,6 +116,25 @@ Constructive refactorings:
 => Create tests and cover certain business logic methods with TSUnit tests.
 => Minimize all static accesses to Main.game
 
+=> Unify the level of abstraction (s. Player.update !)
+
+        public update
+        (
+            dx          :number,
+            dt          :number,
+            stageLength :number,
+            segments    :outrun.Segment[],
+            keySystem   :outrun.KeySystem
+        )
+        : void
+        {
+            this.handleKeys( keySystem );
+            this.updateZ( dt, stageLength, segments );
+            this.updateX( dx );
+            this.updateSpeed( dt );
+            this.updateSprite();
+
+
 Results:
 ==========================
 Separate units
