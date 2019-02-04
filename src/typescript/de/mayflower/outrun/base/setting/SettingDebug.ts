@@ -6,7 +6,7 @@
     export class SettingDebug
     {
         /** The global switch for the debug mode. */
-        public  static  readonly    DEBUG_MODE                              :boolean            = false;
+        public  static  readonly    DEBUG_MODE                              :boolean            = true;
 
         // noinspection PointlessBooleanExpressionJS
         /** Show FPS counter. */

@@ -93,12 +93,17 @@
         (
             dx          :number,
             dt          :number,
-            stageLength :number
+            stageLength :number,
+            segments    :outrun.Segment[],
+            keySystem   :outrun.KeySystem
         )
         : void
         {
+            this.updatePosition( dt, stageLength );
+            this.updatePlayerSegment( segments );
+
             // check keys for player
-            this.handlePlayerKeys();
+            this.handlePlayerKeys( keySystem );
 
             // steer according to keys
             if ( this.keyLeft )
@@ -155,9 +160,11 @@
 
             // dont ever let it go too far out of bounds
             this.clipBoundsForX();
+
+
         }
 
-        public updatePosition( dt:number, stageLength:number ) : void
+        private updatePosition( dt:number, stageLength:number ) : void
         {
             this.z =
             (
@@ -208,12 +215,12 @@
             );
         }
 
-        private handlePlayerKeys() : void
+        private handlePlayerKeys( keySystem:outrun.KeySystem ) : void
         {
-            this.keyLeft   = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
-            this.keyRight  = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
-            this.keyFaster = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
-            this.keySlower = outrun.Main.game.engine.keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
+            this.keyLeft   = keySystem.isPressed( outrun.KeyCodes.KEY_LEFT  );
+            this.keyRight  = keySystem.isPressed( outrun.KeyCodes.KEY_RIGHT );
+            this.keyFaster = keySystem.isPressed( outrun.KeyCodes.KEY_UP    );
+            this.keySlower = keySystem.isPressed( outrun.KeyCodes.KEY_DOWN  );
         }
 
         private checkCollidingWithCar( car:outrun.Car, playerW:number, carW:number, stageLength:number ) : boolean

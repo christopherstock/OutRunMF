@@ -10,15 +10,10 @@
     *   TODO Refactorings
     *   ==============================
     *   TODO Minimize access to Main.game.
-    *
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment?
     *   TODO Different lane count for different segments
-    *
     *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
-    *
     *   TODO Different road widths and lanes per level!
-    *
-    *   TODO prune finish line (only if desired)?
     *
     *   ==============================
     *   TODO Game creation
@@ -30,16 +25,11 @@
     *   TODO Create new segments? Enable widening and narrowing the road etc.?
     *
     *   ==============================
-    *   TODO Secondary / Decorative features
+    *   TODO Secondary features
     *   ==============================
     *   TODO Enable fullscreen mode.
     *   TODO Add intro.
     *   TODO Add main menu.
-    *
-    *   =====================
-    *   TODO Code Quality
-    *   =====================
-    *   TODO Ask CSP for a code review.
     *******************************************************************************************************************/
     export class Main
     {

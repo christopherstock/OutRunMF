@@ -2,10 +2,14 @@
     import * as outrun from '../..';
 
     /** ****************************************************************************************************************
-    *   The stage background.
+    *   The stage background consisting of multiple layers.
+    *
+    *   TODO generic layer count!
     *******************************************************************************************************************/
     export class Background
     {
+        // TODO reference images!
+
         /** The assigned image for the sky. */
         private     readonly    skyImage            :string                     = null;
         /** The assigned image for the hills. */

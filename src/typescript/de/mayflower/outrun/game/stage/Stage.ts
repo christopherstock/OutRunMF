@@ -77,9 +77,10 @@
         /** ************************************************************************************************************
         *   Updates this stage for one tick of the game loop.
         *
-        *   @param dt The delta time to update the game.
+        *   @param dt        The delta time to update the game.
+        *   @param keySystem The key system that handles pressed keys.
         ***************************************************************************************************************/
-        public update( dt:number ) : void
+        public update( dt:number, keySystem:outrun.KeySystem ) : void
         {
             this.player.updatePlayerSegment( this.segments );
 
@@ -90,11 +91,8 @@
             // update cars
             this.updateCars( dt, this.player );
 
-            this.player.updatePosition( dt, this.stageLength );
-            this.player.updatePlayerSegment( this.segments );
-
             // update player
-            this.player.update( deltaX, dt, this.stageLength );
+            this.player.update( deltaX, dt, this.stageLength, this.segments, keySystem );
 
             // update backgrounds
             this.background.updateOffsets( this.player.getPlayerSegment(), this.player, startPosition );
