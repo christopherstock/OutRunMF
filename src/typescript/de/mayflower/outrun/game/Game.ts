@@ -8,7 +8,7 @@
     export class Game
     {
         /** The game engine. */
-        public                  engine              :outrun.Engine                  = null;
+        private                 engine              :outrun.Engine                  = null;
 
         /** The game stage. */
         private                 stage               :outrun.Stage                   = null;

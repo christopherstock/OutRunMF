@@ -17,6 +17,7 @@
                 3,
                 new outrun.Background
                 (
+                    imageSystem,
                     outrun.ImageFile.BG_SKY2,
                     outrun.ImageFile.BG_HILL2,
                     outrun.ImageFile.BG_TREE2

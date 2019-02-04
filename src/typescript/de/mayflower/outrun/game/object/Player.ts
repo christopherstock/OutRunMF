@@ -38,9 +38,9 @@
         /** player constant camera offset Z. */
         private     readonly        offsetZ             :number                     = null;
 
-        public constructor()
+        public constructor( imageSystem:outrun.ImageSystem )
         {
-            super( outrun.Main.game.engine.imageSystem.getImage( outrun.ImageFile.PLAYER_STRAIGHT ) );
+            super( imageSystem, imageSystem.getImage( outrun.ImageFile.PLAYER_STRAIGHT ) );
 
             this.cameraDepth = ( 1 / Math.tan( ( outrun.SettingEngine.CAMERA_FIELD_OF_VIEW / 2 ) * Math.PI / 180 ) );
 

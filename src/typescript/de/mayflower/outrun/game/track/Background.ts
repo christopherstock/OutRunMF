@@ -22,11 +22,11 @@
         /** current tree scroll offset */
         private                 treeOffset          :number                     = 0;
 
-        public constructor( skyImage:string, hillImage:string, treeImage:string )
+        public constructor( imageSystem:outrun.ImageSystem, skyImage:string, hillImage:string, treeImage:string )
         {
-            this.skyImage  = outrun.Main.game.engine.imageSystem.getImage( skyImage  );
-            this.hillImage = outrun.Main.game.engine.imageSystem.getImage( hillImage );
-            this.treeImage = outrun.Main.game.engine.imageSystem.getImage( treeImage );
+            this.skyImage  = imageSystem.getImage( skyImage  );
+            this.hillImage = imageSystem.getImage( hillImage );
+            this.treeImage = imageSystem.getImage( treeImage );
         }
 
         /** ************************************************************************************************************

@@ -16,9 +16,9 @@
         /** This is useful for interpolation during rendering phase */
         private                         percent                         :number                     = 0;
 
-        public constructor( offset:number, z:number, image:HTMLImageElement, speed:number )
+        public constructor( imageSystem:outrun.ImageSystem, offset:number, z:number, image:HTMLImageElement, speed:number )
         {
-            super( image );
+            super( imageSystem, image );
 
             this.x      = offset;
             this.z      = z;

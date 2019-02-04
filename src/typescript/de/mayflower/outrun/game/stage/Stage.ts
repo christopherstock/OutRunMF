@@ -58,7 +58,7 @@
         public init() : void
         {
             // create the player
-            this.player = new outrun.Player();
+            this.player = new outrun.Player( this.imageSystem );
 
             const playerZ:number = this.player.getOffsetZ();
 
@@ -238,7 +238,7 @@
             {
                 this.segments[ index ].addObstacle
                 (
-                    new outrun.Obstacle( this.imageSystem.getImage( sprite ), offset )
+                    new outrun.Obstacle( this.imageSystem, this.imageSystem.getImage( sprite ), offset )
                 );
             }
         }
@@ -278,6 +278,7 @@
                 );
                 const car      :outrun.Car     = new outrun.Car
                 (
+                    this.imageSystem,
                     offset,
                     z,
                     this.imageSystem.getImage( sprite ),

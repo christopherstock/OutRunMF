@@ -9,9 +9,9 @@
         /** Constant obstacle position X. */
         private             readonly    x                           :number                 = null;
 
-        public constructor( image:HTMLImageElement, x:number )
+        public constructor( imageSystem:outrun.ImageSystem, image:HTMLImageElement, x:number )
         {
-            super( image );
+            super( imageSystem, image );
 
             this.x = x;
         }
