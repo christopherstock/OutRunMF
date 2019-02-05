@@ -250,12 +250,12 @@
             if ( ( this.x < -1 ) || ( this.x > 1 ) )
             {
                 // clip to offroad speed
-                if ( this.speed > outrun.SettingGame.OFF_ROAD_LIMIT )
+                if ( this.speed > outrun.SettingGame.SPEED_LIMIT_OFF_ROAD )
                 {
                     this.speed = outrun.MathUtil.accelerate
                     (
                         this.speed,
-                        outrun.SettingGame.DECELERATION_OFF_ROAD,
+                        outrun.SettingGame.DECELERATION_RATE_OFF_ROAD,
                         delta
                     );
                 }

@@ -45,10 +45,10 @@
         public  static  readonly    PLAYER_BREAKING_RATE        :number             = -SettingGame.PLAYER_MAX_SPEED;
 
         /** limit when off road deceleration no longer applies (e.g. you can always go at least this speed even when off road) */
-        public  static  readonly    OFF_ROAD_LIMIT              :number             = SettingGame.PLAYER_MAX_SPEED / 4;
+        public  static  readonly    SPEED_LIMIT_OFF_ROAD        :number             = SettingGame.PLAYER_MAX_SPEED / 4;
 
         /** 'natural' deceleration rate when neither accelerating, nor braking */
         public  static  readonly    DECELERATION_RATE_NATURAL   :number             = -SettingGame.PLAYER_MAX_SPEED / 5;
         /** speed multiplier for off road - off road deceleration is somewhere in between */
-        public  static  readonly    DECELERATION_OFF_ROAD       :number             = -SettingGame.PLAYER_MAX_SPEED / 2;
+        public  static  readonly    DECELERATION_RATE_OFF_ROAD  :number             = -SettingGame.PLAYER_MAX_SPEED / 2;
     }

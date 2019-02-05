@@ -21,7 +21,11 @@
 
         // TODO outsource to Stage ??
 
+
         private         readonly        obstacles           :outrun.Obstacle[]      = [];
+
+
+
         private         readonly        cars                :outrun.Car[]           = [];
 
         public constructor

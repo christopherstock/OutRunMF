@@ -9,8 +9,9 @@
     *   ==============================
     *   TODO Refactorings
     *   ==============================
-    *   TODO Different lane count for different segments
-    *   TODO Different road widths and lanes per segment?
+    *   TODO Different lane count per segment
+    *   TODO Different road widths per segment?
+    *
     *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment? Add car.currentSegment ?
     *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
     *   TODO Save sprites in Stage and add field 'segment' to sprite?
