@@ -29,5 +29,3 @@ npm run build:devserver
 ```
 http://localhost:1234
 ```
-
-![Out Run TS](https://github.com/christopherstock/OutRunMF/raw/master/_ASSETS/image/promo/promo1_2000x2410.jpg)
