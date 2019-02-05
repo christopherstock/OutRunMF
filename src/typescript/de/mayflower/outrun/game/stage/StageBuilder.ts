@@ -23,9 +23,9 @@
         *   @param color The color for the straight segments.
         *   @param count The number of straight segments to add.
         ***************************************************************************************************************/
-        public addStraight( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
+        public addStraight( color:outrun.SegmentColorSet, count:outrun.RoadLength, laneCount:number ) : void
         {
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, outrun.RoadHill.NONE, color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, outrun.RoadHill.NONE, color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -35,9 +35,9 @@
         *   @param count  The number of straight segments to add.
         *   @param height The height delta of this hill.
         ***************************************************************************************************************/
-        public addHill( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number ) : void
+        public addHill( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number, laneCount:number ) : void
         {
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, height, color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, height, color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -50,14 +50,15 @@
         ***************************************************************************************************************/
         public addCurve
         (
-            color  :outrun.SegmentColorSet,
-            count  :outrun.RoadLength,
-            curve  :outrun.RoadCurve,
-            height :number
+            color     :outrun.SegmentColorSet,
+            count     :outrun.RoadLength,
+            curve     :outrun.RoadCurve,
+            height    :number,
+            laneCount :number
         )
         : void
         {
-            this.addRoad( count, count, count, curve, height, color );
+            this.addRoad( count, count, count, curve, height, color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -65,32 +66,33 @@
         ***************************************************************************************************************/
         public addLowRollingHills
         (
-            color  :outrun.SegmentColorSet,
-            count  :outrun.RoadLength,
-            curve  :outrun.RoadCurve,
-            height :number
+            color     :outrun.SegmentColorSet,
+            count     :outrun.RoadLength,
+            curve     :outrun.RoadCurve,
+            height    :number,
+            laneCount :number
         )
         : void
         {
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, height / 2,  color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, -height,     color );
-            this.addRoad( count, count, count, curve,                  height,      color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, 0,           color );
-            this.addRoad( count, count, count, -curve,                 -height / 2, color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE, 0,           color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, height / 2,  color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, -height,     color, laneCount );
+            this.addRoad( count, count, count, curve,                  height,     color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, 0,           color, laneCount );
+            this.addRoad( count, count, count, -curve,                -height / 2, color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE, 0,           color, laneCount );
         }
 
         /** ************************************************************************************************************
         *   The LEGACY implementation of low rolling hills.
         ***************************************************************************************************************/
-        public addLowRollingHillsLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number ) : void
+        public addLowRollingHillsLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number, laneCount:number ) : void
         {
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  height / 2, color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  -height,    color );
-            this.addRoad( count, count, count, outrun.RoadCurve.EASY,  height,     color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  0,          color );
-            this.addRoad( count, count, count, -outrun.RoadCurve.EASY, height / 2, color );
-            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  0,          color );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  height / 2, color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  -height,    color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.EASY,  height,     color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  0,          color, laneCount );
+            this.addRoad( count, count, count, -outrun.RoadCurve.EASY, height / 2, color, laneCount );
+            this.addRoad( count, count, count, outrun.RoadCurve.NONE,  0,          color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -100,13 +102,13 @@
         *   @param color  The color of the segments to add.
         ***************************************************************************************************************/
         // tslint:disable:max-line-length
-        public addSCurves( height:number, color:outrun.SegmentColorSet ) : void
+        public addSCurves( height:number, color:outrun.SegmentColorSet, laneCount:number ) : void
         {
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE, color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  height,                color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -height / 2,           color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   height / 2,            color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -height,               color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE, color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  height,               color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -height / 2,          color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   height / 2,           color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -height,              color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -115,51 +117,51 @@
         *   @param color The color of the segments to add.
         ***************************************************************************************************************/
         // tslint:disable:max-line-length
-        public addSCurvesLegacy( color:outrun.SegmentColorSet ) : void
+        public addSCurvesLegacy( color:outrun.SegmentColorSet, laneCount:number ) : void
         {
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE,    color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  outrun.RoadHill.MEDIUM,  color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -outrun.RoadHill.LOW,    color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.MEDIUM,  color );
-            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -outrun.RoadHill.MEDIUM, color );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE,    color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.MEDIUM,  outrun.RoadHill.MEDIUM,  color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadCurve.EASY,    -outrun.RoadHill.LOW,    color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.MEDIUM,  color, laneCount );
+            this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.MEDIUM, -outrun.RoadHill.MEDIUM, color, laneCount );
         }
 
         /** ************************************************************************************************************
         *   Adds some bumps to the track.
         ***************************************************************************************************************/
-        public addBumps( count:outrun.RoadLength, height:number, color:outrun.SegmentColorSet) : void
+        public addBumps( count:outrun.RoadLength, height:number, color:outrun.SegmentColorSet, laneCount:number ) : void
         {
-            this.addRoad( count, count, count, 0, height,  color );
-            this.addRoad( count, count, count, 0, -height, color );
-            this.addRoad( count, count, count, 0, height,  color );
-            this.addRoad( count, count, count, 0, -height, color );
-            this.addRoad( count, count, count, 0, height,  color );
-            this.addRoad( count, count, count, 0, -height, color );
-            this.addRoad( count, count, count, 0, height,  color );
-            this.addRoad( count, count, count, 0, -height, color );
+            this.addRoad( count, count, count, 0, height,  color, laneCount );
+            this.addRoad( count, count, count, 0, -height, color, laneCount );
+            this.addRoad( count, count, count, 0, height,  color, laneCount );
+            this.addRoad( count, count, count, 0, -height, color, laneCount );
+            this.addRoad( count, count, count, 0, height,  color, laneCount );
+            this.addRoad( count, count, count, 0, -height, color, laneCount );
+            this.addRoad( count, count, count, 0, height,  color, laneCount );
+            this.addRoad( count, count, count, 0, -height, color, laneCount );
         }
 
         /** ************************************************************************************************************
         *   The LEGACY implementation of adding bumps to the track.
         ***************************************************************************************************************/
-        public addBumpsLegacy( color:outrun.SegmentColorSet) : void
+        public addBumpsLegacy( color:outrun.SegmentColorSet, laneCount:number ) : void
         {
-            this.addRoad( 10, 10, 10, 0, 5,  color );
-            this.addRoad( 10, 10, 10, 0, -2, color );
-            this.addRoad( 10, 10, 10, 0, -5, color );
-            this.addRoad( 10, 10, 10, 0, 8,  color );
-            this.addRoad( 10, 10, 10, 0, 5,  color );
-            this.addRoad( 10, 10, 10, 0, -7, color );
-            this.addRoad( 10, 10, 10, 0, 5,  color );
-            this.addRoad( 10, 10, 10, 0, -2, color );
+            this.addRoad( 10, 10, 10, 0, 5,  color, laneCount );
+            this.addRoad( 10, 10, 10, 0, -2, color, laneCount );
+            this.addRoad( 10, 10, 10, 0, -5, color, laneCount );
+            this.addRoad( 10, 10, 10, 0, 8,  color, laneCount );
+            this.addRoad( 10, 10, 10, 0, 5,  color, laneCount );
+            this.addRoad( 10, 10, 10, 0, -7, color, laneCount );
+            this.addRoad( 10, 10, 10, 0, 5,  color, laneCount );
+            this.addRoad( 10, 10, 10, 0, -2, color, laneCount );
         }
 
         /** ************************************************************************************************************
         *   The legacy method for adding a downhill track till the level end.
         ***************************************************************************************************************/
-        public addDownhillToEndLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength ) : void
+        public addDownhillToEndLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength, laneCount:number ) : void
         {
-            this.addRoad( count, count, count, -outrun.RoadCurve.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH, color );
+            this.addRoad( count, count, count, -outrun.RoadCurve.EASY, -this.lastY() / outrun.SettingGame.SEGMENT_LENGTH, color, laneCount );
         }
 
         /** ************************************************************************************************************
@@ -187,6 +189,7 @@
         *   @param curve      The curve situation for this road.
         *   @param hill       The hill  situation for this road.
         *   @param color      The color set for this road segment.
+        *   @param laneCount  The lane count.
         ***************************************************************************************************************/
         private addRoad
         (
@@ -196,7 +199,9 @@
 
             curve      :outrun.RoadCurve,
             hill       :outrun.RoadHill,
-            color      :outrun.SegmentColorSet
+            color      :outrun.SegmentColorSet,
+
+            laneCount  :number
         )
         : void
         {
@@ -212,7 +217,8 @@
                 (
                     outrun.MathUtil.easeIn( 0, curve, n / countEnter ),
                     outrun.MathUtil.easeInOut( startY, endY, n / total ),
-                    color
+                    color,
+                    laneCount
                 );
             }
 
@@ -222,7 +228,8 @@
                 (
                     curve,
                     outrun.MathUtil.easeInOut( startY, endY, ( countEnter + n ) / total ),
-                    color
+                    color,
+                    laneCount
                 );
             }
 
@@ -232,7 +239,8 @@
                 (
                     outrun.MathUtil.easeInOut( curve, 0, n / countLeave ),
                     outrun.MathUtil.easeInOut( startY, endY, ( countEnter + countHold + n ) / total ),
-                    color
+                    color,
+                    laneCount
                 );
             }
         }
@@ -240,11 +248,12 @@
         /** ************************************************************************************************************
         *   Adds a road segment.
         *
-        *   @param curve Specifies if this segment is a curve?
-        *   @param y     The Y location of this segment.
-        *   @param color The color set for this segment.
+        *   @param curve     Specifies if this segment is a curve?
+        *   @param y         The Y location of this segment.
+        *   @param color     The color set for this segment.
+        *   @param laneCount The number of lanes for this segment.
         ***************************************************************************************************************/
-        private addSegment( curve:outrun.RoadCurve, y:number, color:outrun.SegmentColorSet ) : void
+        private addSegment( curve:outrun.RoadCurve, y:number, color:outrun.SegmentColorSet, laneCount:number ) : void
         {
             const index :number = this.segments.length;
             const lastY :number = this.lastY();
@@ -254,7 +263,7 @@
                 new outrun.Segment
                 (
                     index,
-                    outrun.SettingGame.DEFAULT_LANE_COUNT,
+                    laneCount,
                     outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH,
 
                     new outrun.SegmentPoint(

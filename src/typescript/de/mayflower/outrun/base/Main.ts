@@ -7,18 +7,10 @@
     *   The main class containing the point of entry and a single game instance.
     *
     *   ==============================
-    *   TODO Refactorings
+    *   TODO Game creation
     *   ==============================
     *   TODO Different lane count per segment
     *   TODO Different road widths per segment?
-    *
-    *   TODO Stage.createCars() remove duplicated car arrays in Stage and Segment? Add car.currentSegment ?
-    *   TODO Extract level (also cars and sprites?) creation to separate Factory / StageBuilder class?
-    *   TODO Save sprites in Stage and add field 'segment' to sprite?
-    *
-    *   ==============================
-    *   TODO Game creation
-    *   ==============================
     *   TODO Enable additional segment forms left or right of the road (seaside?).
     *   TODO Add new images and sprites and alter existent ones.
     *   TODO Stage.createCars: create speed map for all cars.

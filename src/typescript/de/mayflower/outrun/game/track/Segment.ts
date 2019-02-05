@@ -19,13 +19,7 @@
         private                         fog                 :number                 = 0;
         private                         clip                :number                 = 0;
 
-        // TODO outsource to Stage ??
-
-
         private         readonly        obstacles           :outrun.Obstacle[]      = [];
-
-
-
         private         readonly        cars                :outrun.Car[]           = [];
 
         public constructor
