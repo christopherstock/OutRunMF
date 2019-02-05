@@ -93,7 +93,7 @@
             + (
                 spriteScale
                 * this.x
-                * outrun.SettingGame.HALF_ROAD_WIDTH
+                * segment.getRoadDrawingWidth()
                 * ( canvasSystem.getWidth() / 2 )
             );
             const spriteY     :number = outrun.MathUtil.interpolate(
@@ -104,7 +104,7 @@
 
             outrun.Drawing2D.drawImage(
                 canvasSystem,
-                outrun.SettingGame.HALF_ROAD_WIDTH,
+                segment.getRoadDrawingWidth(),
                 this.image,
                 spriteScale,
                 spriteX,

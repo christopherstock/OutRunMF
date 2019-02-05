@@ -6,39 +6,45 @@
     *******************************************************************************************************************/
     export class Segment
     {
-        private         readonly        index           :number                 = 0;
-        private         readonly        laneCount       :number                 = 0;
-        private         readonly        pointLeft       :outrun.SegmentPoint    = null;
-        private         readonly        pointRight      :outrun.SegmentPoint    = null;
-        private         readonly        curve           :outrun.RoadCurve       = 0;
+        private         readonly        index               :number                 = 0;
+        private         readonly        laneCount           :number                 = 0;
+        private         readonly        roadDrawingWidth    :number                 = 0;
 
-        private                         color           :outrun.SegmentColor    = null;
-        private                         looped          :boolean                = false;
-        private                         fog             :number                 = 0;
-        private                         clip            :number                 = 0;
+        private         readonly        pointLeft           :outrun.SegmentPoint    = null;
+        private         readonly        pointRight          :outrun.SegmentPoint    = null;
+        private         readonly        curve               :outrun.RoadCurve       = 0;
+
+        private                         color               :outrun.SegmentColor    = null;
+        private                         looped              :boolean                = false;
+        private                         fog                 :number                 = 0;
+        private                         clip                :number                 = 0;
 
         // TODO outsource to Stage ??
 
-        private         readonly        obstacles       :outrun.Obstacle[]      = [];
-        private         readonly        cars            :outrun.Car[]           = [];
+        private         readonly        obstacles           :outrun.Obstacle[]      = [];
+        private         readonly        cars                :outrun.Car[]           = [];
 
         public constructor
         (
-            index      :number,
-            laneCount  :number,
-            pointLeft  :outrun.SegmentPoint,
-            pointRight :outrun.SegmentPoint,
-            curve      :outrun.RoadCurve,
-            color      :outrun.SegmentColorSet
+            index            :number,
+            laneCount        :number,
+            roadDrawingWidth :number,
+
+            pointLeft        :outrun.SegmentPoint,
+            pointRight       :outrun.SegmentPoint,
+            curve            :outrun.RoadCurve,
+            color            :outrun.SegmentColorSet
         )
         {
-            this.index      = index;
-            this.laneCount  = laneCount;
-            this.pointLeft  = pointLeft;
-            this.pointRight = pointRight;
-            this.curve      = curve;
+            this.index            = index;
+            this.laneCount        = laneCount;
+            this.roadDrawingWidth = roadDrawingWidth;
 
-            this.color      = (
+            this.pointLeft        = pointLeft;
+            this.pointRight       = pointRight;
+            this.curve            = curve;
+
+            this.color            = (
                 Math.floor( index / outrun.SettingGame.RUMBLE_LENGTH ) % 2
                 ? color.dark
                 : color.light
@@ -78,6 +84,11 @@
         public getObstacles() : outrun.Obstacle[]
         {
             return this.obstacles;
+        }
+
+        public getRoadDrawingWidth() : number
+        {
+            return this.roadDrawingWidth;
         }
 
         public isLooped() : boolean

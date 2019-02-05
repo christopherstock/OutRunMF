@@ -7,15 +7,7 @@
     export class StageBuilder
     {
         /** The collection of segments one stage consists of. */
-        private                 readonly            segments                :outrun.Segment[]       = null;
-
-        /** ************************************************************************************************************
-        *   Creates a new stage builder.
-        ***************************************************************************************************************/
-        public constructor()
-        {
-            this.segments = [];
-        }
+        private                 readonly            segments                :outrun.Segment[]       = [];
 
         /** ************************************************************************************************************
         *   Returns all segments being created by this stage builder.
@@ -263,10 +255,14 @@
                 (
                     index,
                     outrun.SettingGame.DEFAULT_LANE_COUNT,
+                    outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH,
+
                     new outrun.SegmentPoint(
+                        // TODO why is X always 0 here?
                         new outrun.Vector( 0, lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     new outrun.SegmentPoint(
+                        // TODO why is X always 0 here?
                         new outrun.Vector( 0, y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     curve,

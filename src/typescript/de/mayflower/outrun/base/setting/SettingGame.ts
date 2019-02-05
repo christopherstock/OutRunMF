@@ -23,7 +23,7 @@
         public  static  readonly    TREE_SPEED                  :number             = 0.003;
 
         /** actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth. */
-        public  static  readonly    HALF_ROAD_WIDTH             :number             = 2000;
+        public  static  readonly    HALF_ROAD_DRAWING_WIDTH             :number             = 2000;
         /** default number of lanes */
         public  static  readonly    DEFAULT_LANE_COUNT          :number             = 4;
 

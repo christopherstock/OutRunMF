@@ -147,19 +147,19 @@
                 // calculate road segment projections
                 segment.getP1().updateProjectionPoints(
                     canvasSystem,
-                    ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x,
+                    ( this.player.getX() * segment.getRoadDrawingWidth() ) - x,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
                     this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
                     this.player.getCameraDepth(),
-                    outrun.SettingGame.HALF_ROAD_WIDTH
+                    segment.getRoadDrawingWidth()
                 );
                 segment.getP2().updateProjectionPoints(
                     canvasSystem,
-                    ( this.player.getX() * outrun.SettingGame.HALF_ROAD_WIDTH ) - x - dx,
+                    ( this.player.getX() * segment.getRoadDrawingWidth() ) - x - dx,
                     playerY + outrun.SettingEngine.CAMERA_HEIGHT,
                     this.player.getZ() - ( segment.isLooped() ? this.stageLength : 0 ),
                     this.player.getCameraDepth(),
-                    outrun.SettingGame.HALF_ROAD_WIDTH
+                    segment.getRoadDrawingWidth()
                 );
 
                 x  = x + dx;
@@ -201,7 +201,8 @@
                     (
                         canvasSystem,
                         segment.getP1(),
-                        segment.getClip()
+                        segment.getClip(),
+                        segment
                     );
                 }
 

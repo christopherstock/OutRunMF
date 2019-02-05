@@ -25,7 +25,8 @@
         (
             canvasSystem :outrun.CanvasSystem,
             p1           :outrun.SegmentPoint,
-            clip         :number
+            clip         :number,
+            segment     :outrun.Segment
         )
         : void
         {
@@ -33,7 +34,7 @@
             const spriteX     :number = p1.getScreen().x + (
                 spriteScale
                 * this.x
-                * outrun.SettingGame.HALF_ROAD_WIDTH
+                * segment.getRoadDrawingWidth()
                 * ( canvasSystem.getWidth() / 2 )
             );
             const spriteY     :number = p1.getScreen().y;
@@ -41,7 +42,7 @@
             outrun.Drawing2D.drawImage
             (
                 canvasSystem,
-                outrun.SettingGame.HALF_ROAD_WIDTH,
+                segment.getRoadDrawingWidth(),
                 this.image,
                 spriteScale,
                 spriteX,
