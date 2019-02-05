@@ -262,6 +262,7 @@
                 new outrun.Segment
                 (
                     index,
+                    outrun.SettingGame.DEFAULT_LANE_COUNT,
                     new outrun.SegmentPoint(
                         new outrun.Vector( 0, lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
@@ -269,12 +270,7 @@
                         new outrun.Vector( 0, y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
                     ),
                     curve,
-                    [],
-                    [],
-                    color,
-                    false,
-                    0,
-                    0
+                    color
                 )
             );
         }

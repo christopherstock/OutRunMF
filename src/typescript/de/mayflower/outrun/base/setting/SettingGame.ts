@@ -24,9 +24,9 @@
 
         /** actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth. */
         public  static  readonly    HALF_ROAD_WIDTH             :number             = 2000;
+        /** default number of lanes */
+        public  static  readonly    DEFAULT_LANE_COUNT          :number             = 4;
 
-        /** number of lanes */
-        public  static  readonly    LANES                       :number             = 4;
         /** length of a single segment */
         public  static  readonly    SEGMENT_LENGTH              :number             = 200;
         /** number of segments per red/white strip */

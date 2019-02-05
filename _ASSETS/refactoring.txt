@@ -141,7 +141,9 @@ Constructive refactorings:
     // update player
     this.player.update( deltaX, deltaTime, this.stageLength, this.segments, keySystem );
 
+=> Remove method/constructor parameters that are constant when there is only one invocation
 
+                    ( .., false, 0, 0 )
 
 
 Results:

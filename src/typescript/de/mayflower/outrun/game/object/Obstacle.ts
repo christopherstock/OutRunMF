@@ -7,7 +7,7 @@
     export class Obstacle extends outrun.GameObject
     {
         /** Constant obstacle position X. */
-        private             readonly    x                           :number                 = null;
+        private             readonly        x                           :number                 = null;
 
         public constructor( imageSystem:outrun.ImageSystem, image:HTMLImageElement, x:number )
         {

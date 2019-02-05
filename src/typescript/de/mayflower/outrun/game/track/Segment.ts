@@ -7,43 +7,36 @@
     export class Segment
     {
         private         readonly        index           :number                 = 0;
-
+        private         readonly        laneCount       :number                 = 0;
         private         readonly        pointLeft       :outrun.SegmentPoint    = null;
         private         readonly        pointRight      :outrun.SegmentPoint    = null;
-
-        private         readonly        obstacles       :outrun.Obstacle[]      = null;
-
-        private         readonly        cars            :outrun.Car[]           = null;
         private         readonly        curve           :outrun.RoadCurve       = 0;
 
         private                         color           :outrun.SegmentColor    = null;
         private                         looped          :boolean                = false;
-        private                         fog             :number                 = null;
+        private                         fog             :number                 = 0;
         private                         clip            :number                 = 0;
+
+        // TODO outsource to Stage ??
+
+        private         readonly        obstacles       :outrun.Obstacle[]      = [];
+        private         readonly        cars            :outrun.Car[]           = [];
 
         public constructor
         (
             index      :number,
+            laneCount  :number,
             pointLeft  :outrun.SegmentPoint,
             pointRight :outrun.SegmentPoint,
             curve      :outrun.RoadCurve,
-            obstacles  :outrun.Obstacle[],
-            cars       :outrun.Car[],
-            color      :outrun.SegmentColorSet,
-            looped     :boolean,
-            fog        :number,
-            clip       :number
+            color      :outrun.SegmentColorSet
         )
         {
             this.index      = index;
+            this.laneCount  = laneCount;
             this.pointLeft  = pointLeft;
             this.pointRight = pointRight;
             this.curve      = curve;
-            this.obstacles  = obstacles;
-            this.cars       = cars;
-            this.looped     = looped;
-            this.fog        = fog;
-            this.clip       = clip;
 
             this.color      = (
                 Math.floor( index / outrun.SettingGame.RUMBLE_LENGTH ) % 2
@@ -122,13 +115,10 @@
             const rightY :number = this.pointRight.getScreen().y;
             const rightW :number = this.pointRight.getScreen().w;
 
-            // TODO different lane count for different road segments
-            const laneCount   :number = outrun.SettingGame.LANES;
-
-            const leftRumbleWidth      :number = this.calculateRumbleWidth(     leftW,  laneCount );
-            const rightRumbleWidth     :number = this.calculateRumbleWidth(     rightW, laneCount );
-            const leftLaneMarkerWidth  :number = this.calculateLaneMarkerWidth( leftW,  laneCount );
-            const rightLaneMarkerWidth :number = this.calculateLaneMarkerWidth( rightW, laneCount );
+            const leftRumbleWidth      :number = this.calculateRumbleWidth(     leftW  );
+            const rightRumbleWidth     :number = this.calculateRumbleWidth(     rightW );
+            const leftLaneMarkerWidth  :number = this.calculateLaneMarkerWidth( leftW  );
+            const rightLaneMarkerWidth :number = this.calculateLaneMarkerWidth( rightW );
 
             // TODO extract all to separate methods!
 
@@ -181,12 +171,12 @@
             // draw lane
             if ( this.color.lane )
             {
-                const lanew1 :number = leftW * 2 / laneCount;
-                const lanew2 :number = rightW * 2 / laneCount;
+                const lanew1 :number = leftW * 2 / this.laneCount;
+                const lanew2 :number = rightW * 2 / this.laneCount;
                 let   lanex1 :number = leftX - leftW + lanew1;
                 let   lanex2 :number = rightX - rightW + lanew2;
 
-                for ( let lane:number = 1; lane < laneCount; lane++ )
+                for ( let lane:number = 1; lane < this.laneCount; lane++ )
                 {
                     outrun.Drawing2D.drawPolygon
                     (
@@ -211,13 +201,13 @@
             }
         }
 
-        private calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+        private calculateRumbleWidth( projectedRoadWidth:number ) : number
         {
-            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
+            return ( projectedRoadWidth / Math.max( 6,  2 * this.laneCount ) );
         }
 
-        private calculateLaneMarkerWidth( projectedRoadWidth:number, lanes:number ) : number
+        private calculateLaneMarkerWidth( projectedRoadWidth:number ) : number
         {
-            return ( projectedRoadWidth / Math.max( 32, 8 * lanes ) );
+            return ( projectedRoadWidth / Math.max( 32, 8 * this.laneCount ) );
         }
     }
