@@ -39,7 +39,14 @@
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
 
+            stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 4 );
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 3 );
+            stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 2 );
+            stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 1 );
+            stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 2 );
+            stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 3 );
+
+/*
             stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.RoadLength.LONG, outrun.RoadCurve.EASY, outrun.RoadHill.LOW, outrun.SettingGame.DEFAULT_LANE_COUNT );
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, outrun.SettingGame.DEFAULT_LANE_COUNT );
             stageBuilder.addBumps(           outrun.RoadLength.MINIMUM,   outrun.RoadHill.MINIMUM, outrun.SettingColor.RED, outrun.SettingGame.DEFAULT_LANE_COUNT );
@@ -50,9 +57,6 @@
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, outrun.SettingGame.DEFAULT_LANE_COUNT );
             stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.RoadLength.LONG, -outrun.RoadCurve.EASY, -outrun.RoadHill.LOW, outrun.SettingGame.DEFAULT_LANE_COUNT );
             stageBuilder.addHill(            outrun.SettingColor.RED,     outrun.RoadLength.SHORT, -outrun.RoadHill.EXTREME, 3 );
-/*
-            // set startGameLoop and finish
-            stageBuilder.addStartAndFinish( playerZ );
 */
             return stageBuilder.assemble();
         }

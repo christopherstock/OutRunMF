@@ -264,7 +264,6 @@
                 (
                     index,
                     laneCount,
-                    outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH,
 
                     new outrun.SegmentPoint(
                         // TODO why is X always 0 here?

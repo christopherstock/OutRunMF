@@ -34,7 +34,7 @@
             const spriteX     :number = p1.getScreen().x + (
                 spriteScale
                 * this.x
-                * segment.getRoadDrawingWidth()
+                * outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH
                 * ( canvasSystem.getWidth() / 2 )
             );
             const spriteY     :number = p1.getScreen().y;
@@ -42,7 +42,7 @@
             outrun.Drawing2D.drawImage
             (
                 canvasSystem,
-                segment.getRoadDrawingWidth(),
+                outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH,
                 this.image,
                 spriteScale,
                 spriteX,

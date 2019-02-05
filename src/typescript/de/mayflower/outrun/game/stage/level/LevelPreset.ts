@@ -58,7 +58,7 @@
             stageBuilder.addSCurvesLegacy(         outrun.SettingColor.DEFAULT, outrun.SettingGame.DEFAULT_LANE_COUNT );
             stageBuilder.addDownhillToEndLegacy(         outrun.SettingColor.DEFAULT, outrun.RoadLength.DOUBLE_LONG, outrun.SettingGame.DEFAULT_LANE_COUNT );
 
-            // set startGameLoop and finish
+            // set start and finish
             stageBuilder.addStartAndFinish( playerZ );
 
             return stageBuilder.assemble();

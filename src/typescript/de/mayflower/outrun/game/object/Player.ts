@@ -140,7 +140,7 @@
             outrun.Drawing2D.drawImage
             (
                 canvasSystem,
-                this.playerSegment.getRoadDrawingWidth(),
+                outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH,
                 this.image,
                 scale,
                 destX,

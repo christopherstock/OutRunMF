@@ -9,7 +9,6 @@
     *   ==============================
     *   TODO Game creation
     *   ==============================
-    *   TODO Different lane count per segment
     *   TODO Different road widths per segment?
     *   TODO Enable additional segment forms left or right of the road (seaside?).
     *   TODO Add new images and sprites and alter existent ones.

@@ -24,19 +24,26 @@
 
         public constructor
         (
-            index            :number,
-            laneCount        :number,
-            roadDrawingWidth :number,
+            index      :number,
+            laneCount  :number,
 
-            pointLeft        :outrun.SegmentPoint,
-            pointRight       :outrun.SegmentPoint,
-            curve            :outrun.RoadCurve,
-            color            :outrun.SegmentColorSet
+            pointLeft  :outrun.SegmentPoint,
+            pointRight :outrun.SegmentPoint,
+            curve      :outrun.RoadCurve,
+            color      :outrun.SegmentColorSet
         )
         {
             this.index            = index;
             this.laneCount        = laneCount;
-            this.roadDrawingWidth = roadDrawingWidth;
+/*
+            this.roadDrawingWidth =
+            (
+                laneCount
+                * outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH
+                / outrun.SettingGame.DEFAULT_LANE_COUNT
+            );
+*/
+            this.roadDrawingWidth = outrun.SettingGame.HALF_ROAD_DRAWING_WIDTH;
 
             this.pointLeft        = pointLeft;
             this.pointRight       = pointRight;
