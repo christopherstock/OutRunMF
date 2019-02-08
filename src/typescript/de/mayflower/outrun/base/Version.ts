@@ -5,6 +5,8 @@
     // tslint:disable:max-line-length
     export class Version
     {
+        /** The project's version v.0.0.4. */
+        private     static  readonly    V_0_0_4                 :Version            = new Version( '0.0.4', 'Mayflower Out Run', '08.02.2019, 08:53:23 GMT+1' );
         // noinspection JSUnusedLocalSymbols
         /** The project's version v.0.0.3. */
         private     static  readonly    V_0_0_3                 :Version            = new Version( '0.0.3', 'OutRunMF', '06.01.2019, 14:32:05 GMT+1' );
@@ -16,7 +18,7 @@
         private     static  readonly    V_0_0_1                 :Version            = new Version( '0.0.1', 'OutRunJS', '31.10.2018, 17:38:17 GMT+1' );
 
         /** The project's current version. */
-        private     static  readonly    CURRENT_VERSION         :Version            = Version.V_0_0_3;
+        private     static  readonly    CURRENT_VERSION         :Version            = Version.V_0_0_4;
 
         /** This version's specifier. */
         private             readonly    version                 :string             = null;

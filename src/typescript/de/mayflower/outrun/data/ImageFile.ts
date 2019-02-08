@@ -1,6 +1,8 @@
 
     /** ****************************************************************************************************************
     *   Specifies all different images used in the game.
+    *
+    *   TODO class to enum! Array external!
     *******************************************************************************************************************/
     // tslint:disable:max-line-length
     export class ImageFile
@@ -120,7 +122,7 @@
             ImageFile.BG_TREE2,
         ];
 
-        public  static  readonly    BILLBOARDS              :string[]       = [ImageFile.BILLBOARD01, ImageFile.BILLBOARD02, ImageFile.BILLBOARD03, ImageFile.BILLBOARD04, ImageFile.BILLBOARD05, ImageFile.BILLBOARD06, ImageFile.BILLBOARD07, ImageFile.BILLBOARD08, ImageFile.BILLBOARD09];
-        public  static  readonly    PLANTS                  :string[]       = [ImageFile.TREE1, ImageFile.TREE2, ImageFile.DEAD_TREE1, ImageFile.DEAD_TREE2, ImageFile.PALM_TREE, ImageFile.BUSH1, ImageFile.BUSH2, ImageFile.CACTUS, ImageFile.STUMP, ImageFile.BOULDER1, ImageFile.BOULDER2, ImageFile.BOULDER3];
-        public  static  readonly    CARS                    :string[]       = [ImageFile.CAR01, ImageFile.CAR02, ImageFile.CAR03, ImageFile.CAR04, ImageFile.TRUCK2, ImageFile.TRUCK1];
+        public  static  readonly    BILLBOARDS              :string[]       = [ ImageFile.BILLBOARD01, ImageFile.BILLBOARD02, ImageFile.BILLBOARD03, ImageFile.BILLBOARD04, ImageFile.BILLBOARD05, ImageFile.BILLBOARD06, ImageFile.BILLBOARD07, ImageFile.BILLBOARD08, ImageFile.BILLBOARD09 ];
+        public  static  readonly    PLANTS                  :string[]       = [ ImageFile.TREE1, ImageFile.TREE2, ImageFile.DEAD_TREE1, ImageFile.DEAD_TREE2, ImageFile.PALM_TREE, ImageFile.BUSH1, ImageFile.BUSH2, ImageFile.CACTUS, ImageFile.STUMP, ImageFile.BOULDER1, ImageFile.BOULDER2, ImageFile.BOULDER3 ];
+        public  static  readonly    CARS                    :string[]       = [ ImageFile.CAR01, ImageFile.CAR02, ImageFile.CAR03, ImageFile.CAR04, ImageFile.TRUCK2, ImageFile.TRUCK1 ];
     }

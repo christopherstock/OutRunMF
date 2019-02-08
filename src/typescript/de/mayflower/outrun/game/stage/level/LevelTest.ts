@@ -14,7 +14,8 @@
             super
             (
                 imageSystem,
-                3,
+                20,
+                [ outrun.ImageFile.TRUCK1, outrun.ImageFile.TRUCK2 ],
                 new outrun.Background
                 (
                     imageSystem,
@@ -45,6 +46,7 @@
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 1 );
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 2 );
             stageBuilder.addStraight(        outrun.SettingColor.RED,     outrun.RoadLength.SHORT, 3 );
+            stageBuilder.addLowRollingHills( outrun.SettingColor.RED,     outrun.RoadLength.SHORT, outrun.RoadCurve.NONE, outrun.RoadHill.MEDIUM, 3 );
 
 /*
             stageBuilder.addCurve(           outrun.SettingColor.DEFAULT, outrun.RoadLength.LONG, outrun.RoadCurve.EASY, outrun.RoadHill.LOW, outrun.SettingGame.DEFAULT_LANE_COUNT );
@@ -68,5 +70,15 @@
         ***************************************************************************************************************/
         protected createSprites( segmentCount:number ) : void
         {
+            for ( let n:number = 100; n < 500; n += 5 ) {
+
+                this.createObstacle( n, outrun.ImageFile.COLUMN, 1.5  );
+                this.createObstacle( n, outrun.ImageFile.TREE2,  -1.5 );
+            }
+
+
+
+
+
         }
     }

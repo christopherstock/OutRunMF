@@ -9,12 +9,13 @@
     *   ==============================
     *   TODO Game creation
     *   ==============================
+    *   TODO Stage.createCars: create speed map for all cars.
+    *   TODO Add new images and sprites and alter existent ones.
+    *
     *   TODO Different road widths per segment?
     *   TODO Enable additional segment forms left or right of the road (seaside?).
-    *   TODO Add new images and sprites and alter existent ones.
-    *   TODO Stage.createCars: create speed map for all cars.
-    *   TODO Add sound effects?
     *   TODO Create new segments? Enable widening and narrowing the road etc.?
+    *   TODO Add sound effects?
     *
     *   ==============================
     *   TODO Secondary features

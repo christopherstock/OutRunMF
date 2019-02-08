@@ -265,14 +265,8 @@
                     index,
                     laneCount,
 
-                    new outrun.SegmentPoint(
-                        // TODO why is X always 0 here?
-                        new outrun.Vector( 0, lastY, index * outrun.SettingGame.SEGMENT_LENGTH )
-                    ),
-                    new outrun.SegmentPoint(
-                        // TODO why is X always 0 here?
-                        new outrun.Vector( 0, y, ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH )
-                    ),
+                    new outrun.SegmentPoint( 0, lastY, ( index     ) * outrun.SettingGame.SEGMENT_LENGTH ),
+                    new outrun.SegmentPoint( 0, y,     ( index + 1 ) * outrun.SettingGame.SEGMENT_LENGTH ),
                     curve,
                     color
                 )

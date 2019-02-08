@@ -13,11 +13,11 @@
         /** Segment's camera projection coordinate. */
         private     readonly    playerVector                        :outrun.Vector             = null;
 
-        public constructor( world:outrun.Vector )
+        public constructor( worldX:number, worldY:number, worldZ:number )
         {
-            this.worldVector  = world;
-            this.screenVector = new outrun.Vector( 0, 0, 0 );
-            this.playerVector = new outrun.Vector( 0, 0, 0 );
+            this.worldVector  = new outrun.Vector( worldX, worldY, worldZ );
+            this.screenVector = new outrun.Vector( 0,      0,      0      );
+            this.playerVector = new outrun.Vector( 0,      0,      0      );
         }
 
         public getWorld() : outrun.Vector

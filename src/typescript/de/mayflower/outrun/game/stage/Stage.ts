@@ -24,6 +24,9 @@
         private         readonly    fogColor            :string                     = null;
         /** The stage background. */
         private         readonly    background          :outrun.Background          = null;
+        /** The pool of cars to occur in this stage. */
+        private         readonly    carPool             :string[]                   = null;
+
         /** The image system that handles all images. */
         private         readonly    imageSystem         :outrun.ImageSystem         = null;
 
@@ -32,6 +35,7 @@
         *
         *   @param imageSystem The image system that handles all images.
         *   @param carCount    The number of cars to create in this stage.
+        *   @param carPool     The cars to occur in this stage.
         *   @param background  The background to use for this stage.
         *   @param skyColor    The color of the sky.
         *   @param fogColor    The color of the fog.
@@ -40,6 +44,7 @@
         (
             imageSystem :outrun.ImageSystem,
             carCount    :number,
+            carPool     :string[],
             background  :outrun.Background,
             skyColor    :string,
             fogColor    :string
@@ -47,6 +52,7 @@
         {
             this.imageSystem = imageSystem;
             this.carCount    = carCount;
+            this.carPool     = carPool;
             this.background  = background;
             this.skyColor    = skyColor;
             this.fogColor    = fogColor;
@@ -233,7 +239,7 @@
         /** ************************************************************************************************************
         *   Adds a sprite to the segment with the specified index.
         ***************************************************************************************************************/
-        protected addObstacle( index:number, sprite:string, offset:number ) : void
+        protected createObstacle( index:number, sprite:string, offset:number ) : void
         {
             if ( this.segments.length > index )
             {
@@ -265,7 +271,7 @@
             for ( let i:number = 0; i < this.carCount; i++ )
             {
                 const offset  :number = Math.random() * outrun.MathUtil.getRandomElement( [ -0.8, 0.8 ] );
-                const sprite  :string = outrun.MathUtil.getRandomElement( outrun.ImageFile.CARS );
+                const sprite  :string = outrun.MathUtil.getRandomElement( this.carPool );
                 const z       :number = Math.floor(
                     Math.random() * this.segments.length
                 ) * outrun.SettingGame.SEGMENT_LENGTH;

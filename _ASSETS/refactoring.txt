@@ -101,6 +101,8 @@ Constructive refactorings:
     );
     segment.clip = maxY;
 
+=> constant settings to settings class ..
+
 => Move value classes to enums!
 
     /** Specifies attributes for the length of the road. */
