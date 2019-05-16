@@ -275,21 +275,12 @@
                 const z       :number = Math.floor(
                     Math.random() * this.segments.length
                 ) * outrun.SettingGame.SEGMENT_LENGTH;
-                const speed   :number = (
-                    ( outrun.SettingGame.PLAYER_MAX_SPEED / 4 )
-                    + (
-                        Math.random()
-                        * outrun.SettingGame.PLAYER_MAX_SPEED
-                        / ( sprite === outrun.ImageFile.TRUCK2 ? 4 : 2 )
-                    )
-                );
                 const car      :outrun.Car     = new outrun.Car
                 (
                     this.imageSystem,
                     offset,
                     z,
-                    this.imageSystem.getImage( sprite ),
-                    speed
+                    this.imageSystem.getImage( sprite )
                 );
                 const segment :outrun.Segment = Stage.findSegment( this.segments, car.getZ() );
 

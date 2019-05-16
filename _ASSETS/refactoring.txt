@@ -54,6 +54,7 @@ Refactoring Methods:
 - Rename packages according to new functionality!
 - remove or move too special 'helper' functions
 - Remove one functin call with '0' and turn into '1'! remove: ( percent || 1 )
+- Renaming variables on by passing it to and calling a function: ($rootTag => $productTag)
 
 Tools that support:
 ===================

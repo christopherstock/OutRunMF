@@ -11,18 +11,25 @@
         /** Current position Z */
         private                         z                               :number                     = 0;
         /** Constant speed */
-        private         readonly        speed                           :number                     = 0;
+        private                         speed                           :number                     = 0;
 
         /** This is useful for interpolation during rendering phase */
         private                         percent                         :number                     = 0;
 
-        public constructor( imageSystem:outrun.ImageSystem, offset:number, z:number, image:HTMLImageElement, speed:number )
+        public constructor
+        (
+            imageSystem :outrun.ImageSystem,
+            offset      :number,
+            z           :number,
+            image       :HTMLImageElement
+        )
         {
             super( imageSystem, image );
 
             this.x      = offset;
             this.z      = z;
-            this.speed  = speed;
+
+            this.assignSpeed();
         }
 
         public getWidth() : number
@@ -183,5 +190,20 @@
                 return -0.1;
             else
                 return 0;
+        }
+
+        /** ************************************************************************************************************
+        *   Assigns the constant speed for this car.
+        ***************************************************************************************************************/
+        private assignSpeed() : void
+        {
+            this.speed = (
+                ( outrun.SettingGame.PLAYER_MAX_SPEED / 4 )
+                + (
+                    Math.random()
+                    * outrun.SettingGame.PLAYER_MAX_SPEED
+                    / ( 2 )
+                )
+            );
         }
     }
