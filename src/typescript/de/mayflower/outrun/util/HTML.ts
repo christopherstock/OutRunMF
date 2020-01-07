@@ -1,6 +1,8 @@
 
     /** ****************************************************************************************************************
-    *   Offers functionality for the HTML webpage.
+    *   Offers and wraps functionality for accessing the HTML document.
+    *
+    *   TODO create non static
     *******************************************************************************************************************/
     export class HTML
     {
