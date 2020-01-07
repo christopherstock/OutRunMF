@@ -119,7 +119,7 @@ Constructive refactorings:
 => Create tests and cover certain business logic methods with TSUnit tests.
 => Minimize all static accesses to Main.game
 
-=> Unify the level of abstraction (s. Player.update !)
+=> Unify the level of abstraction / achieve same level of abstraction (s. Player.update !)
 
         public update
         (
@@ -154,3 +154,6 @@ Results:
 Separate units
 added Testability
 Easy possibility to combine all elements and easily create new features.
+
+=> Implement Linter
+=> Implement Tests!
