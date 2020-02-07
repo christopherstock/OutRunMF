@@ -20,7 +20,7 @@
             outrun.Debug.init.log( 'Init game engine' );
 
             this.engine = new outrun.Engine();
-            this.engine.init( this.onEngineInitCompleted );
+            this.engine.init( () : void => { this.onEngineInitCompleted(); } );
         }
 
         /** ************************************************************************************************************
@@ -37,27 +37,27 @@
         /** ************************************************************************************************************
         *   Being invoked when the game engine is fully initialized.
         ***************************************************************************************************************/
-        private onEngineInitCompleted = () :void =>
+        private onEngineInitCompleted() :void
         {
             outrun.Debug.init.log( 'Game engine fully initialized' );
 
             // switch to initial level and startGameLoop the game loop
             this.changeToLevel( new outrun.LevelPreset( this.engine.imageSystem ) );
             this.startGameLoop();
-        };
+        }
 
         /** ************************************************************************************************************
         *   Starts the game loop.
         ***************************************************************************************************************/
         private startGameLoop() : void
         {
-            requestAnimationFrame( this.tick );
+            requestAnimationFrame( () : void => { this.tick(); } );
         }
 
         /** ************************************************************************************************************
         *   Performs one tick of the game loop.
         ***************************************************************************************************************/
-        private tick = () :void =>
+        private tick() :void
         {
             if ( outrun.SettingDebug.SHOW_FPS )
             {
@@ -73,8 +73,8 @@
                 this.engine.fpsMeter.tick();
             }
 
-            requestAnimationFrame( this.tick );
-        };
+            requestAnimationFrame( () : void => { this.tick(); } );
+        }
 
         /** ************************************************************************************************************
         *   Updates the game world.

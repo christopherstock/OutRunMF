@@ -62,7 +62,7 @@
         {
             const img :HTMLImageElement = new Image();
             img.src    = filename;
-            img.onload = this.onImageLoaded;
+            img.onload = () :void => { this.onImageLoaded(); };
 
             return img;
         }
@@ -70,7 +70,7 @@
         /** ************************************************************************************************************
         *   This function is invoked each time <strong>one</strong> image has been fully loaded.
         ***************************************************************************************************************/
-        private onImageLoaded=() :void =>
+        private onImageLoaded() : void
         {
             ++this.loadedCount;
 
@@ -81,5 +81,5 @@
                 // invoke callback function when all images are loaded
                 this.callback();
             }
-        };
+        }
     }
