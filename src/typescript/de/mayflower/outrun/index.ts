@@ -1,7 +1,6 @@
 
     export * from './base/Debug';
     export * from './base/Main';
-    export * from './base/Version';
 
     export * from './data/ImageFile';
     export * from './game/engine/ui/SegmentColor';

@@ -8,7 +8,7 @@
     export class SettingGame
     {
         /** The application title. */
-        public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ OutRun';
+        public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ OutRun, v.0.1 MVP';
         /** The application favicon. */
         public  static  readonly    APP_FAVICON                 :string             = 'favicon.ico';
 
@@ -36,7 +36,9 @@
         public  static  readonly    FOG_DENSITY                 :number             = 5;
 
         /** top speed (ensure we can't move more than 1 segment in a single frame to make collision detection easier) */
-        public  static  readonly    PLAYER_MAX_SPEED            :number             = SettingGame.SEGMENT_LENGTH / outrun.SettingEngine.STEP;
+        public  static  readonly    PLAYER_MAX_SPEED            :number             = (
+            SettingGame.SEGMENT_LENGTH / outrun.SettingEngine.STEP
+        );
         /** maximum multiplier for player bouncing */
         public  static  readonly    PLAYER_MAX_BOUNCE           :number             = 1.5;
         /** acceleration rate - tuned until it 'felt' right */
@@ -44,7 +46,7 @@
         /** deceleration rate when braking */
         public  static  readonly    PLAYER_BREAKING_RATE        :number             = -SettingGame.PLAYER_MAX_SPEED;
 
-        /** limit when off road deceleration no longer applies (e.g. you can always go at least this speed even when off road) */
+        /** limit when off road deceleration no longer applies (minimum speed when driving off road). */
         public  static  readonly    SPEED_LIMIT_OFF_ROAD        :number             = SettingGame.PLAYER_MAX_SPEED / 4;
 
         /** 'natural' deceleration rate when neither accelerating, nor braking */

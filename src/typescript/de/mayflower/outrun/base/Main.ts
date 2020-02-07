@@ -47,8 +47,6 @@
         private static acclaim() : void
         {
             outrun.Debug.acclaim.log( outrun.SettingGame.APP_TITLE );
-
-            outrun.Debug.acclaim.log( outrun.Version.getCurrent() );
             outrun.Debug.acclaim.log();
         }
     }

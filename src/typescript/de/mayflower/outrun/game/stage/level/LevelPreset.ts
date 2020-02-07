@@ -1,4 +1,6 @@
 
+    /* eslint-disable max-len */
+
     import * as outrun from '../../..'
 
     /** ****************************************************************************************************************
@@ -35,7 +37,6 @@
         *
         *   @return All segments the road consists of.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
         protected createRoad( playerZ:number ) : outrun.Segment[]
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();

@@ -4,7 +4,6 @@
     /** ****************************************************************************************************************
     *   Specifies all colors for the game.
     *******************************************************************************************************************/
-    // tslint:disable:max-line-length
     export class SettingColor
     {
         public      static      DEFAULT_SKY     :string                     = '#72d7ee';
@@ -29,6 +28,16 @@
             new outrun.SegmentColor( '#484848', '#509a00', '#ffffff', null      )
         );
 
-        public      static      START           :outrun.SegmentColor        = new outrun.SegmentColor( 'white',   'white',   'white',   null      );
-        public      static      FINISH          :outrun.SegmentColor        = new outrun.SegmentColor( 'black',   'black',   'black',   null      );
+        public      static      START           :outrun.SegmentColor        = new outrun.SegmentColor(
+            'white',
+            'white',
+            'white',
+            null
+        );
+        public      static      FINISH          :outrun.SegmentColor        = new outrun.SegmentColor(
+            'black',
+            'black',
+            'black',
+            null
+        );
     }

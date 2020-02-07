@@ -14,7 +14,7 @@
         /** The player. */
         private                     player              :outrun.Player              = null;
         /** All cars that appear in this level. */
-        private                     cars                :outrun.Car[]               = [];
+        private         readonly    cars                :outrun.Car[]               = [];
 
         /** The number of cars to create in this stage. */
         private         readonly    carCount            :number                     = 0;

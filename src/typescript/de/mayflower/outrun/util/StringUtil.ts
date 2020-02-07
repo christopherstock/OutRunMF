@@ -1,5 +1,5 @@
 
-    /** The Moment.js library import. */
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const moment:any = require( 'moment' );
 
     /** ****************************************************************************************************************

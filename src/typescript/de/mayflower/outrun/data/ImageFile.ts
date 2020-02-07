@@ -1,10 +1,11 @@
 
+    /* eslint-disable max-len */
+
     /** ****************************************************************************************************************
     *   Specifies all different images used in the game.
     *
     *   TODO class to enum! Array external!
     *******************************************************************************************************************/
-    // tslint:disable:max-line-length
     export class ImageFile
     {
         public  static  readonly    BILLBOARD01             :string         = 'sprite/billboard01.png';
