@@ -15,7 +15,7 @@
         /** The image system that manages all images. */
         public              imageSystem             :outrun.ImageSystem             = null;
         /** The FPS meter. */
-        public              fpsMeter                :FPSMeter                       = null;
+        public              fpsMeter                :any                            = null;
 
         /** The key system that manages pressed keys. */
         private             onInitComplete          :() => void                     = null;
@@ -51,6 +51,8 @@
         {
             if ( outrun.SettingDebug.SHOW_FPS )
             {
+                const FPSMeter :any = ( window as any ).FPSMeter;
+
                 this.fpsMeter = new FPSMeter(
                     null,
                     {

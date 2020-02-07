@@ -1,6 +1,6 @@
 
     /** The Moment.js library import. */
-    const moment:any = require('moment');
+    const moment:any = require( 'moment' );
 
     /** ****************************************************************************************************************
     *   Offers extended string functionality.
