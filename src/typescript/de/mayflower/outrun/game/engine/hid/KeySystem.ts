@@ -16,11 +16,11 @@
         ***************************************************************************************************************/
         public constructor()
         {
-            window.addEventListener( 'keydown',     this.onKeyDown, false );
-            window.addEventListener( 'keyup',       this.onKeyUp,   false );
+            window.addEventListener( 'keydown',     ( event:Event ) :void => { this.onKeyDown( event ); }, false );
+            window.addEventListener( 'keyup',       ( event:Event ) :void => { this.onKeyUp(   event ); }, false );
 
-            window.addEventListener( 'onkeydown',   this.onKeyDown, false );
-            window.addEventListener( 'onkeyup',     this.onKeyUp,   false );
+            window.addEventListener( 'onkeydown',   ( event:Event ) :void => { this.onKeyDown( event ); }, false );
+            window.addEventListener( 'onkeyup',     ( event:Event ) :void => { this.onKeyUp(   event ); }, false );
         }
 
         /** ************************************************************************************************************
@@ -28,7 +28,7 @@
         *
         *   @param event The system's propagated key event.
         ***************************************************************************************************************/
-        public onKeyDown=( event:Event ) : void  =>
+        public onKeyDown( event:Event ) : void
         {
             const keyCode:string = ( event as KeyboardEvent ).code;
 
@@ -38,14 +38,14 @@
 
                 outrun.Debug.key.log( 'key pressed ['  + keyCode + ']' );
             }
-        };
+        }
 
         /** ************************************************************************************************************
         *   Being invoked by the system when a key is released.
         *
         *   @param event The system's propagated key event.
         ***************************************************************************************************************/
-        public onKeyUp=( event:Event ) : void =>
+        public onKeyUp( event:Event ) : void
         {
             const keyCode:string = ( event as KeyboardEvent ).code;
 
@@ -53,7 +53,7 @@
             this.keysNeedRelease[ keyCode ] = false;
 
             outrun.Debug.key.log( 'key released ['  + keyCode + ']' );
-        };
+        }
 
         /** ************************************************************************************************************
         *   Checks if the key with the given keyCode is currently pressed.
