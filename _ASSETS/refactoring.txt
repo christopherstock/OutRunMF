@@ -30,6 +30,7 @@ Refactoring Methods:
 - Remove static (global) fields and turn into non-static fields with propagated context in the constructor.
 - Increase visibility ( private where possible! Then protected any finally public ) => create getters/setters for access control.
 - Add tests
+- Remove unused parameters.
 - clear suspicious name combinations ( setX( y ) ), MathUtil.toInt( x ) => MathUtil.toInt( num )
 - Remove pointless statements: rotation = rotation || 0;
 - Unify level of abstraction!!

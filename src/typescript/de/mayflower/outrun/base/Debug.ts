@@ -45,8 +45,8 @@
         {
             if ( bz.SettingDebug.DEBUG_MODE && this.debugEnabled )
             {
-                // tslint:disable-next-line:no-console
-                console.log( '[' + bz.String.getDateTimeString() + '] ' + msg );
+                // eslint-disable-next-line no-console
+                console.log( '[' + bz.StringUtil.getDateTimeString() + '] ' + msg );
             }
         }
 
@@ -60,8 +60,8 @@
         {
             if ( bz.SettingDebug.DEBUG_MODE && this.debugEnabled )
             {
-                // tslint:disable-next-line:no-console
-                console.error( '[' + bz.String.getDateTimeString() + '] ' + msg );
+                // eslint-disable-next-line no-console
+                console.error( '[' + bz.StringUtil.getDateTimeString() + '] ' + msg );
             }
         }
     }

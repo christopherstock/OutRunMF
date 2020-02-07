@@ -29,12 +29,18 @@
         )
         : void
         {
-            if ( alpha !== 1.0 ) ctx.globalAlpha = alpha;
+            if ( alpha !== 1.0 )
+            {
+                ctx.globalAlpha = alpha;
+            }
 
             ctx.fillStyle = color;
             ctx.fillRect( left, top, width, height );
 
-            if ( alpha !== 1.0 ) ctx.globalAlpha = 1.0;
+            if ( alpha !== 1.0 )
+            {
+                ctx.globalAlpha = 1.0;
+            }
         }
 
         /** ************************************************************************************************************

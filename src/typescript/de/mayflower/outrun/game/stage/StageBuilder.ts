@@ -1,4 +1,5 @@
 
+    /* eslint-disable max-len */
     import * as outrun from '../..'
 
     /** ****************************************************************************************************************
@@ -20,8 +21,9 @@
         /** ************************************************************************************************************
         *   Adds straight road segments to the stage segments.
         *
-        *   @param color The color for the straight segments.
-        *   @param count The number of straight segments to add.
+        *   @param color     The color for the straight segments.
+        *   @param count     The number of straight segments to add.
+        *   @param laneCount The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
         public addStraight( color:outrun.SegmentColorSet, count:outrun.RoadLength, laneCount:number ) : void
         {
@@ -31,9 +33,10 @@
         /** ************************************************************************************************************
         *   Adds straight road segments with an ascend or descend to the stage segments.
         *
-        *   @param color  The color for the straight segments.
-        *   @param count  The number of straight segments to add.
-        *   @param height The height delta of this hill.
+        *   @param color     The color for the straight segments.
+        *   @param count     The number of straight segments to add.
+        *   @param height    The height delta of this hill.
+        *   @param laneCount The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
         public addHill( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number, laneCount:number ) : void
         {
@@ -43,10 +46,11 @@
         /** ************************************************************************************************************
         *   Adds a curve to the stage segments.
         *
-        *   @param color  The color for the straight segments.
-        *   @param count  The number of straight segments to add.
+        *   @param color      The color for the straight segments.
+        *   @param count      The number of straight segments to add.
         *   @param curve      The curve situation for this road.
         *   @param height The height delta of this hill.
+        *   @param laneCount  The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
         public addCurve
         (
@@ -85,7 +89,14 @@
         /** ************************************************************************************************************
         *   The LEGACY implementation of low rolling hills.
         ***************************************************************************************************************/
-        public addLowRollingHillsLegacy( color:outrun.SegmentColorSet, count:outrun.RoadLength, height:number, laneCount:number ) : void
+        public addLowRollingHillsLegacy
+        (
+            color     :outrun.SegmentColorSet,
+            count     :outrun.RoadLength,
+            height    :number,
+            laneCount :number
+        )
+        : void
         {
             this.addRoad( count, count, count, outrun.RoadCurve.NONE,  height / 2, color, laneCount );
             this.addRoad( count, count, count, outrun.RoadCurve.NONE,  -height,    color, laneCount );
@@ -98,10 +109,10 @@
         /** ************************************************************************************************************
         *   Adds some S-curves to the track.
         *
-        *   @param height The ascend/descend of the S curves.
-        *   @param color  The color of the segments to add.
+        *   @param height    The ascend/descend of the S curves.
+        *   @param color     The color of the segments to add.
+        *   @param laneCount The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
         public addSCurves( height:number, color:outrun.SegmentColorSet, laneCount:number ) : void
         {
             this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE, color, laneCount );
@@ -114,9 +125,9 @@
         /** ************************************************************************************************************
         *   Adds some S-curves to the track.
         *
-        *   @param color The color of the segments to add.
+        *   @param color     The color of the segments to add.
+        *   @param laneCount The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
         public addSCurvesLegacy( color:outrun.SegmentColorSet, laneCount:number ) : void
         {
             this.addRoad( outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, outrun.RoadLength.MEDIUM, -outrun.RoadCurve.EASY,   outrun.RoadHill.NONE,    color, laneCount );
@@ -189,7 +200,7 @@
         *   @param curve      The curve situation for this road.
         *   @param hill       The hill  situation for this road.
         *   @param color      The color set for this road segment.
-        *   @param laneCount  The lane count.
+        *   @param laneCount  The number of lanes this road segment is separated into.
         ***************************************************************************************************************/
         private addRoad
         (

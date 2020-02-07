@@ -25,8 +25,7 @@
         (
             canvasSystem :outrun.CanvasSystem,
             p1           :outrun.SegmentPoint,
-            clip         :number,
-            segment     :outrun.Segment
+            clip         :number
         )
         : void
         {

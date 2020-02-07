@@ -207,8 +207,7 @@
                     (
                         canvasSystem,
                         segment.getP1(),
-                        segment.getClip(),
-                        segment
+                        segment.getClip()
                     );
                 }
 

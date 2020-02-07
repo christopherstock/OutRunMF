@@ -22,6 +22,14 @@
         /** current tree scroll offset */
         private                 treeOffset          :number                     = 0;
 
+        /** ************************************************************************************************************
+        *   Specifies one set of background.
+        *
+        *   @param imageSystem The ImageSystem for loading images.
+        *   @param skyImage    The image to use for the sky,
+        *   @param hillImage   The image to use for the hills,
+        *   @param treeImage   The image to use for the trees,
+        ***************************************************************************************************************/
         public constructor( imageSystem:outrun.ImageSystem, skyImage:string, hillImage:string, treeImage:string )
         {
             this.skyImage  = imageSystem.getImage( skyImage  );

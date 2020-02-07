@@ -44,12 +44,22 @@
             let height :number = window.innerHeight;
 
             // clip to minimum canvas dimensions
-            if ( width  < outrun.SettingEngine.CANVAS_MIN_WIDTH  ) width  = outrun.SettingEngine.CANVAS_MIN_WIDTH;
-            if ( height < outrun.SettingEngine.CANVAS_MIN_HEIGHT ) height = outrun.SettingEngine.CANVAS_MIN_HEIGHT;
+            if ( width  < outrun.SettingEngine.CANVAS_MIN_WIDTH  )
+            {
+                width  = outrun.SettingEngine.CANVAS_MIN_WIDTH;
+            }
+            if ( height < outrun.SettingEngine.CANVAS_MIN_HEIGHT )
+            {
+                height = outrun.SettingEngine.CANVAS_MIN_HEIGHT;
+            }
 
             // clip to maximum canvas dimensions
-            if ( width  > outrun.SettingEngine.CANVAS_MAX_WIDTH  ) width  = outrun.SettingEngine.CANVAS_MAX_WIDTH;
-            if ( height > outrun.SettingEngine.CANVAS_MAX_HEIGHT ) height = outrun.SettingEngine.CANVAS_MAX_HEIGHT;
+            if ( width  > outrun.SettingEngine.CANVAS_MAX_WIDTH  ) {
+                width  = outrun.SettingEngine.CANVAS_MAX_WIDTH;
+            }
+            if ( height > outrun.SettingEngine.CANVAS_MAX_HEIGHT ) {
+                height = outrun.SettingEngine.CANVAS_MAX_HEIGHT;
+            }
 
             // determine dimension change
             const dimensionsChanged:boolean =
@@ -65,7 +75,9 @@
             // specify canvas resolution according to its current height
             this.resolution = height / CanvasSystem.RESOLUTION_DIVIDER;
 
-            outrun.Debug.canvas.log( ' Updated canvas dimensions to [' + width + 'x' + height + ']' );
+            outrun.Debug.canvas.log(
+                ' Updated canvas dimensions to [' + String( width ) + 'x' + String( height ) + ']'
+            );
 
             return dimensionsChanged;
         }

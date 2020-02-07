@@ -141,7 +141,9 @@
 
             // optimization, dont bother steering around other cars when 'out of sight' of the player
             if ( ( carSegment.getIndex() - playerSegment.getIndex() ) > outrun.SettingEngine.DRAW_DISTANCE )
+            {
                 return 0;
+            }
 
             for ( let i:number = 1; i < lookahead; i++ )
             {
@@ -153,12 +155,18 @@
                     && ( this.speed > playerSpeed )
                     && (outrun.MathUtil.overlap(playerX, playerW, this.x, this.width, 1.2))
                 ) {
-                    if (playerX > 0.5)
+                    if ( playerX > 0.5 )
+                    {
                         dir = -1;
-                    else if (playerX < -0.5)
+                    }
+                    else if ( playerX < -0.5 )
+                    {
                         dir = 1;
+                    }
                     else
+                    {
                         dir = ( this.x > playerX ) ? 1 : -1;
+                    }
 
                     // the closer the cars (smaller i) and the greater the speed ratio, the larger the offset
                     return dir / i * ( this.speed - playerSpeed ) / outrun.SettingGame.PLAYER_MAX_SPEED;
@@ -173,11 +181,18 @@
                     )
                     {
                         if ( otherCar.x > 0.5 )
+                        {
                             dir = -1;
+                        }
                         else if ( otherCar.x < -0.5 )
+                        {
                             dir = 1;
+                        }
                         else
+                        {
                             dir = ( this.x > otherCar.x ) ? 1 : -1;
+                        }
+
                         return dir / i * ( this.speed - otherCar.speed ) / outrun.SettingGame.PLAYER_MAX_SPEED;
                     }
                 }
@@ -185,11 +200,17 @@
 
             // if no cars ahead, but I have somehow ended up off road, then steer back on
             if ( this.x < -0.9 )
+            {
                 return 0.1;
+            }
             else if ( this.x > 0.9 )
+            {
                 return -0.1;
+            }
             else
+            {
                 return 0;
+            }
         }
 
         /** ************************************************************************************************************

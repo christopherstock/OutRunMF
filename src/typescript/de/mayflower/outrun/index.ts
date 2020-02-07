@@ -45,4 +45,4 @@
 
     export * from './util/HTML';
     export * from './util/MathUtil';
-    export * from './util/String';
+    export * from './util/StringUtil';

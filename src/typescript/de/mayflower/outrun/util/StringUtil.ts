@@ -5,7 +5,7 @@
     /** ****************************************************************************************************************
     *   Offers extended string functionality.
     *******************************************************************************************************************/
-    export class String
+    export class StringUtil
     {
         /** ************************************************************************************************************
         *   Returns a formatted timestamp of the current system date and time.
@@ -32,7 +32,7 @@
             const results:RegExpMatchArray = subject.match( regEx );
             const ret:string[]             = [];
 
-            if ( results != null )
+            if ( results !== null )
             {
                 for ( const result of results )
                 {
