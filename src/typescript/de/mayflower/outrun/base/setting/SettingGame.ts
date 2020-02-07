@@ -8,7 +8,7 @@
     export class SettingGame
     {
         /** The application title. */
-        public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ Out Run';
+        public  static  readonly    APP_TITLE                   :string             = 'Mayflower™ OutRun';
         /** The application favicon. */
         public  static  readonly    APP_FAVICON                 :string             = 'favicon.ico';
 

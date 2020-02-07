@@ -1,6 +1,8 @@
 
     /** ****************************************************************************************************************
     *   Contains the project history with all current and completed version information.
+    *
+    *   TODO prune!
     *******************************************************************************************************************/
     // tslint:disable:max-line-length
     export class Version

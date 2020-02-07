@@ -1,10 +1,10 @@
-# Out Run MF
+# Mayflower OutRun
 
-![Out Run TS](https://github.com/christopherstock/OutRunMF/raw/master/dist/res/image/promo/title.png)
+![OutRun TS](https://github.com/christopherstock/OutRunMF/raw/master/dist/res/image/promo/title.png)
 
-A TypeScript port of the famous Out Run from SEGA with Mayflower styling.
+A TypeScript port of the famous OutRun from SEGA with Mayflower styling.
 
-![Out Run TS](https://github.com/christopherstock/OutRunMF/raw/master/dist/res/image/promo/screen0.png)
+![OutRun TS](https://github.com/christopherstock/OutRunMF/raw/master/dist/res/image/promo/screen0.png)
 
 - TypeScript, Node.js &amp; the Webpack Dev Server
 - Minimum code

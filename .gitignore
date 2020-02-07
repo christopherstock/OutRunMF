@@ -1,15 +1,16 @@
 
-# mac
+# macOS
 .DS_Store
 
-# JetBrains
-.idea
+# JetBrains IDEs
+/.idea
+*.iml
 
 # Node.js
-node_modules
+/node_modules
 
-# TypeScript compiler output
-bin
-
-# Webpack output
-# dist/js
+# build and output paths
+/bin
+/doc
+/dist/js
+/coverage

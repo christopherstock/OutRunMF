@@ -1,4 +1,7 @@
 
+    // eslint-disable-next-line import/no-deprecated
+    import './de/mayflower/outrun/css/global.less';
+
     import * as outrun from './de/mayflower/outrun';
 
     /*******************************************************************************************************************

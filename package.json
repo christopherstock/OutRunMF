@@ -1,7 +1,7 @@
 {
     "name": "out-run-ts",
     "version": "0.0.1",
-    "description": "A TypeScript Joyride",
+    "description": "Mayflower™ OutRun",
     "author": "Christopher Stock <email@christopherstock.de>",
     "license": "MIT",
     "main": "dist/index.html",
@@ -13,15 +13,13 @@
         "webpack:dev": "webpack --mode=development --watch",
         "webpack:production": "webpack --mode=production --watch",
         "webpack:devserver": "webpack-dev-server --mode=development",
-        "test:all": "mocha --require ts-node/register --require ignore-styles --require src/test/index.ts src/test/**/*.ts src/test/**/*.tsx",
         "test:jest": "jest",
         "test:jest-coverage": "jest --coverage",
-        "typedoc:generate": "typedoc --out doc --listInvalidSymbolLinks --name \"Ant Design meets The International Chuck Norris Database, (c) 2020 Mayflower GmbH\" src/typescript",
+        "typedoc:generate": "typedoc --out doc --listInvalidSymbolLinks --name \"Mayflower™ OutRun, (c) 2020 Mayflower GmbH\" src/typescript",
         "tslint:check": "tslint --project ./tsconfig.json --config ./tslint.json \"src/**/*.{ts,tsx}\"",
         "eslint:check": "eslint \"src/**/*.{ts,tsx}\""
     },
     "devDependencies": {
-        "@types/chai": "^4.1.7",
         "@types/jest": "^24.0.18",
         "@types/node": "^9.6.48",
         "@types/webpack": "^4.4.29",
@@ -29,7 +27,6 @@
         "@typescript-eslint/eslint-plugin-tslint": "^2.17.0",
         "@typescript-eslint/parser": "^2.17.0",
         "awesome-typescript-loader": "^5.2.1",
-        "chai": "^4.2.0",
         "css-loader": "^0.28.11",
         "eslint": "^6.8.0",
         "eslint-plugin-import": "^1.0",
@@ -38,7 +35,6 @@
         "jest": "^24.9.0",
         "less": "^3.9.0",
         "less-loader": "^4.1.0",
-        "mocha": "^5.2.0",
         "source-map-loader": "^0.2.4",
         "style-loader": "^0.20.3",
         "ts-jest": "^24.1.0",
@@ -51,7 +47,26 @@
         "webpack-dev-server": "^3.3.1"
     },
     "dependencies": {
+        "@types/chai": "^4.2.8",
+        "chai": "^4.2.0",
         "fpsmeter": "^0.3.1",
         "moment": "^2.22.1"
+    },
+    "jest": {
+        "verbose": true,
+        "transform": {
+            ".(ts|tsx)": "ts-jest"
+        },
+        "testRegex": "(/src/test/.*\\.(test|spec))\\.(ts|tsx|js|jsx)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx"
+        ],
+        "testURL": "http://localhost/",
+        "setupFiles": [
+            "<rootDir>/src/test/index.ts"
+        ]
     }
 }
