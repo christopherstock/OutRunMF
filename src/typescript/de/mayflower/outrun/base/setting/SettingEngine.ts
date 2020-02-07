@@ -1,8 +1,9 @@
 
+    /* eslint-disable max-len */
+
     /** ****************************************************************************************************************
     *   Specifies all settings for the game engine.
     *******************************************************************************************************************/
-    // tslint:disable:max-line-length
     export class SettingEngine
     {
         /** Minimum canvas width. */

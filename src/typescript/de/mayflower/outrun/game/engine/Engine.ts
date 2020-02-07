@@ -74,7 +74,7 @@
         /** ************************************************************************************************************
         *   Being invoked when all images are loaded.
         ***************************************************************************************************************/
-        private onImagesLoaded=() : void =>
+        private onImagesLoaded =() : void =>
         {
             // notify engine load complete
             this.onInitComplete();

@@ -126,7 +126,7 @@ module.exports = {
         'no-fallthrough': 'error',
         'no-invalid-this': 'error',
         'no-irregular-whitespace': 'off',
-        'no-multiple-empty-lines': 'off',
+        'no-multiple-empty-lines': 'error',
         'no-new-wrappers': 'error',
         'no-shadow': [
             'error',

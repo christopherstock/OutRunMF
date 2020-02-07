@@ -59,6 +59,22 @@
         }
 
         /** ************************************************************************************************************
+        *   Creates the road of this stage.
+        *
+        *   @param playerZ The initial z position of the player.
+        *
+        *   @return All segments the road consists of.
+        ***************************************************************************************************************/
+        protected abstract createRoad( playerZ:number ) : outrun.Segment[];
+
+        /** ************************************************************************************************************
+        *   Creates all decoration sprites for this stage.
+        *
+        *   @param segmentCount The number of segments this level consists of.
+        ***************************************************************************************************************/
+        protected abstract createSprites( segmentCount:number ) : void;
+
+        /** ************************************************************************************************************
         *   Initializes all properties of this stage.
         ***************************************************************************************************************/
         public init() : void
@@ -68,10 +84,8 @@
 
             const playerZ:number = this.player.getOffsetZ();
 
-            // create the road
+            // create the road, sprites and cars
             this.segments = this.createRoad( playerZ );
-
-            // add sprites and cars
             this.createSprites( this.segments.length );
             this.createCars();
 
@@ -218,22 +232,6 @@
                 }
             }
         }
-
-        /** ************************************************************************************************************
-        *   Creates the road of this stage.
-        *
-        *   @param playerZ The initial z position of the player.
-        *
-        *   @return All segments the road consists of.
-        ***************************************************************************************************************/
-        protected abstract createRoad( playerZ:number ) : outrun.Segment[];
-
-        /** ************************************************************************************************************
-        *   Creates all decoration sprites for this stage.
-        *
-        *   @param segmentCount The number of segments this level consists of.
-        ***************************************************************************************************************/
-        protected abstract createSprites( segmentCount:number ) : void;
 
         /** ************************************************************************************************************
         *   Adds a sprite to the segment with the specified index.

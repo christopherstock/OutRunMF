@@ -37,7 +37,6 @@
         *
         *   @return All segments the road consists of.
         ***************************************************************************************************************/
-        // tslint:disable:max-line-length
         protected createRoad( playerZ:number ) : outrun.Segment[]
         {
             const stageBuilder :outrun.StageBuilder = new outrun.StageBuilder();
@@ -77,10 +76,5 @@
                 this.createObstacle( n, outrun.ImageFile.COLUMN, 1.5  );
                 this.createObstacle( n, outrun.ImageFile.TREE2,  -1.5 );
             }
-
-
-
-
-
         }
     }

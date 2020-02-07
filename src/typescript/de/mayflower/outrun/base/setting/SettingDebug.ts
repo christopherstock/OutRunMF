@@ -1,8 +1,9 @@
 
+    /* eslint-disable max-len */
+
     /** ****************************************************************************************************************
     *   Specifies all debug adjustments for the application.
     *******************************************************************************************************************/
-    // tslint:disable:max-line-length
     export class SettingDebug
     {
         /** The global switch for the debug mode. */

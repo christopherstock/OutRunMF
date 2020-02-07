@@ -1,10 +1,11 @@
 
+    /* eslint-disable max-len */
+
     import * as outrun from '../..';
 
     /** ****************************************************************************************************************
     *   Specifies all adjustments for the gameplay.
     *******************************************************************************************************************/
-    // tslint:disable:max-line-length
     export class SettingGame
     {
         /** The application title. */

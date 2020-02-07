@@ -1,4 +1,5 @@
 
+    /** The moment.js implementation. */
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const moment:any = require( 'moment' );
 
@@ -29,8 +30,8 @@
         ***************************************************************************************************************/
         public static searchRegEx( subject:string, regEx:RegExp ) : string[]
         {
-            const results:RegExpMatchArray = subject.match( regEx );
-            const ret:string[]             = [];
+            const results :RegExpExecArray = regEx.exec( subject );
+            const ret     :string[]        = [];
 
             if ( results !== null )
             {

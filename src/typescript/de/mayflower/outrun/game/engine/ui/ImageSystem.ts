@@ -76,7 +76,7 @@
 
             if ( this.loadedCount === this.fileNames.length )
             {
-                outrun.Debug.init.log( ' All [' + this.loadedCount + '] images loaded' );
+                outrun.Debug.init.log( ' All [' + String( this.loadedCount ) + '] images loaded' );
 
                 // invoke callback function when all images are loaded
                 this.callback();
