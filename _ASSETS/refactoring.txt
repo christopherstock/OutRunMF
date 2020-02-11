@@ -1,19 +1,58 @@
 
 Introduction:
 =============
-s. "Martin Fowler" - Refactoring has never been more important!
-- KISS == Technical debts and no structure??
-- YAGNI
-- DRY
+s. "Martin Fowler":
+- Refactoring has never been more important!
+- Technical Debts are optimal!
+
+- DRY   = Don't repeat yourself
+- KISS  = Keep it stupid simple
+- YAGNI = You ain't gonna need it
 
 Refactoring Methods:
 ====================
-- Descoping (enscoping?) ( Limit scope by intending into for-loop ) e.g. let i :number = 0;
-- From var to let ( from global to local )
+
+Coding Style / Readability
+==========================
 - Separate multiple vars in one line var x, y = 10, z;
 - Renaming ( clear speaking names )
+
+Variables
+=========
+- From var to let   ( from global to local      )
+- From let to const ( from variable to constant )
+- Descoping (enscoping?) ( Limit scope by intending into for-loop ) e.g. let i :number = 0;
+
+Structure ( Classes, Types etc. )
+=====================
 - Introduce classes ( From {} to Sprite, Car etc. )
-- Extract methods ( separate logical units )
+
+Methods
+=======
+- Turn static methods into instance methods on single usages!
+- Extract single code fragments/lines to methods ( separate logical units )
+
+Supporting Tools:
+=================
+- ESLint (TSLint)
+- TS-Compiler
+- IntelliJ ( "Code Inspection" )
+- TypeDoc Documentation Generator
+- TSUnit & Coverage (jest):
+  Create tests and cover certain business logic methods with TSUnit tests.
+
+Results:
+==========================
+- Separated units that do not belong together.
+- Unified units that do belong together.
+- Added Testability
+- Easy possibility to combine all elements and easily create new features.
+
+
+
+
+Unsorted Refactoring Methods:
+=============================
 - Ensure that every variable has a value! remove constructs like: ( offsetX || 0 )
 - Add documentation ( where it adds value )
 - Add typings (!) from JS to TS conversion
@@ -38,7 +77,6 @@ Refactoring Methods:
     stage.render()
     this.keyLeft = this.keySystem.isPressed( KEYS.KEY_LEFT ) // extract!
 - Minimize method parameters by moving values or extracting to member fields etc.
-- Resolve static methods to instance methods on single usages!
 - (simple) for loops with iterator to foreach (if possible)
 - Add 'readonly' for non-static fields that are only assigned in the constructor!
 - remove redundant field namings (Player.playerX)
@@ -49,7 +87,6 @@ Refactoring Methods:
         dir = 1;
 - Remove clumsy methods:
   public static increase( start:number, increment:number, max:number ) : number
-
 - Move redundant calculations to constant fields into constructor etc!
   const carW:number = outrun.Main.game.engine.imageSystem.getImage( car.getSprite() ).width * outrun.SettingEngine.SPRITE_SCALE;
 - Clear speaking names:
@@ -59,14 +96,8 @@ Refactoring Methods:
 - Remove one functin call with '0' and turn into '1'! remove: ( percent || 1 )
 - Renaming variables on by passing it to and calling a function: ($rootTag => $productTag)
 
-Tools that support:
-===================
-- Lint
-- TS-Compiler
-- IntelliJ ( "Code Inspection" )
-
-Constructive refactorings:
-==========================
+Constructive / 2nd level refactorings:
+======================================
 - Separate stage: construction scheme and data to abstract class Stage + concrete subclass StageLegacy
 - Added new classes ("Segment")
 - Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
@@ -77,7 +108,6 @@ Constructive refactorings:
         {
             return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
         }
-
 
 - extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
@@ -93,7 +123,6 @@ Constructive refactorings:
     );
     this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
 => Remove public setter not being used outside
-
 => Bundle setters or field accesses to one public function and make all fields private!
 
     // assign new segment properties
@@ -119,7 +148,6 @@ Constructive refactorings:
         DOUBLE_LONG: 200,
     };
 
-=> Create tests and cover certain business logic methods with TSUnit tests.
 => Minimize all static accesses to Main.game
 
 => Unify the level of abstraction / achieve same level of abstraction (s. Player.update !)
@@ -150,13 +178,3 @@ Constructive refactorings:
 => Remove method/constructor parameters that are constant when there is only one invocation
 
                     ( .., false, 0, 0 )
-
-
-Results:
-==========================
-Separate units
-added Testability
-Easy possibility to combine all elements and easily create new features.
-
-=> Implement Linter
-=> Implement Tests!
