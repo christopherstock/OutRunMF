@@ -27,5 +27,5 @@ npm run build:devserver
 
 ## 3. Open the app in your browser
 ```
-http://localhost:1234
+http://localhost:1235
 ```
