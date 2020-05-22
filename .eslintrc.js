@@ -5,22 +5,23 @@ module.exports = {
     },
     extends: [
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         // 'prettier',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        project: 'tsconfig.json',
+        project: './tsconfig.json',
         sourceType: 'module',
+        createDefaultProgram: true,
     },
     plugins: ['@typescript-eslint', '@typescript-eslint/tslint', 'eslint-plugin-prefer-arrow', 'eslint-plugin-import'],
     rules: {
         '@typescript-eslint/typedef': [
-            "error",
+            'error',
             {
-                "arrowParameter": true,
-                "variableDeclaration": true
-            }
+                'arrowParameter': true,
+                'variableDeclaration': true,
+            },
         ],
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/consistent-type-definitions': 'off',
@@ -68,28 +69,28 @@ module.exports = {
         'arrow-parens': ['error', 'as-needed'],
         camelcase: 'error',
         'comma-dangle': [
-            "error",
+            'error',
             {
-                "arrays": "always-multiline",
-                "objects": "always-multiline",
-                "imports": "always-multiline",
-                "exports": "always-multiline",
-                "functions": "never"
-            }
+                'arrays': 'always-multiline',
+                'objects': 'always-multiline',
+                'imports': 'always-multiline',
+                'exports': 'always-multiline',
+                'functions': 'never',
+            },
         ],
         complexity: 'off',
-        "require-jsdoc": [
-            "error",
+        'require-jsdoc': [
+            'error',
             {
-                "require":
+                'require':
                 {
-                    "FunctionDeclaration": true,
-                    "MethodDefinition": true,
-                    "ClassDeclaration": true,
-                    "ArrowFunctionExpression": true,
-                    "FunctionExpression": true
-                }
-            }
+                    'FunctionDeclaration': true,
+                    'MethodDefinition': true,
+                    'ClassDeclaration': true,
+                    'ArrowFunctionExpression': true,
+                    'FunctionExpression': true,
+                },
+            },
         ],
         'constructor-super': 'error',
         curly: 'error',
@@ -100,15 +101,15 @@ module.exports = {
         'id-blacklist': ['error', 'any', 'Number', 'number', 'String', 'string', 'Boolean', 'boolean'],
         'id-match': 'error',
         'import/no-deprecated': 'error',
-        'import/order': 'error',
+        'import/order': 'off',
         'linebreak-style': 'off',
         'max-classes-per-file': [ 'error', 1 ],
         'max-len': [
-            "error",
+            'error',
             {
-                "code":     120,
-                "tabWidth": 4
-            }
+                'code':     120,
+                'tabWidth': 4,
+            },
         ],
         'new-parens': 'off',
         'newline-per-chained-call': 'off',
@@ -118,8 +119,8 @@ module.exports = {
         'no-console': 'error',
         'no-debugger': 'error',
         'no-empty': 'error',
-        'no-empty-function': "off",
-        '@typescript-eslint/no-empty-function': "off",
+        'no-empty-function': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
         'no-eval': 'error',
         'no-extra-bind': 'error',
         'no-extra-semi': 'off',
@@ -143,14 +144,15 @@ module.exports = {
         'no-unused-labels': 'error',
         'object-shorthand': 'off',
         'one-var': ['error', 'never'],
+/*
         'prefer-arrow/prefer-arrow-functions': [
             'error',
             {
-                disallowPrototype: false,
-                singleReturnOnly: true,
-                classPropertiesAllowed: false,
-            },
+                allowNamedFunctions: false,
+                allowUnboundThis: true
+            }
         ],
+*/
         'quote-props': 'off',
         radix: 'error',
         'space-before-function-paren': 'off',
@@ -161,63 +163,63 @@ module.exports = {
         '@typescript-eslint/member-ordering': [
             'warn',
             {
-              "default": [
+              'default': [
 
-                "signature",
+                'signature',
 
-                "public-static-field",
-                "protected-static-field",
-                "private-static-field",
+                'public-static-field',
+                'protected-static-field',
+                'private-static-field',
 
-                "public-abstract-field",
-                "protected-abstract-field",
-                "private-abstract-field",
+                'public-abstract-field',
+                'protected-abstract-field',
+                'private-abstract-field',
 
-                "public-instance-field",
-                "protected-instance-field",
-                "private-instance-field",
+                'public-instance-field',
+                'protected-instance-field',
+                'private-instance-field',
 
-                "public-field",
-                "protected-field",
-                "private-field",
+                'public-field',
+                'protected-field',
+                'private-field',
 
-                "static-field",
-                "instance-field",
-                "abstract-field",
+                'static-field',
+                'instance-field',
+                'abstract-field',
 
-                "field",
+                'field',
 
-                "constructor",
+                'constructor',
 
-                "public-abstract-method",
-                "protected-abstract-method",
-                "private-abstract-method",
+                'public-abstract-method',
+                'protected-abstract-method',
+                'private-abstract-method',
 
-                "public-instance-method",
-                "protected-instance-method",
-                "private-instance-method",
+                'public-instance-method',
+                'protected-instance-method',
+                'private-instance-method',
 
-                "public-method",
-                "protected-method",
-                "private-method",
+                'public-method',
+                'protected-method',
+                'private-method',
 
-                "public-static-method",
-                "protected-static-method",
-                "private-static-method",
+                'public-static-method',
+                'protected-static-method',
+                'private-static-method',
 
-                "static-method",
-                "instance-method",
-                "abstract-method",
+                'static-method',
+                'instance-method',
+                'abstract-method',
 
-                "method"
-              ]
-            }
+                'method',
+              ],
+            },
         ],
         '@typescript-eslint/array-type': [
             'warn',
             {
-                'default': 'array'
-            }
-        ]
+                'default': 'array',
+            },
+        ],
     },
 };
