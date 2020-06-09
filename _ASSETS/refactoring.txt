@@ -9,6 +9,10 @@ s. "Martin Fowler":
 - KISS  = Keep it stupid simple
 - YAGNI = You ain't gonna need it
 
+- cyclomatic complexity
+- layer of abstraction
+- cohesion
+
 Refactoring Methods:
 ====================
 
