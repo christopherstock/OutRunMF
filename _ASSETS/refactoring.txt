@@ -182,3 +182,8 @@ Constructive / 2nd level refactorings:
 => Remove method/constructor parameters that are constant when there is only one invocation
 
                     ( .., false, 0, 0 )
+
+Last Steps
+==========
+Linter, Style Fixer (Prettifier etc.)
+Method Ordering ..
