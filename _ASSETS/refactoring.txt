@@ -16,42 +16,125 @@ s. "Martin Fowler":
 Refactoring Methods:
 ====================
 
-Coding Style / Readability
-==========================
-- Separate multiple vars in one line var x, y = 10, z;
-- Renaming ( clear speaking names )
+1. Wiederholungen eliminieren
+"Don't repeat yourself!"
+Informationen und Wissenskapseln atomar trennen.
+Separate multiple vars from one line to multiple lines var x, y = 10, z;
+Wiederholungen entfernen und vereinen.
 
-Variables
-=========
+
+2.
+Renaming ( clear speaking names )
+""
+- clear suspicious name combinations ( setX( y ) ), MathUtil.toInt( x ) => MathUtil.toInt( num )
+- Fix faulty namings! getVerticalScroll() { return this.scrollX } >
+
+3.
+Descoping
+- Descoping: var > let
 - From var to let   ( from global to local      )
 - From let to const ( from variable to constant )
 - Descoping (enscoping?) ( Limit scope by intending into for-loop ) e.g. let i :number = 0;
 
-Structure ( Classes, Types etc. )
-=====================
+4.
+- Explicitly specify, which values change and which values are constant!
+let > const
+- Add const for non-changing values!
+=> constant settings to settings class, external XML, ini etc. .. or .properties file etc.!
+
+5.
+Move
+Trennen was nicht zusammengehört,
+Zusammenziehen was zusammengehört
+"Gute Zäune, gute Nachbarn"
+
+6.
+Codestrukturen einführen
+Codestrukturen sinnvoll nutzen
+"Die Grenzen meiner Sprache sind die Grenzen meiner Welt"
+
+Hierfür gibt es zahlreiche Codestrukturen, Structure ( Classes, Types etc. )
 - Introduce classes ( From {} to Sprite, Car etc. )
 
-Methods
+- Extract/Separate grouped members to new class
+
+- (simple) for loops with iterator to foreach (if possible)
+
+- introduce enums
+    if (player.getX() > 0.5)
+        dir = -1;
+    else if (player.getX() < -0.5)
+        dir = 1;
+
+7.
+Zeilen in Funktionen bündeln
 =======
-- Turn static methods into instance methods on single usages!
 - Extract single code fragments/lines to methods ( separate logical units )
+- extract grouped lines of code to new 'speaking' method (four key detection methods)
+- sprechender: ..
 
-Supporting Tools:
-=================
-- ESLint (TSLint)
-- TS-Compiler
-- IntelliJ ( "Code Inspection" )
-- TypeDoc Documentation Generator
-- TSUnit & Coverage (jest):
-  Create tests and cover certain business logic methods with TSUnit tests.
+8.
+Statische Konstrukte umwandeln in nicht-statische Konstrukte mit einem Kontext
+"Aller Rätsel Lösung liegt im Kontext."
+- Turn static methods into instance methods on single usages!
+- Remove static (global) fields and turn into non-static fields with propagated context in the constructor.
 
-Results:
-==========================
-- Separated units that do not belong together.
-- Unified units that do belong together.
-- Added Testability
-- Easy possibility to combine all elements and easily create new features.
+9.
+Typisieren
+"Was bist Du denn für einer?"
+- Add typings (!) from JS to TS conversion
 
+10.
+Kapseln!
+(private for all fields / methods not available to outside compilation units)
+=> Remove public setter not being used outside sinnlose getter/setter die nicht nach Außen zur Verfügung stehen sollen
+verwendet werden.
+
+=> Bundle setters or field accesses to one public function and make all fields private!
+
+    // assign new segment properties
+    segment.looped = segment.getIndex() < baseSegment.getIndex();
+    segment.fog    = outrun.MathUtil.exponentialFog
+    (
+        n / outrun.SettingEngine.DRAW_DISTANCE,
+        outrun.SettingGame.FOG_DENSITY
+    );
+    segment.clip = maxY;
+
+11.
+Auslauben!
+"You ain't gonna need it!"
+- Remove unused parameters, local and global variables and constants.
+Auslauben ..
+=> Remove method/constructor parameters that are constant when there is only one invocation
+                    ( .., false, 0, 0 )
+- Minimize method parameters by moving values or extracting to member fields etc.
+
+12.
+Einheitliche Abstraktionslevel schaffen
+"Keep it stupid simple"
+ - Unify level of abstraction!!
+    player.render()
+    stage.render()
+    this.keyLeft = this.keySystem.isPressed( KEYS.KEY_LEFT ) // extract!
+
+13.
+Den Code sprechend machen
+removing magic numbers and string literals by extracting to named constants:
+"Es wird immer gleich ein wenig anders, wenn man es ausspricht"
+
+this.resolution = this.canvasSystem.getHeight() / 480;
+    private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+    {
+        return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
+    }
+
+- removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
+
+        private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
+        {
+            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
+        }
 
 
 
@@ -59,7 +142,6 @@ Unsorted Refactoring Methods:
 =============================
 - Ensure that every variable has a value! remove constructs like: ( offsetX || 0 )
 - Add documentation ( where it adds value )
-- Add typings (!) from JS to TS conversion
 - Order variables, fields and methods by visibility, type (number, boolean, string, object, collections ) and static state.
   This helps grouping members and extract them later!
 - Enable TSLint from the very 1st second!
@@ -68,27 +150,11 @@ Unsorted Refactoring Methods:
 - Group members by their logical corresponding
 - Redundant calculated (local) fields into non-static fields.
 - Add 'readonly' modifier for all non-changing fields only assigned in the constructor!
-- Extract/Separate grouped members to new class
-- Add const for non-changing values!
-- Remove static (global) fields and turn into non-static fields with propagated context in the constructor.
 - Increase visibility ( private where possible! Then protected any finally public ) => create getters/setters for access control.
 - Add tests
-- Remove unused parameters.
-- clear suspicious name combinations ( setX( y ) ), MathUtil.toInt( x ) => MathUtil.toInt( num )
 - Remove pointless statements: rotation = rotation || 0;
-- Unify level of abstraction!!
-    player.render()
-    stage.render()
-    this.keyLeft = this.keySystem.isPressed( KEYS.KEY_LEFT ) // extract!
-- Minimize method parameters by moving values or extracting to member fields etc.
-- (simple) for loops with iterator to foreach (if possible)
 - Add 'readonly' for non-static fields that are only assigned in the constructor!
 - remove redundant field namings (Player.playerX)
-- introduce enums
-    if (player.getX() > 0.5)
-        dir = -1;
-    else if (player.getX() < -0.5)
-        dir = 1;
 - Remove clumsy methods:
   public static increase( start:number, increment:number, max:number ) : number
 - Move redundant calculations to constant fields into constructor etc!
@@ -106,14 +172,6 @@ Constructive / 2nd level refactorings:
 - Added new classes ("Segment")
 - Remove obsolete statements ( addDownhillToEnd( 0 ) => num = num || 200; )
 - Introduce empty class without members that extends any.
-- removing magic numbers by extracting to named constants: this.resolution = this.canvasSystem.getHeight() / 480;
-
-        private static calculateRumbleWidth( projectedRoadWidth:number, lanes:number ) : number
-        {
-            return ( projectedRoadWidth / Math.max( 6,  2 * lanes ) );
-        }
-
-- extract grouped lines of code to new 'speaking' method (four key detection methods)
 - Remove/Resolve all "":any" statements
 - Create constructors from direct object instanciations (forced on making fields private) => newPoint = { x: 0, y: 0, z: 0 }
 - cluster and separate on more than 7 items per folder, package, class, methods, fields, parameters and so on ..
@@ -126,19 +184,6 @@ Constructive / 2nd level refactorings:
         Stage.findSegment( this.segments, this.player.getZ() + this.player.getOffsetZ() )
     );
     this.player.speedPercent  = this.player.getSpeed() / outrun.SettingGame.PLAYER_MAX_SPEED;
-=> Remove public setter not being used outside
-=> Bundle setters or field accesses to one public function and make all fields private!
-
-    // assign new segment properties
-    segment.looped = segment.getIndex() < baseSegment.getIndex();
-    segment.fog    = outrun.MathUtil.exponentialFog
-    (
-        n / outrun.SettingEngine.DRAW_DISTANCE,
-        outrun.SettingGame.FOG_DENSITY
-    );
-    segment.clip = maxY;
-
-=> constant settings to settings class ..
 
 => Move value classes to enums!
 
@@ -179,11 +224,20 @@ Constructive / 2nd level refactorings:
     // update player
     this.player.update( deltaX, deltaTime, this.stageLength, this.segments, keySystem );
 
-=> Remove method/constructor parameters that are constant when there is only one invocation
+Results:
+==========================
+- Separated units that do not belong together.
+- Unified units that do belong together.
+- Added Testability
+- Easy possibility to combine all elements and easily create new features.
 
-                    ( .., false, 0, 0 )
-
-Last Steps
-==========
-Linter, Style Fixer (Prettifier etc.)
-Method Ordering ..
+Supporting Tools:
+=================
+- TS-Compiler
+- ESLint (TSLint)
+- IntelliJ ( "Code Inspection" )
+- TypeDoc Documentation Generator
+- TSUnit & Coverage (jest):
+  Create tests and cover certain business logic methods with TSUnit tests.
+- Linter, Style Fixer (Prettifier etc.)
+- Method Ordering ..
