@@ -16,6 +16,10 @@ s. "Martin Fowler":
 Refactoring Methods:
 ====================
 
+BEFORE REFACTORING:
+- Test Coverage before Refactoring
+- Introduce Code Inspection Tools, Formatter, Prettifier, Linter
+
 1. Wiederholungen eliminieren
 "Don't repeat yourself!"
 Informationen und Wissenskapseln atomar trennen.
@@ -74,10 +78,11 @@ Zeilen in Funktionen bündeln
 - sprechender: ..
 
 8.
-Statische Konstrukte umwandeln in nicht-statische Konstrukte mit einem Kontext
+Statische Konstrukte umwandeln in einen nicht-statischen Kontext
 "Aller Rätsel Lösung liegt im Kontext."
 - Turn static methods into instance methods on single usages!
 - Remove static (global) fields and turn into non-static fields with propagated context in the constructor.
+- remove params and turn into non-static fields
 
 9.
 Typisieren
@@ -86,6 +91,7 @@ Typisieren
 
 10.
 Kapseln!
+"Abgekapselt von der Welt"
 (private for all fields / methods not available to outside compilation units)
 => Remove public setter not being used outside sinnlose getter/setter die nicht nach Außen zur Verfügung stehen sollen
 verwendet werden.
@@ -109,6 +115,7 @@ Auslauben ..
 => Remove method/constructor parameters that are constant when there is only one invocation
                     ( .., false, 0, 0 )
 - Minimize method parameters by moving values or extracting to member fields etc.
+- Remove pointless statements: rotation = rotation || 0;
 
 12.
 Einheitliche Abstraktionslevel schaffen
