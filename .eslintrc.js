@@ -103,7 +103,7 @@ module.exports = {
         'import/no-deprecated': 'error',
         'import/order': 'off',
         'linebreak-style': 'off',
-        'max-classes-per-file': [ 'error', 1 ],
+        'max-classes-per-file': [ 'warn', 1 ],
         'max-len': [
             'error',
             {
