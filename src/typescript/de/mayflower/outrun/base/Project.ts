@@ -6,41 +6,11 @@
     *******************************************************************************************************************/
     export class Project
     {
-        /** ************************************************************************************************************
-        *   This method is invoked when the application starts.
-        ***************************************************************************************************************/
-        public open( userName:any ) : void
-        {
-            const user :User = this.loadUser( userName );
-
-
-
-            const a :number = width / 64;
-            for ( let i:number = 0; i < a; ++i )
-            {
-                this.drawTile( i * 64, 0 );
-            }
-
-            //
-            Level
-
-            const tileCountX :number = screenWidth / 64;
-
-            const project :Project = db.loadProject();
-            if ( project.typeKey === 7 ) {
-                this.openGUI( project )
-            }
-        }
-
-        public drawTile( x:any, y:any ) : void
-        {
-
-        }
     }
 
     export class Point {
-        x :number;
-        y :number;
+        public x :number;
+        public y :number;
     }
 
     export class Route {
@@ -50,12 +20,6 @@
         PRIVATE_VEHICLE,
         BICYCLE,
         PUBLIC_TRANSPORT,
-    }
-
-    export class Line {
-        x :Point;
-        y :number;
-        length :number;
     }
 
     // TODO to kotlin code !!
