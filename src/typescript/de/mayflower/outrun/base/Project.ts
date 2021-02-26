@@ -118,33 +118,48 @@
             {
                 case TransportType.PRIVATE_VEHICLE:
                 {
-                    const route: Route = new Route();
-
-                    // many lines of code + API invocations
-                    // ...
-
-                    return route;
+                    return this.buildRoutePrivateVehicle();
                 }
 
                 case TransportType.BICYCLE:
                 {
-                    const route: Route = new Route();
-
-                    // many lines of code + API invocations
-                    // ...
-
-                    return route;
+                    return this.buildRouteBicycle();
                 }
 
                 case TransportType.PUBLIC_TRANSPORT:
                 {
-                    const route: Route = new Route();
-
-                    // many lines of code + API invocations
-                    // ...
-
-                    return route;
+                    return this.buildRoutePublicTransport();
                 }
             }
+        }
+
+        private buildRoutePrivateVehicle(): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+
+        private buildRouteBicycle(): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+
+        private buildRoutePublicTransport(): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
         }
     }
