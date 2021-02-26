@@ -58,10 +58,12 @@
         length :number;
     }
 
+    // TODO to kotlin code !!
+
     export class Navigator1
     {
-        public buildRoute(A: Point, B: Point): Route {
-
+        public buildRoute(A: Point, B: Point): Route
+        {
             const route: Route = new Route();
 
             // many lines of code + API invocations
@@ -73,8 +75,8 @@
 
     export class Navigator2
     {
-        public buildRoute(type: TransportType, A: Point, B: Point): Route {
-
+        public buildRoute(type: TransportType, A: Point, B: Point): Route
+        {
             switch ( type )
             {
                 case TransportType.PRIVATE_VEHICLE:
@@ -112,54 +114,132 @@
 
     export class Navigator3
     {
+        public buildRoute(type: TransportType, A: Point, B: Point): Route
+        {
+            switch ( type )
+            {
+                case TransportType.PRIVATE_VEHICLE:
+                {
+                    return this.buildRoutePrivateVehicle(A, B);
+                }
+
+                case TransportType.BICYCLE:
+                {
+                    return this.buildRouteBicycle(A, B);
+                }
+
+                case TransportType.PUBLIC_TRANSPORT:
+                {
+                    return this.buildRoutePublicTransport(A, B);
+                }
+            }
+        }
+
+        private buildRoutePrivateVehicle(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+
+        private buildRouteBicycle(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+
+        private buildRoutePublicTransport(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+    }
+
+    // ### Strategy Pattern ###
+
+    export interface RouteStrategy
+    {
+        buildRoute(A: Point, B: Point): Route;
+    }
+
+    export class RouteStrategyPrivateVehicle implements RouteStrategy
+    {
+        public buildRoute(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+    }
+
+    export class RouteStrategyBicycle implements RouteStrategy
+    {
+        public buildRoute(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+    }
+
+    export class RouteStrategyPublicTransport implements RouteStrategy
+    {
+        public buildRoute(A: Point, B: Point): Route
+        {
+            const route: Route = new Route();
+
+            // many lines of code + API invocations
+            // ...
+
+            return route;
+        }
+    }
+
+    export class Navigator4
+    {
         public buildRoute(type: TransportType, A: Point, B: Point): Route {
+
+            let strategy :RouteStrategy = null;
 
             switch ( type )
             {
                 case TransportType.PRIVATE_VEHICLE:
                 {
-                    return this.buildRoutePrivateVehicle();
+                    strategy = new RouteStrategyPrivateVehicle();
+                    break;
                 }
 
                 case TransportType.BICYCLE:
                 {
-                    return this.buildRouteBicycle();
+                    strategy = new RouteStrategyBicycle();
+                    break;
                 }
 
                 case TransportType.PUBLIC_TRANSPORT:
+                default:
                 {
-                    return this.buildRoutePublicTransport();
+                    strategy = new RouteStrategyPublicTransport();
+                    break;
                 }
             }
-        }
 
-        private buildRoutePrivateVehicle(): Route
-        {
-            const route: Route = new Route();
-
-            // many lines of code + API invocations
-            // ...
-
-            return route;
-        }
-
-        private buildRouteBicycle(): Route
-        {
-            const route: Route = new Route();
-
-            // many lines of code + API invocations
-            // ...
-
-            return route;
-        }
-
-        private buildRoutePublicTransport(): Route
-        {
-            const route: Route = new Route();
-
-            // many lines of code + API invocations
-            // ...
-
-            return route;
+            return strategy.buildRoute(A, B);
         }
     }
