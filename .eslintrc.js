@@ -80,7 +80,7 @@ module.exports = {
         ],
         complexity: 'off',
         'require-jsdoc': [
-            'error',
+            'warn',
             {
                 'require':
                 {
