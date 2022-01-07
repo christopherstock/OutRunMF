@@ -12,5 +12,5 @@
 # build and output paths
 /bin
 /doc
-/dist/js
+# /dist/js
 /coverage

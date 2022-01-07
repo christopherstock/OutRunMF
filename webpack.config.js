@@ -1,10 +1,10 @@
 module.exports = ( env, argv ) => {
 
-    let config = {
+    const config = {
         entry: './src/typescript/index.ts',
         output: {
-            filename: 'bundle.js',
-            path: __dirname + '/dist/js/'
+            filename: 'mayflower-outrun-1.0.0.js',
+            path: __dirname + '/dist/js/',
         },
 
         resolve: {
@@ -13,8 +13,8 @@ module.exports = ( env, argv ) => {
                 '.ts',
                 '.tsx',
                 '.js',
-                '.json'
-            ]
+                '.json',
+            ],
         },
     };
 
@@ -28,14 +28,14 @@ module.exports = ( env, argv ) => {
             // all files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader'
+                loader: 'awesome-typescript-loader',
             },
 
             // all output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 test: /\.js$/,
                 enforce: 'pre',
-                loader: 'source-map-loader'
+                loader: 'source-map-loader',
             },
 
             // all '.css' files will be handled by the style- and css-loader
@@ -43,12 +43,12 @@ module.exports = ( env, argv ) => {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: 'style-loader'
+                        loader: 'style-loader',
                     },
                     {
-                        loader: 'css-loader'
-                    }
-                ]
+                        loader: 'css-loader',
+                    },
+                ],
             },
 
             // all '.less' files will be handled by the style- and css-loader
@@ -56,22 +56,22 @@ module.exports = ( env, argv ) => {
                 test: /\.less$/,
                 use: [
                     {
-                        loader: 'style-loader'
+                        loader: 'style-loader',
                     },
                     {
-                        loader: 'css-loader'
+                        loader: 'css-loader',
                     },
                     {
-                        loader: 'less-loader'
-                    }
-                ]
-            }
+                        loader: 'less-loader',
+                    },
+                ],
+            },
         ],
     };
 
     if ( argv.mode === 'production' ) {
         config.optimization = {
-            minimize: true
+            minimize: true,
         };
     }
 
@@ -80,7 +80,7 @@ module.exports = ( env, argv ) => {
         port: 1235,
         watchContentBase: true,
         publicPath: '/js/',
-        contentBase: __dirname + '/dist/'
+        contentBase: __dirname + '/dist/',
     };
 
     return config;
