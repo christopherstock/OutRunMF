@@ -10,8 +10,7 @@ A TypeScript port of the famous OutRun from SEGA with Mayflower styling.
 - Minimum code
 - Pseudo 3D
 
-## Online-Demo
-
+## Online Demo
 https://christopherstock.github.io/OutRunMF/dist
 
 ## Original JS Code
