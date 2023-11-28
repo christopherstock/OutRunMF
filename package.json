@@ -5,7 +5,7 @@
     "author": "Christopher Stock <email@christopherstock.de>",
     "license": "MIT",
     "main": "dist/index.html",
-    "homepage": "http://www.christopherstock.de",
+    "homepage": "https://www.christopherstock.de",
     "repository": "https://github.com/christopherstock/OutRunTs",
     "bugs": "https://github.com/christopherstock/OutRunTs/issues",
     "scripts": {
